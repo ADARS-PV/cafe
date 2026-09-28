@@ -1,0 +1,1181 @@
+{% extends "staff/base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   TGARDEN — ORDER DETAIL
+   Professional Café Management UI
+========================================================= */
+
+.order-detail-page {
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 30px 34px 55px;
+    color: #173b2b;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.order-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #087443;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: .2s ease;
+}
+
+.back-link:hover {
+    color: #064f2e;
+    transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   ORDER HEADER
+========================================================= */
+
+.order-header-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ebe7;
+    border-radius: 16px;
+
+    box-shadow: 0 5px 22px rgba(20, 60, 42, .05);
+
+    margin-bottom: 20px;
+}
+
+
+.order-header-left {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+
+.order-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf7ef;
+
+    border-radius: 14px;
+
+    font-size: 25px;
+}
+
+
+.order-heading small {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8a9790;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+.order-heading h1 {
+    margin: 0;
+
+    color: #173b2b;
+
+    font-size: 28px;
+    font-weight: 800;
+}
+
+
+.order-heading p {
+    margin: 6px 0 0;
+
+    color: #89958f;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.order-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 14px;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+.order-status::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+.status-pending {
+    color: #bd4a39;
+    background: #fff0ed;
+}
+
+
+.status-preparing {
+    color: #a06b00;
+    background: #fff7df;
+}
+
+
+.status-ready {
+    color: #087443;
+    background: #e8f7ef;
+}
+
+
+.status-completed {
+    color: #087443;
+    background: #dff4e6;
+}
+
+
+.status-cancelled {
+    color: #777;
+    background: #eeeeee;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.order-summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+
+.summary-card {
+    padding: 18px 19px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ebe7;
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 16px rgba(20, 60, 42, .04);
+}
+
+
+.summary-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #89958f;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    text-transform: uppercase;
+}
+
+
+.summary-value {
+    color: #173b2b;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+.summary-value.green {
+    color: #087443;
+}
+
+
+.summary-value small {
+    color: #89958f;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.order-main-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        300px;
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.detail-card {
+    background: #ffffff;
+
+    border: 1px solid #e4ebe7;
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 22px rgba(20, 60, 42, .045);
+
+    overflow: hidden;
+}
+
+
+.detail-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 21px 24px;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+
+.detail-card-header h2 {
+    margin: 0;
+
+    color: #173b2b;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+.detail-card-header p {
+    margin: 5px 0 0;
+
+    color: #8b9690;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ITEMS TABLE
+========================================================= */
+
+.items-table-wrapper {
+    overflow-x: auto;
+}
+
+
+.items-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 600px;
+}
+
+
+.items-table thead {
+    background: #f8faf9;
+}
+
+
+.items-table th {
+    padding: 12px 20px;
+
+    color: #7e8b84;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    text-transform: uppercase;
+
+    text-align: left;
+}
+
+
+.items-table td {
+    padding: 17px 20px;
+
+    border-top: 1px solid #edf1ef;
+
+    color: #536159;
+
+    font-size: 13px;
+}
+
+
+.items-table tbody tr {
+    transition: .15s ease;
+}
+
+
+.items-table tbody tr:hover {
+    background: #fbfdfc;
+}
+
+
+/* PRODUCT */
+
+.product-name {
+    color: #173b2b;
+
+    font-size: 13px;
+    font-weight: 750;
+}
+
+
+.product-number {
+    width: 30px;
+
+    color: #9aa59f;
+
+    font-size: 11px;
+}
+
+
+/* QUANTITY */
+
+.quantity-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 32px;
+
+    padding: 5px 9px;
+
+    background: #f1f6f3;
+
+    color: #40584b;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* PRICE */
+
+.price {
+    color: #526158;
+
+    font-size: 12px;
+}
+
+
+/* SUBTOTAL */
+
+.subtotal {
+    color: #087443 !important;
+
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.items-total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 35px;
+
+    padding: 19px 24px;
+
+    background: #fafcfb;
+
+    border-top: 1px solid #e5ebe8;
+}
+
+
+.items-total span {
+    color: #7e8b84;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.items-total strong {
+    color: #087443;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SIDE PANEL
+========================================================= */
+
+.side-card {
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ebe7;
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 22px rgba(20, 60, 42, .045);
+}
+
+
+.side-card h3 {
+    margin: 0 0 5px;
+
+    color: #173b2b;
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+
+.side-card-description {
+    margin: 0 0 18px;
+
+    color: #8b9690;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   INFO LIST
+========================================================= */
+
+.info-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+
+.info-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 13px;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+
+.info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+
+.info-row span {
+    color: #8b9690;
+
+    font-size: 10px;
+}
+
+
+.info-row strong {
+    color: #31463a;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.action-title {
+    margin: 23px 0 12px;
+
+    color: #173b2b;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+.action-buttons {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.action-button {
+    width: 100%;
+
+    padding: 10px 13px;
+
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    transition: .2s ease;
+}
+
+
+.action-pending {
+    background: #fff0ed;
+    color: #bd4a39;
+}
+
+
+.action-preparing {
+    background: #fff7df;
+    color: #9a6800;
+}
+
+
+.action-ready {
+    background: #e8f7ef;
+    color: #087443;
+}
+
+
+.action-completed {
+    background: #dff4e6;
+    color: #087443;
+}
+
+
+.action-cancelled {
+    background: #f0f0f0;
+    color: #666;
+}
+
+
+.action-button:hover {
+    transform: translateY(-1px);
+
+    filter: brightness(.96);
+}
+
+
+/* =========================================================
+   ORDER FOOTER
+========================================================= */
+
+.order-footer {
+    margin-top: 20px;
+
+    padding: 17px 22px;
+
+    background: #f4faf6;
+
+    border: 1px solid #dceee3;
+
+    border-radius: 13px;
+
+    color: #63736a;
+
+    font-size: 11px;
+}
+
+
+.order-footer strong {
+    color: #087443;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .order-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .order-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .order-detail-page {
+        padding: 20px 14px 40px;
+    }
+
+    .order-header-card {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+    .order-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-heading h1 {
+        font-size: 24px;
+    }
+
+}
+
+</style>
+
+
+<div class="order-detail-page">
+
+
+    <!-- =====================================================
+         BACK
+    ====================================================== -->
+
+    <div class="order-topbar">
+
+        <a
+            href="{% url 'staff:orders' %}"
+            class="back-link"
+        >
+            ← Back to Orders
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         ORDER HEADER
+    ====================================================== -->
+
+    <div class="order-header-card">
+
+        <div class="order-header-left">
+
+            <div class="order-icon">
+                🧾
+            </div>
+
+            <div class="order-heading">
+
+                <small>
+                    Order Details
+                </small>
+
+                <h1>
+                    Order #{{ order.id }}
+                </h1>
+
+                <p>
+                    Received
+                    {{ order.created_at|date:"d M Y, h:i A" }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <span
+                class="
+                    order-status
+                    status-{{ order.status|lower }}
+                "
+            >
+                {{ order.get_status_display }}
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUMMARY
+    ====================================================== -->
+
+    <div class="order-summary-grid">
+
+
+        <!-- TABLE -->
+
+        <div class="summary-card">
+
+            <span class="summary-label">
+                Table
+            </span>
+
+            <div class="summary-value">
+                🪑 {{ order.table_name }}
+            </div>
+
+        </div>
+
+
+        <!-- TIME -->
+
+        <div class="summary-card">
+
+            <span class="summary-label">
+                Order Time
+            </span>
+
+            <div class="summary-value">
+
+                {{ order.created_at|date:"h:i A" }}
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEMS -->
+
+        <div class="summary-card">
+
+            <span class="summary-label">
+                Items
+            </span>
+
+            <div class="summary-value">
+
+                {{ order.items.all|length }}
+
+                <small>
+                    item{{ order.items.all|length|pluralize }}
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div class="summary-card">
+
+            <span class="summary-label">
+                Order Total
+            </span>
+
+            <div class="summary-value green">
+
+                ₹{{ order.total_amount|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <div class="order-main-grid">
+
+
+        <!-- =================================================
+             ORDER ITEMS
+        ================================================== -->
+
+        <div class="detail-card">
+
+            <div class="detail-card-header">
+
+                <div>
+
+                    <h2>
+                        Ordered Items
+                    </h2>
+
+                    <p>
+                        Items requested by table
+                        {{ order.table_name }}
+                    </p>
+
+                </div>
+
+                <strong>
+                    {{ order.items.all|length }}
+                    item{{ order.items.all|length|pluralize }}
+                </strong>
+
+            </div>
+
+
+            <div class="items-table-wrapper">
+
+                <table class="items-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Product</th>
+
+                            <th>Quantity</th>
+
+                            <th>Unit Price</th>
+
+                            <th>Subtotal</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in order.items.all %}
+
+                        <tr>
+
+                            <td class="product-number">
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <td>
+
+                                <span class="product-name">
+
+                                    {{ item.product.name }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="quantity-badge">
+
+                                    {{ item.quantity }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td class="price">
+
+                                ₹{{ item.price|floatformat:2 }}
+
+                            </td>
+
+
+                            <td class="subtotal">
+
+                                ₹{{ item.price|floatformat:2 }}
+
+                                × {{ item.quantity }}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                style="text-align:center;padding:40px;"
+                            >
+
+                                No items found.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- TOTAL -->
+
+            <div class="items-total">
+
+                <span>
+                    ORDER TOTAL
+                </span>
+
+                <strong>
+                    ₹{{ order.total_amount|floatformat:2 }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDE PANEL
+        ================================================== -->
+
+        <div class="side-card">
+
+            <h3>
+                Order Information
+            </h3>
+
+            <p class="side-card-description">
+                Quick information about this order.
+            </p>
+
+
+            <div class="info-list">
+
+
+                <div class="info-row">
+
+                    <span>
+                        Order ID
+                    </span>
+
+                    <strong>
+                        #{{ order.id }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Table
+                    </span>
+
+                    <strong>
+                        {{ order.table_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Date
+                    </span>
+
+                    <strong>
+                        {{ order.created_at|date:"d M Y" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Time
+                    </span>
+
+                    <strong>
+                        {{ order.created_at|date:"h:i A" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong style="color:#087443;">
+                        ₹{{ order.total_amount|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="action-title">
+                Update Order Status
+            </div>
+
+            <div class="action-buttons">
+
+
+                <a
+                    href="?status=pending"
+                    class="action-button action-pending"
+                >
+                    Mark as Pending
+                </a>
+
+
+                <a
+                    href="?status=preparing"
+                    class="action-button action-preparing"
+                >
+                    Start Preparing
+                </a>
+
+
+                <a
+                    href="?status=ready"
+                    class="action-button action-ready"
+                >
+                    Mark as Ready
+                </a>
+
+
+                <a
+                    href="?status=completed"
+                    class="action-button action-completed"
+                >
+                    ✓ Complete Order
+                </a>
+
+
+                <a
+                    href="?status=cancelled"
+                    class="action-button action-cancelled"
+                >
+                    Cancel Order
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <div class="order-footer">
+
+        🌿
+
+        Order
+
+        <strong>#{{ order.id }}</strong>
+
+        from table
+
+        <strong>{{ order.table_name }}</strong>
+
+        ·
+
+        {{ order.items.all|length }}
+        item{{ order.items.all|length|pluralize }}
+
+        ·
+
+        Total
+
+        <strong>
+            ₹{{ order.total_amount|floatformat:2 }}
+        </strong>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

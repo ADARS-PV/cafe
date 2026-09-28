@@ -1,0 +1,924 @@
+{% extends "staff/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   TGARDEN DAILY REPORT - PROFESSIONAL UI
+========================================================= */
+
+.daily-report {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 34px 50px;
+    color: #173b2b;
+}
+
+/* ---------- HEADER ---------- */
+
+.daily-report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.daily-report-title small {
+    display: block;
+    margin-bottom: 7px;
+    color: #0a7744;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.daily-report-title h1 {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: #153b2b;
+}
+
+.daily-report-title p {
+    margin: 7px 0 0;
+    color: #7a8981;
+    font-size: 14px;
+}
+
+.report-date-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 17px;
+
+    background: #ffffff;
+    border: 1px solid #e5ece8;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(21, 59, 43, 0.05);
+}
+
+.report-date-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf7ef;
+    border-radius: 10px;
+
+    font-size: 19px;
+}
+
+.report-date-box span {
+    display: block;
+    color: #8a9891;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .8px;
+}
+
+.report-date-box strong {
+    display: block;
+    margin-top: 3px;
+    color: #173b2b;
+    font-size: 13px;
+}
+
+
+/* ---------- STATISTICS ---------- */
+
+.report-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.report-stat {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    min-height: 115px;
+    padding: 20px;
+
+    background: #ffffff;
+    border: 1px solid #e5ece8;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 18px rgba(21, 59, 43, .045);
+
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.report-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 25px rgba(21, 59, 43, .08);
+}
+
+.report-stat-icon {
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 21px;
+}
+
+.icon-orders {
+    background: #eef5ff;
+}
+
+.icon-money {
+    background: #e8f7ef;
+    color: #087443;
+}
+
+.icon-items {
+    background: #fff5e5;
+}
+
+.icon-average {
+    background: #f1edff;
+}
+
+.report-stat-info {
+    min-width: 0;
+}
+
+.report-stat-info label {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #829088;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.report-stat-info strong {
+    display: block;
+
+    color: #173b2b;
+    font-size: 25px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.report-stat-info small {
+    display: block;
+    margin-top: 6px;
+
+    color: #a0aaa5;
+    font-size: 10px;
+}
+
+
+/* ---------- MAIN REPORT ---------- */
+
+.orders-report-card {
+    background: #ffffff;
+
+    border: 1px solid #e4ebe7;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(21, 59, 43, .045);
+
+    overflow: hidden;
+}
+
+.orders-report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+.orders-report-header h2 {
+    margin: 0;
+
+    color: #173b2b;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.orders-report-header p {
+    margin: 5px 0 0;
+
+    color: #8a9690;
+    font-size: 12px;
+}
+
+.orders-count {
+    padding: 7px 12px;
+
+    background: #edf8f1;
+    color: #087443;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* ---------- TABLE ---------- */
+
+.orders-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+.orders-table thead {
+    background: #f8faf9;
+}
+
+.orders-table th {
+    padding: 13px 20px;
+
+    text-align: left;
+
+    color: #7c8983;
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.orders-table td {
+    padding: 17px 20px;
+
+    border-top: 1px solid #eef2ef;
+
+    color: #4e5e55;
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+.orders-table tbody tr {
+    transition: background .15s ease;
+}
+
+.orders-table tbody tr:hover {
+    background: #fbfdfc;
+}
+
+
+/* ORDER */
+
+.order-id {
+    color: #087443;
+    text-decoration: none;
+
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.order-id:hover {
+    text-decoration: underline;
+}
+
+
+/* TABLE */
+
+.table-number {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 6px 9px;
+
+    background: #f2f7f4;
+    border-radius: 7px;
+
+    color: #385247;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* TIME */
+
+.order-time {
+    color: #63736a;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ITEMS */
+
+.item-count {
+    color: #526259;
+    font-weight: 600;
+}
+
+
+/* STATUS */
+
+.order-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.order-status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.status-pending {
+    color: #c23b3b;
+    background: #fff0f0;
+}
+
+.status-preparing {
+    color: #a16c00;
+    background: #fff7df;
+}
+
+.status-ready {
+    color: #087443;
+    background: #eaf7ef;
+}
+
+.status-completed {
+    color: #087443;
+    background: #dff5e7;
+}
+
+.status-cancelled {
+    color: #777;
+    background: #eeeeee;
+}
+
+
+/* AMOUNT */
+
+.order-amount {
+    text-align: right;
+
+    color: #087443 !important;
+
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+
+/* ---------- EMPTY STATE ---------- */
+
+.report-empty {
+    text-align: center;
+    padding: 65px 20px;
+}
+
+.report-empty-icon {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    background: #edf8f1;
+    border-radius: 50%;
+
+    font-size: 26px;
+}
+
+.report-empty h3 {
+    margin: 0;
+
+    color: #173b2b;
+    font-size: 17px;
+}
+
+.report-empty p {
+    margin: 7px 0 0;
+
+    color: #8b9891;
+    font-size: 12px;
+}
+
+
+/* ---------- COLLECTION FOOTER ---------- */
+
+.collection-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 20px;
+    padding: 20px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #075d36,
+        #087443
+    );
+
+    border-radius: 15px;
+
+    color: #ffffff;
+
+    box-shadow: 0 8px 22px rgba(8, 116, 67, .16);
+}
+
+.collection-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.collection-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.13);
+    border-radius: 11px;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.collection-info strong {
+    display: block;
+    font-size: 14px;
+}
+
+.collection-info small {
+    display: block;
+    margin-top: 4px;
+
+    color: rgba(255,255,255,.68);
+
+    font-size: 10px;
+}
+
+.collection-total {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+.report-bottom {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 18px;
+
+    color: #9aa69f;
+    font-size: 10px;
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 1100px) {
+
+    .report-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .daily-report {
+        padding: 20px 15px 40px;
+    }
+
+    .daily-report-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .report-date-box {
+        width: 100%;
+    }
+
+    .report-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .orders-report-header {
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column;
+    }
+
+    .collection-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .report-bottom {
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+</style>
+
+
+<div class="daily-report">
+
+    <!-- HEADER -->
+
+    <div class="daily-report-header">
+
+        <div class="daily-report-title">
+
+            <small>Sales Report</small>
+
+            <h1>Daily Report</h1>
+
+            <p>
+                Overview of today's orders, sales and collection
+            </p>
+
+        </div>
+
+
+        <div class="report-date-box">
+
+            <div class="report-date-icon">
+                📅
+            </div>
+
+            <div>
+
+                <span>REPORT DATE</span>
+
+                <strong>
+                    {{ report_date|date:"d M Y" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="report-stat-grid">
+
+        <!-- TOTAL ORDERS -->
+
+        <div class="report-stat">
+
+            <div class="report-stat-icon icon-orders">
+                📋
+            </div>
+
+            <div class="report-stat-info">
+
+                <label>Total Orders</label>
+
+                <strong>
+                    {{ total_orders }}
+                </strong>
+
+                <small>
+                    Orders received today
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- COLLECTION -->
+
+        <div class="report-stat">
+
+            <div class="report-stat-icon icon-money">
+                ₹
+            </div>
+
+            <div class="report-stat-info">
+
+                <label>Today's Collection</label>
+
+                <strong>
+                    ₹{{ total_collection|floatformat:2 }}
+                </strong>
+
+                <small>
+                    Total sales today
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEMS -->
+
+        <div class="report-stat">
+
+            <div class="report-stat-icon icon-items">
+                🍽️
+            </div>
+
+            <div class="report-stat-info">
+
+                <label>Items Sold</label>
+
+                <strong>
+                    {{ total_items }}
+                </strong>
+
+                <small>
+                    Total quantity sold
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVERAGE -->
+
+        <div class="report-stat">
+
+            <div class="report-stat-icon icon-average">
+                📊
+            </div>
+
+            <div class="report-stat-info">
+
+                <label>Average Order</label>
+
+                <strong>
+                    ₹{{ average_order|floatformat:2 }}
+                </strong>
+
+                <small>
+                    Average order value
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ORDERS -->
+
+    <div class="orders-report-card">
+
+        <div class="orders-report-header">
+
+            <div>
+
+                <h2>Today's Orders</h2>
+
+                <p>
+                    Complete list of orders received today
+                </p>
+
+            </div>
+
+            <div class="orders-count">
+                {{ total_orders }} Order{{ total_orders|pluralize }}
+            </div>
+
+        </div>
+
+
+        {% if orders %}
+
+        <div class="orders-table-container">
+
+            <table class="orders-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order</th>
+
+                        <th>Table</th>
+
+                        <th>Time</th>
+
+                        <th>Items</th>
+
+                        <th>Status</th>
+
+                        <th style="text-align:right;">
+                            Amount
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for order in orders %}
+
+                    <tr>
+
+                        <td>
+
+                            <a
+                                href="{% url 'staff:order_detail' order.id %}"
+                                class="order-id"
+                            >
+                                #{{ order.id }}
+                            </a>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="table-number">
+                                🍽️ {{ order.table_name }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="order-time">
+                                {{ order.created_at|date:"h:i A" }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="item-count">
+
+                                {{ order.items.all|length }}
+
+                                item{{ order.items.all|length|pluralize }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="
+                                    order-status
+                                    status-{{ order.status|lower }}
+                                "
+                            >
+                                {{ order.get_status_display }}
+                            </span>
+
+                        </td>
+
+
+                        <td class="order-amount">
+
+                            ₹{{ order.total_amount|floatformat:2 }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="report-empty">
+
+            <div class="report-empty-icon">
+                📋
+            </div>
+
+            <h3>No orders today</h3>
+
+            <p>
+                Orders received today will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- COLLECTION -->
+
+    <div class="collection-footer">
+
+        <div class="collection-info">
+
+            <div class="collection-icon">
+                ₹
+            </div>
+
+            <div>
+
+                <strong>
+                    Today's Total Collection
+                </strong>
+
+                <small>
+                    Based on {{ total_orders }}
+                    order{{ total_orders|pluralize }}
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="collection-total">
+
+            ₹{{ total_collection|floatformat:2 }}
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="report-bottom">
+
+        <span>
+            🌱 Tgarden Café
+        </span>
+
+        <span>
+            Daily sales report ·
+            {{ report_date|date:"d M Y" }}
+        </span>
+
+    </div>
+
+</div>
+
+{% endblock %}

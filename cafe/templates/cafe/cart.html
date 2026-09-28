@@ -1,0 +1,194 @@
+{% extends "cafe/base.html" %}
+
+{% block title %}
+Your Cart | Tgarden
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container cart-container">
+
+    <div class="page-title">
+
+        <span>
+            YOUR ORDER
+        </span>
+
+        <h1>
+            Your Cart 🛒
+        </h1>
+
+    </div>
+
+
+    {% if cart_items %}
+
+
+    <div class="row g-4">
+
+
+        <div class="col-lg-8">
+
+
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+
+                <img
+                    src="{{ item.product.image.url }}"
+                    alt="{{ item.product.name }}"
+                >
+
+
+                <div class="cart-product">
+
+                    <h3>
+                        {{ item.product.name }}
+                    </h3>
+
+                    <p>
+                        ₹{{ item.product.price }}
+                    </p>
+
+                </div>
+
+
+                <div class="quantity-control">
+
+                    <a
+                        href="{% url 'decrease_cart' item.product.id %}"
+                    >
+                        −
+                    </a>
+
+                    <span>
+                        {{ item.quantity }}
+                    </span>
+
+                    <a
+                        href="{% url 'increase_cart' item.product.id %}"
+                    >
+                        +
+                    </a>
+
+                </div>
+
+
+                <div class="item-total">
+
+                    ₹{{ item.subtotal }}
+
+                </div>
+
+
+                <a
+                    href="{% url 'remove_from_cart' item.product.id %}"
+                    class="remove-item"
+                >
+                    <i class="bi bi-trash"></i>
+                </a>
+
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <div class="col-lg-4">
+
+            <div class="order-summary">
+
+                <h3>
+                    Order Summary
+                </h3>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Items
+                    </span>
+
+                    <span>
+                        {{ cart_items|length }}
+                    </span>
+
+                </div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹{{ total }}
+                    </strong>
+
+                </div>
+
+
+                <a
+                    href="{% url 'checkout' %}"
+                    class="checkout-button"
+                >
+
+                    Continue to Order
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="continue-shopping"
+                >
+                    ← Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    {% else %}
+
+    <div class="empty-cart">
+
+        <div class="empty-cart-icon">
+            🛒
+        </div>
+
+        <h2>
+            Your cart is empty
+        </h2>
+
+        <p>
+            Add something delicious from our menu.
+        </p>
+
+        <a
+            href="{% url 'home' %}"
+            class="btn btn-green"
+        >
+            Browse Menu
+        </a>
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,251 @@
+{% extends "staff/base.html" %}
+
+{% block title %}
+Dashboard | Tgarden
+{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="welcome-banner">
+
+    <div>
+        <span>TODAY</span>
+
+        <h1>
+            Good day, {{ request.user.username }} 🌿
+        </h1>
+
+        <p>
+            Here's what's happening at Tgarden today.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- STAT CARDS -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon green">
+            🧾
+        </div>
+
+        <div>
+            <span>Today's Orders</span>
+
+            <strong>
+                {{ total_orders }}
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon orange">
+            ⏳
+        </div>
+
+        <div>
+            <span>Pending</span>
+
+            <strong>
+                {{ pending_orders }}
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon blue">
+            🍳
+        </div>
+
+        <div>
+            <span>Preparing</span>
+
+            <strong>
+                {{ preparing_orders }}
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon purple">
+            ✓
+        </div>
+
+        <div>
+            <span>Completed</span>
+
+            <strong>
+                {{ completed_orders }}
+            </strong>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- COLLECTION -->
+
+<div class="collection-card">
+
+    <div>
+
+        <span>
+            TODAY'S COLLECTION
+        </span>
+
+        <h2>
+            ₹{{ collection }}
+        </h2>
+
+    </div>
+
+    <div class="collection-icon">
+        ₹
+    </div>
+
+</div>
+
+
+<!-- ORDERS -->
+
+<div class="section-header">
+
+    <div>
+
+        <h2>
+            Today's Orders
+        </h2>
+
+        <p>
+            Latest orders received from customers
+        </p>
+
+    </div>
+
+    <a
+        href="{% url 'staff:orders' %}"
+        class="view-button"
+    >
+        View All →
+    </a>
+
+</div>
+
+
+<div class="orders-table">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Order
+                </th>
+
+                <th>
+                    Table
+                </th>
+
+                <th>
+                    Amount
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+                <th>
+                    Time
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for order in recent_orders %}
+
+            <tr>
+
+                <td>
+
+                    <a
+                        href="{% url 'staff:order_detail' order.id %}"
+                    >
+                        #{{ order.id }}
+                    </a>
+
+                </td>
+
+                <td>
+
+                    <span class="table-badge">
+                        {{ order.table_name }}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    ₹{{ order.total_amount }}
+
+                </td>
+
+                <td>
+
+                    <span class="status {{ order.status|lower }}">
+                        {{ order.status }}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    {{ order.created_at|date:"h:i A" }}
+
+                </td>
+
+            </tr>
+
+        {% empty %}
+
+            <tr>
+
+                <td colspan="5">
+
+                    No orders received today.
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

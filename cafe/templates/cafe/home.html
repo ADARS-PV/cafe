@@ -1,0 +1,425 @@
+{% extends "cafe/base.html" %}
+
+{% load static %}
+
+
+{% block title %}
+Tgarden Café | Menu
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                🌿 Welcome to Tgarden
+            </span>
+
+            <h1>
+                Freshly made,
+                <span>happily served.</span>
+            </h1>
+
+            <p>
+                Delicious food, refreshing drinks and
+                good vibes — all in one place.
+            </p>
+
+            <a
+                href="#menu"
+                class="btn btn-green"
+            >
+                Explore Menu
+                <i class="bi bi-arrow-down"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- SEARCH -->
+
+<section class="search-section">
+
+    <div class="container">
+
+        <form
+            method="GET"
+            action="{% url 'home' %}"
+            class="search-box"
+        >
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="text"
+                name="q"
+                value="{{ search_query }}"
+                placeholder="Search for coffee, burger, juice..."
+            >
+
+            {% if selected_category %}
+
+            <input
+                type="hidden"
+                name="category"
+                value="{{ selected_category }}"
+            >
+
+            {% endif %}
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- CATEGORIES -->
+
+<section class="categories-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>
+                EXPLORE
+            </span>
+
+            <h2>
+                What are you craving?
+            </h2>
+
+            <p>
+                Pick a category and discover your favourites.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- HOT -->
+
+            <div class="col-12 col-md-4">
+
+                <a
+                    href="{% url 'home' %}?category=HOT"
+                    class="category-card"
+                >
+
+                    <img
+                        src="{% static 'cafe/images/hot.jpg' %}"
+                        alt="Hot drinks"
+                    >
+
+                    <div class="category-overlay">
+
+                        <span>
+                            🔥
+                        </span>
+
+                        <h3>
+                            Hot
+                        </h3>
+
+                        <p>
+                            Coffee, tea & more
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- COOL -->
+
+            <div class="col-12 col-md-4">
+
+                <a
+                    href="{% url 'home' %}?category=COOL"
+                    class="category-card"
+                >
+
+                    <img
+                        src="{% static 'cafe/images/cool.jpg' %}"
+                        alt="Cool drinks"
+                    >
+
+                    <div class="category-overlay">
+
+                        <span>
+                            🧊
+                        </span>
+
+                        <h3>
+                            Cool
+                        </h3>
+
+                        <p>
+                            Juices, mojitos & shakes
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- SNACKS -->
+
+            <div class="col-12 col-md-4">
+checkout/
+                <a
+                    href="{% url 'home' %}?category=SNACKS"
+                    class="category-card"
+                >
+
+                    <img
+                        src="{% static 'cafe/images/snacks.jpg' %}"
+                        alt="Snacks"
+                    >
+
+                    <div class="category-overlay">
+
+                        <span>
+                            🍟
+                        </span>
+
+                        <h3>
+                            Snacks
+                        </h3>
+
+                        <p>
+                            Burgers, fries & bites
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- MENU -->
+
+<section
+    class="menu-section"
+    id="menu"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <span>
+                OUR MENU
+            </span>
+
+            {% if search_query %}
+
+                <h2>
+                    Search results for "{{ search_query }}"
+                </h2>
+
+            {% elif selected_category == "HOT" %}
+
+                <h2>
+                    🔥 Hot Menu
+                </h2>
+
+            {% elif selected_category == "COOL" %}
+
+                <h2>
+                    🧊 Cool Menu
+                </h2>
+
+            {% elif selected_category == "SNACKS" %}
+
+                <h2>
+                    🍟 Snacks Menu
+                </h2>
+
+            {% else %}
+
+                <h2>
+                    All our favourites
+                </h2>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            {% for product in products %}
+
+
+            <div class="col-12 col-sm-6 col-lg-4">
+
+
+                <div class="product-card">
+
+
+                    <div class="product-image">
+
+                        {% if product.image %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                        {% else %}
+
+                        <div class="no-image">
+                            🌿
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="product-body">
+
+
+                        <div class="product-category">
+
+                            {% if product.category == "HOT" %}
+
+                                🔥 HOT
+
+                            {% elif product.category == "COOL" %}
+
+                                🧊 COOL
+
+                            {% else %}
+
+                                🍟 SNACKS
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <h3>
+                            {{ product.name }}
+                        </h3>
+
+
+                        <p>
+                            {{ product.description }}
+                        </p>
+
+
+
+                        <div class="product-footer">
+
+
+                            <div class="price">
+
+                                ₹{{ product.price }}
+
+                            </div>
+
+
+
+                            <a
+                                href="{% url 'add_to_cart' product.id %}"
+                                class="add-button"
+                            >
+
+                                <i class="bi bi-plus-lg"></i>
+
+                                Add
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% empty %}
+
+
+            <div class="empty-menu">
+
+                <div>
+                    🔍
+                </div>
+
+                <h3>
+                    No products found
+                </h3>
+
+                <p>
+                    Try searching for something else.
+                </p>
+
+                <a
+                    href="{% url 'home' %}"
+                    class="btn btn-green"
+                >
+                    View All Menu
+                </a>
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+{% endblock %}

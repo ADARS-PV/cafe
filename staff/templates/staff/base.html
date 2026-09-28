@@ -1,0 +1,193 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {% block title %}
+        Tgarden Staff
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'staff/css/staff.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="staff-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <span>
+                🌿
+            </span>
+
+            <strong>
+                Tgarden
+            </strong>
+
+        </div>
+
+
+        <div class="sidebar-label">
+            MANAGEMENT
+        </div>
+
+
+        <a
+            href="{% url 'staff:dashboard' %}"
+            class="sidebar-link"
+        >
+            📊
+            <span>Dashboard</span>
+        </a>
+
+
+        <a
+            href="{% url 'staff:orders' %}"
+            class="sidebar-link"
+        >
+            🧾
+            <span>Orders</span>
+        </a>
+
+
+        <a
+            href="{% url 'staff:products' %}"
+            class="sidebar-link"
+        >
+            🍔
+            <span>Products</span>
+        </a>
+
+
+        <a
+            href="{% url 'staff:daily_report' %}"
+            class="sidebar-link"
+        >
+            📈
+            <span>Daily Report</span>
+        </a>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="staff-user">
+
+                <div class="user-avatar">
+
+                    {{ request.user.username|first|upper }}
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ request.user.username }}
+                    </strong>
+
+                    <small>
+                        Staff
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="{% url 'staff:logout' %}"
+                class="logout-link"
+            >
+                ↪ Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="staff-main">
+
+
+        <header class="staff-header">
+
+            <div>
+
+                <h2>
+
+                    {% block page_title %}
+                    Dashboard
+                    {% endblock %}
+
+                </h2>
+
+                <p>
+                    Tgarden Café Management
+                </p>
+
+            </div>
+
+
+            <div class="header-date">
+
+                📅 {% now "d M Y" %}
+
+            </div>
+
+        </header>
+
+
+        <div class="staff-content">
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message-success">
+
+                        ✓ {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+{% extends "cafe/base.html" %}
+
+{% block title %}
+Checkout | Tgarden
+{% endblock %}
+
+
+{% block content %}
+
+<section class="checkout-page">
+
+    <div class="container">
+
+        <div class="checkout-header">
+
+            <span class="checkout-label">
+                FINAL STEP
+            </span>
+
+            <h1>
+                Complete Your Order 🍃
+            </h1>
+
+            <p>
+                Select your table and confirm your order.
+            </p>
+
+        </div>
+
+
+        <div class="checkout-layout">
+
+
+            <!-- ORDER DETAILS -->
+
+            <div class="checkout-card">
+
+                <div class="checkout-card-header">
+
+                    <h2>
+                        Your Order
+                    </h2>
+
+                    <span>
+                        {{ cart_items|length }} items
+                    </span>
+
+                </div>
+
+
+                {% for item in cart_items %}
+
+                <div class="checkout-item">
+
+                    <div class="checkout-item-image">
+
+                        {% if item.product.image %}
+
+                            <img
+                                src="{{ item.product.image.url }}"
+                                alt="{{ item.product.name }}"
+                            >
+
+                        {% else %}
+
+                            🌿
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="checkout-item-info">
+
+                        <h3>
+                            {{ item.product.name }}
+                        </h3>
+
+                        <p>
+                            ₹{{ item.product.price }} × {{ item.quantity }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="checkout-item-price">
+
+                        ₹{{ item.subtotal }}
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+
+                <div class="checkout-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹{{ total }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TABLE SELECTION -->
+
+            <div class="checkout-card table-card">
+
+                <div class="table-icon">
+                    🪑
+                </div>
+
+                <h2>
+                    Where are you sitting?
+                </h2>
+
+                <p>
+                    Select your table number so our team
+                    can bring your order to you.
+                </p>
+
+
+                <form
+                    method="POST"
+                    action="{% url 'checkout' %}"
+                >
+
+                    {% csrf_token %}
+
+
+                    <label for="{{ form.table_name.id_for_label }}">
+                        Table Number
+                    </label>
+
+
+                    {{ form.table_name }}
+
+
+                    {% if form.table_name.errors %}
+
+                        <div class="form-error">
+
+                            {{ form.table_name.errors }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <button
+                        type="submit"
+                        class="place-order-button"
+                    >
+
+                        <span>
+                            🍃
+                        </span>
+
+                        Place Order
+
+                    </button>
+
+                </form>
+
+
+                <a
+                    href="{% url 'cart' %}"
+                    class="back-cart"
+                >
+                    ← Back to Cart
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

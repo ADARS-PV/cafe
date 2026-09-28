@@ -1,0 +1,235 @@
+{% extends "staff/base.html" %}
+
+{% block title %}
+Products | Tgarden
+{% endblock %}
+
+{% block page_title %}
+Products
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="page-toolbar">
+
+    <div>
+
+        <h1>
+            Products
+        </h1>
+
+        <p>
+            Manage your Tgarden menu
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'staff:add_product' %}"
+        class="primary-button"
+    >
+        + Add Product
+    </a>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div class="search-card">
+
+    <form method="GET">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search products..."
+        >
+
+        <select name="category">
+
+            <option value="">
+                All Categories
+            </option>
+
+            <option
+                value="HOT"
+                {% if category == "HOT" %}selected{% endif %}
+            >
+                🔥 Hot
+            </option>
+
+            <option
+                value="COOL"
+                {% if category == "COOL" %}selected{% endif %}
+            >
+                🧊 Cool
+            </option>
+
+            <option
+                value="SNACKS"
+                {% if category == "SNACKS" %}selected{% endif %}
+            >
+                🍟 Snacks
+            </option>
+
+        </select>
+
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- PRODUCT GRID -->
+
+<div class="product-grid">
+
+
+{% for product in products %}
+
+
+    <div class="product-card">
+
+
+        <div class="product-image">
+
+            {% if product.image %}
+
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                >
+
+            {% else %}
+
+                <div class="no-image">
+                    🍽️
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="product-info">
+
+            <div class="product-category">
+
+                {{ product.category }}
+
+            </div>
+
+
+            <h3>
+
+                {{ product.name }}
+
+            </h3>
+
+
+            <p>
+
+                {{ product.description|truncatewords:12 }}
+
+            </p>
+
+
+            <div class="product-bottom">
+
+                <strong>
+
+                    ₹{{ product.price }}
+
+                </strong>
+
+
+                {% if product.is_available %}
+
+                    <span class="available">
+                        Available
+                    </span>
+
+                {% else %}
+
+                    <span class="unavailable">
+                        Unavailable
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="product-actions">
+
+                <a
+                    href="{% url 'staff:edit_product' product.id %}"
+                >
+                    Edit
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="{% url 'staff:delete_product' product.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        onclick="return confirm('Delete this product?')"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% empty %}
+
+    <div class="empty-state">
+
+        <div>
+            🍽️
+        </div>
+
+        <h2>
+            No products found
+        </h2>
+
+        <p>
+            Add your first Tgarden menu item.
+        </p>
+
+        <a
+            href="{% url 'staff:add_product' %}"
+            class="primary-button"
+        >
+            + Add Product
+        </a>
+
+    </div>
+
+{% endfor %}
+
+
+</div>
+
+
+{% endblock %}

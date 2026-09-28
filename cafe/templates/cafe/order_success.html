@@ -1,0 +1,146 @@
+{% extends "cafe/base.html" %}
+
+{% block title %}
+Order Received | Tgarden
+{% endblock %}
+
+
+{% block content %}
+
+<section class="success-page">
+
+    <div class="success-card">
+
+        <!-- Animated check -->
+
+        <div class="success-animation">
+
+            <div class="success-circle">
+
+                <span>
+                    ✓
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="success-leaf">
+            🍃
+        </div>
+
+
+        <span class="success-label">
+            ORDER RECEIVED
+        </span>
+
+
+        <h1>
+            Thank You!
+        </h1>
+
+
+        <p class="success-message">
+
+            Your order has been successfully received.
+
+            <br>
+
+            Our team is preparing your food.
+
+        </p>
+
+
+        <!-- Order number -->
+
+        <div class="order-number">
+
+            <span>
+                Order Number
+            </span>
+
+            <strong>
+                #{{ order.id }}
+            </strong>
+
+        </div>
+
+
+        <!-- Table -->
+
+        <div class="table-info">
+
+            <div>
+
+                <span>
+                    TABLE
+                </span>
+
+                <strong>
+                    {{ order.table_name }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    STATUS
+                </span>
+
+                <strong>
+                    {{ order.status }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total -->
+
+        <div class="success-total">
+
+            <span>
+                Total Amount
+            </span>
+
+            <strong>
+                ₹{{ order.total_amount }}
+            </strong>
+
+        </div>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="success-home-button"
+        >
+
+            ← Back to Menu
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- Confetti -->
+
+<div class="confetti-container">
+
+    <span>🍃</span>
+    <span>🌿</span>
+    <span>✨</span>
+    <span>🍃</span>
+    <span>✨</span>
+    <span>🌿</span>
+    <span>🍃</span>
+    <span>✨</span>
+
+</div>
+
+{% endblock %}
