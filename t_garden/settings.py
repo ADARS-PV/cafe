@@ -24,11 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-dy19mp^90egn5q)5sl#y7-rwd4n=d2_xnkaiz^+66#0^sk-3-c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    "cafe.pythonanywhere.com",
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -119,7 +117,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_URL = 'static/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
