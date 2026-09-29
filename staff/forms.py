@@ -28,14 +28,41 @@ class StaffLoginForm(AuthenticationForm):
 class ProductForm(forms.ModelForm):
 
     class Meta:
-
         model = Product
 
         fields = [
             "name",
+            "category",
             "description",
             "price",
             "image",
-            "category",
             "is_available",
         ]
+
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "placeholder": "Product name"
+                }
+            ),
+
+            "category": forms.Select(),
+
+            "description": forms.Textarea(
+                attrs={
+                    "placeholder": "Product description",
+                    "rows": 4,
+                }
+            ),
+
+            "price": forms.NumberInput(
+                attrs={
+                    "placeholder": "0.00",
+                    "step": "0.01",
+                }
+            ),
+
+            "image": forms.ClearableFileInput(),
+
+            "is_available": forms.CheckboxInput(),
+        }

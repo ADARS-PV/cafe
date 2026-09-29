@@ -1,4 +1,6 @@
 from decimal import Decimal
+from django import forms
+from cafe.models import Product
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -180,7 +182,7 @@ def orders(request):
 # ORDER DETAIL
 # ============================================================
 
-@login_required(login_url="staff:login")
+@login_required
 def order_detail(request, order_id):
 
     order = get_object_or_404(
@@ -190,18 +192,35 @@ def order_detail(request, order_id):
         id=order_id
     )
 
+    # -----------------------------------------
+    # UPDATE ORDER STATUS
+    # -----------------------------------------
+
     if request.method == "POST":
 
-        status = request.POST.get("status")
+        new_status = request.POST.get("status")
 
-        if status:
-            order.status = status
+        allowed_statuses = [
+            "pending",
+            "preparing",
+            "ready",
+            "completed",
+            "cancelled",
+        ]
+
+        if new_status in allowed_statuses:
+
+            order.status = new_status
             order.save(update_fields=["status"])
 
         return redirect(
             "staff:order_detail",
             order_id=order.id
         )
+
+    # -----------------------------------------
+    # SHOW ORDER
+    # -----------------------------------------
 
     return render(
         request,
@@ -210,7 +229,6 @@ def order_detail(request, order_id):
             "order": order,
         }
     )
-
 
 # ============================================================
 # UPDATE ORDER STATUS
@@ -293,7 +311,7 @@ def products(request):
 # ADD PRODUCT
 # ============================================================
 
-@staff_required
+@login_required
 def add_product(request):
 
     if request.method == "POST":
@@ -304,20 +322,11 @@ def add_product(request):
         )
 
         if form.is_valid():
-
             form.save()
 
-            messages.success(
-                request,
-                "Product added successfully."
-            )
-
-            return redirect(
-                "staff:products"
-            )
+            return redirect("staff:products")
 
     else:
-
         form = ProductForm()
 
     return render(
@@ -325,16 +334,12 @@ def add_product(request):
         "staff/product_form.html",
         {
             "form": form,
-            "title": "Add Product",
+            "page_title": "Add Product",
         }
     )
 
 
-# ============================================================
-# EDIT PRODUCT
-# ============================================================
-
-@staff_required
+@login_required
 def edit_product(request, product_id):
 
     product = get_object_or_404(
@@ -351,17 +356,9 @@ def edit_product(request, product_id):
         )
 
         if form.is_valid():
-
             form.save()
 
-            messages.success(
-                request,
-                "Product updated successfully."
-            )
-
-            return redirect(
-                "staff:products"
-            )
+            return redirect("staff:products")
 
     else:
 
@@ -375,10 +372,9 @@ def edit_product(request, product_id):
         {
             "form": form,
             "product": product,
-            "title": "Edit Product",
+            "page_title": "Edit Product",
         }
     )
-
 
 # ============================================================
 # DELETE PRODUCT

@@ -1,5 +1,5 @@
 from decimal import Decimal
-
+from django.http import JsonResponse
 from django.shortcuts import (
     render,
     redirect,
@@ -15,44 +15,19 @@ from .forms import CheckoutForm
 
 
 def home(request):
-    return render(request, "cafe/home.html")
 
-def home(request):
-
-    search_query = request.GET.get(
-        "q",
-        ""
-    ).strip()
-
-    category = request.GET.get(
-        "category",
-        ""
-    ).upper()
-
+    # Get all available products
     products = Product.objects.filter(
         is_available=True
-    )
+    ).order_by("name")
 
-    # Search
-    if search_query:
-
-        products = products.filter(
-            Q(name__icontains=search_query) |
-            Q(description__icontains=search_query)
-        )
-
-    # Category filter
-    if category in ["HOT", "COOL", "SNACKS"]:
-
-        products = products.filter(
-            category=category
-        )
-
+    # Get cart from session
     cart = request.session.get(
         "cart",
         {}
     )
 
+    # Calculate total items in cart
     cart_count = sum(
         cart.values()
     )
@@ -63,11 +38,8 @@ def home(request):
         {
             "products": products,
             "cart_count": cart_count,
-            "search_query": search_query,
-            "selected_category": category,
         }
     )
-
 def add_to_cart(request, product_id):
 
     product = get_object_or_404(
@@ -78,23 +50,34 @@ def add_to_cart(request, product_id):
 
     cart = request.session.get("cart", {})
 
-    product_id = str(product_id)
+    product_id_str = str(product.id)
 
-    if product_id in cart:
-        cart[product_id] += 1
-    else:
-        cart[product_id] = 1
+    # Add/increase quantity
+    cart[product_id_str] = cart.get(product_id_str, 0) + 1
 
     request.session["cart"] = cart
     request.session.modified = True
 
+    # Calculate total cart quantity
+    cart_count = sum(cart.values())
+
+    # AJAX request
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+
+        return JsonResponse({
+            "success": True,
+            "message": f"{product.name} added to cart",
+            "product_name": product.name,
+            "cart_count": cart_count,
+        })
+
+    # Normal request fallback
     messages.success(
         request,
-        f"{product.name} added to your cart!"
+        f"{product.name} added to cart."
     )
 
     return redirect("home")
-
 
 def cart(request):
 
