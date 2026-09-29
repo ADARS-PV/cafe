@@ -7,110 +7,421 @@ Checkout | Tgarden
 
 {% block content %}
 
+<style>
+
+/* =====================================================
+   CHECKOUT PAGE
+===================================================== */
+
+.checkout-page {
+    min-height: calc(100vh - 80px);
+    padding: 70px 20px 100px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(22, 163, 74, 0.08),
+            transparent 35%
+        ),
+        #f7faf8;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.checkout-page .container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.checkout-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 50px;
+
+    background: #e8f7ee;
+    color: #087443;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    margin-bottom: 18px;
+}
+
+.checkout-header h1 {
+    margin: 0;
+
+    color: #123c2a;
+
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+}
+
+.checkout-header p {
+    margin: 14px 0 0;
+
+    color: #708077;
+
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   CHECKOUT CARD
+===================================================== */
+
+.checkout-layout {
+    display: flex;
+    justify-content: center;
+}
+
+.checkout-card {
+    width: 100%;
+    max-width: 700px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ece7;
+
+    border-radius: 24px;
+
+    padding: 42px;
+
+    box-shadow:
+        0 20px 50px rgba(16, 62, 42, 0.08);
+}
+
+
+/* =====================================================
+   TABLE ICON
+===================================================== */
+
+.table-icon {
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background: #eaf8ef;
+
+    font-size: 32px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(21, 128, 61, 0.08);
+}
+
+
+/* =====================================================
+   CARD HEADING
+===================================================== */
+
+.table-card {
+    text-align: center;
+}
+
+.table-card h2 {
+    margin: 0;
+
+    color: #123c2a;
+
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.table-card > p {
+    max-width: 500px;
+
+    margin: 12px auto 30px;
+
+    color: #718078;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.table-card form {
+    text-align: left;
+}
+
+.table-card label {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #183d2d;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   TABLE SELECT
+===================================================== */
+
+.table-card select,
+.table-card input {
+    width: 100%;
+
+    height: 56px;
+
+    padding: 0 18px;
+
+    border: 1px solid #dce7e0;
+
+    border-radius: 14px;
+
+    background: #fbfdfc;
+
+    color: #183d2d;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.table-card select:hover,
+.table-card input:hover {
+    border-color: #9ac9ad;
+}
+
+.table-card select:focus,
+.table-card input:focus {
+    border-color: #159447;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(21, 148, 71, 0.10);
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.form-error {
+    margin-top: 10px;
+
+    padding: 11px 14px;
+
+    border-radius: 10px;
+
+    background: #fff0f0;
+
+    color: #c62828;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   PLACE ORDER BUTTON
+===================================================== */
+
+.place-order-button {
+    width: 100%;
+
+    height: 58px;
+
+    margin-top: 25px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #087443,
+        #159447
+    );
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    box-shadow:
+        0 10px 24px rgba(8, 116, 67, 0.20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.place-order-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(8, 116, 67, 0.28);
+
+    filter: brightness(1.04);
+}
+
+.place-order-button:active {
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   BACK TO CART
+===================================================== */
+
+.back-cart {
+    display: block;
+
+    width: fit-content;
+
+    margin: 22px auto 0;
+
+    color: #087443;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: color .2s ease;
+}
+
+.back-cart:hover {
+    color: #054e2d;
+
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   TABLE INFORMATION
+===================================================== */
+
+.table-hint {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 20px;
+    padding: 14px 16px;
+
+    border-radius: 12px;
+
+    background: #f3f8f5;
+
+    color: #66776e;
+
+    font-size: 13px;
+
+    text-align: left;
+}
+
+.table-hint span {
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .checkout-page {
+        padding: 45px 16px 70px;
+    }
+
+    .checkout-header {
+        margin-bottom: 30px;
+    }
+
+    .checkout-header h1 {
+        font-size: 32px;
+    }
+
+    .checkout-card {
+        padding: 28px 20px;
+
+        border-radius: 20px;
+    }
+
+    .table-card h2 {
+        font-size: 24px;
+    }
+
+    .place-order-button {
+        height: 55px;
+    }
+}
+
+</style>
+
+
 <section class="checkout-page">
 
     <div class="container">
 
+        <!-- HEADER -->
+
         <div class="checkout-header">
 
             <span class="checkout-label">
-                FINAL STEP
+                🌿 FINAL STEP
             </span>
 
             <h1>
-                Complete Your Order 🍃
+                Where are you sitting?
             </h1>
 
             <p>
-                Select your table and confirm your order.
+                Select your table and we'll bring your order to you.
             </p>
 
         </div>
 
 
+        <!-- TABLE SELECTION -->
+
         <div class="checkout-layout">
-
-
-            <!-- ORDER DETAILS -->
-
-            <div class="checkout-card">
-
-                <div class="checkout-card-header">
-
-                    <h2>
-                        Your Order
-                    </h2>
-
-                    <span>
-                        {{ cart_items|length }} items
-                    </span>
-
-                </div>
-
-
-                {% for item in cart_items %}
-
-                <div class="checkout-item">
-
-                    <div class="checkout-item-image">
-
-                        {% if item.product.image %}
-
-                            <img
-                                src="{{ item.product.image.url }}"
-                                alt="{{ item.product.name }}"
-                            >
-
-                        {% else %}
-
-                            🌿
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <div class="checkout-item-info">
-
-                        <h3>
-                            {{ item.product.name }}
-                        </h3>
-
-                        <p>
-                            ₹{{ item.product.price }} × {{ item.quantity }}
-                        </p>
-
-                    </div>
-
-
-                    <div class="checkout-item-price">
-
-                        ₹{{ item.subtotal }}
-
-                    </div>
-
-                </div>
-
-                {% endfor %}
-
-
-                <div class="checkout-total">
-
-                    <span>
-                        Total
-                    </span>
-
-                    <strong>
-                        ₹{{ total }}
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- TABLE SELECTION -->
 
             <div class="checkout-card table-card">
 
@@ -118,13 +429,15 @@ Checkout | Tgarden
                     🪑
                 </div>
 
+
                 <h2>
-                    Where are you sitting?
+                    Select Your Table
                 </h2>
 
+
                 <p>
-                    Select your table number so our team
-                    can bring your order to you.
+                    Choose the table number where you're currently sitting.
+                    This helps our team deliver your order to the right place.
                 </p>
 
 
@@ -136,7 +449,9 @@ Checkout | Tgarden
                     {% csrf_token %}
 
 
-                    <label for="{{ form.table_name.id_for_label }}">
+                    <label
+                        for="{{ form.table_name.id_for_label }}"
+                    >
                         Table Number
                     </label>
 
@@ -147,12 +462,22 @@ Checkout | Tgarden
                     {% if form.table_name.errors %}
 
                         <div class="form-error">
-
                             {{ form.table_name.errors }}
-
                         </div>
 
                     {% endif %}
+
+
+                    <div class="table-hint">
+
+                        <span>💡</span>
+
+                        <div>
+                            Please make sure you select the correct
+                            table before placing your order.
+                        </div>
+
+                    </div>
 
 
                     <button
@@ -164,7 +489,7 @@ Checkout | Tgarden
                             🍃
                         </span>
 
-                        Place Order
+                        Confirm & Place Order
 
                     </button>
 
@@ -179,7 +504,6 @@ Checkout | Tgarden
                 </a>
 
             </div>
-
 
         </div>
 
