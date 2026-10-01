@@ -86,56 +86,35 @@ def add_to_cart(request, product_id):
         {}
     )
 
+    product_id = str(product_id)
 
-    product_id_str = str(
-        product_id
+    cart[product_id] = (
+        cart.get(product_id, 0) + 1
     )
-
-
-    # Add / increase quantity
-    cart[product_id_str] = (
-        cart.get(
-            product_id_str,
-            0
-        ) + 1
-    )
-
 
     request.session["cart"] = cart
 
     request.session.modified = True
 
 
-    # Calculate total quantity
     cart_count = sum(
         cart.values()
     )
 
 
     # AJAX request
-    if (
-        request.headers.get(
-            "X-Requested-With"
-        ) == "XMLHttpRequest"
-    ):
+    if request.headers.get(
+        "X-Requested-With"
+    ) == "XMLHttpRequest":
 
         return JsonResponse({
-
             "success": True,
-
-            "cart_count":
-                cart_count,
-
-            "product_name":
-                product.name,
-
-            "message":
-                f"{product.name} added to cart"
-
+            "cart_count": cart_count,
+            "product_name": product.name,
         })
 
 
-    # Normal request fallback
+    # Normal browser request
     return redirect("cart")
 
 def cart(request):

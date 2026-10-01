@@ -11,404 +11,411 @@ Tgarden Café | Menu
 
 <style>
 
-/* =====================================================
-   GLOBAL
-===================================================== */
+/* =========================================================
+   TGARDEN CUSTOMER MENU
+========================================================= */
 
 :root {
-    --green: #087f4e;
-    --green-dark: #05653d;
-    --green-light: #eaf7f0;
-    --text: #17231e;
-    --muted: #718078;
-    --border: #e5ebe7;
-    --white: #ffffff;
-    --bg: #f8faf9;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background: var(--bg);
+    --tg-green: #087f4e;
+    --tg-green-dark: #05663e;
+    --tg-green-light: #eaf7f0;
+    --tg-bg: #f7faf8;
+    --tg-text: #17231e;
+    --tg-muted: #77827d;
+    --tg-border: #e4ebe7;
+    --tg-white: #ffffff;
 }
 
 
-/* =====================================================
-   MAIN CONTAINER
-===================================================== */
+/* =========================================================
+   PAGE
+========================================================= */
 
-.tgarden-page {
-    width: 100%;
-    overflow-x: hidden;
+.tg-page {
+    background: var(--tg-bg);
+    min-height: 100vh;
+    padding-bottom: 110px;
 }
 
-.tgarden-container {
+.tg-container {
     width: min(1180px, calc(100% - 32px));
     margin: auto;
 }
 
 
-/* =====================================================
+/* =========================================================
    SEARCH
-===================================================== */
+========================================================= */
 
-.menu-search-section {
-    padding: 28px 0 10px;
+.tg-search-section {
+    padding: 20px 0 8px;
 }
 
-.menu-search {
-    max-width: 760px;
-    margin: auto;
+.tg-search-box {
+    background: white;
+
+    border: 1px solid var(--tg-border);
+
+    border-radius: 16px;
+
+    height: 54px;
 
     display: flex;
     align-items: center;
 
-    background: white;
-
-    border: 1px solid var(--border);
-
-    border-radius: 18px;
-
-    padding: 6px;
+    padding: 5px;
 
     box-shadow:
-        0 5px 20px rgba(0,0,0,0.05);
+        0 4px 16px rgba(0,0,0,.05);
 }
 
-.menu-search-icon {
-    width: 48px;
+.tg-search-icon {
+    width: 45px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    font-size: 20px;
+    font-size: 19px;
 }
 
-.menu-search input {
+.tg-search-box input {
     flex: 1;
+
+    height: 100%;
 
     border: none;
     outline: none;
 
-    padding: 14px 8px;
-
     font-size: 15px;
 
-    color: var(--text);
+    color: var(--tg-text);
 
     background: transparent;
 }
 
-.menu-search button {
+.tg-search-box button {
+    height: 44px;
+
+    padding: 0 20px;
+
     border: none;
 
-    background: var(--green);
+    border-radius: 12px;
+
+    background: var(--tg-green);
 
     color: white;
-
-    padding: 13px 22px;
-
-    border-radius: 13px;
 
     font-weight: 700;
 
     cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.menu-search button:hover {
-    background: var(--green-dark);
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
-.hero-section {
-    padding: 35px 0 20px;
-}
+.tg-hero {
+    margin-top: 18px;
 
-.hero-card {
-    min-height: 300px;
+    height: 250px;
 
-    border-radius: 28px;
+    border-radius: 24px;
 
     overflow: hidden;
 
     position: relative;
-
-    display: flex;
-    align-items: center;
 
     background:
         linear-gradient(
             90deg,
-            rgba(0,0,0,0.78),
-            rgba(0,0,0,0.35),
-            rgba(0,0,0,0.08)
+            rgba(0,0,0,.78),
+            rgba(0,0,0,.35),
+            rgba(0,0,0,.05)
         ),
         url("{% static 'cafe/images/hot.jpg' %}");
 
     background-size: cover;
+
     background-position: center;
 }
 
-.hero-content {
-    position: relative;
+.tg-hero-content {
+    position: absolute;
 
-    z-index: 2;
+    left: 35px;
 
-    max-width: 580px;
+    top: 50%;
 
-    padding: 45px;
+    transform: translateY(-50%);
+
+    max-width: 530px;
 
     color: white;
 }
 
-.hero-badge {
-    display: inline-flex;
+.tg-hero-badge {
+    display: inline-block;
 
-    padding: 8px 13px;
+    padding: 7px 12px;
+
+    background: rgba(255,255,255,.16);
 
     border-radius: 30px;
 
-    background: rgba(255,255,255,0.16);
-
-    backdrop-filter: blur(10px);
-
-    font-size: 13px;
+    font-size: 12px;
 
     font-weight: 700;
 }
 
-.hero-content h1 {
-    font-size: clamp(34px, 5vw, 58px);
+.tg-hero h1 {
+    font-size: 42px;
 
-    line-height: 1.05;
+    line-height: 1.08;
 
-    margin: 18px 0 15px;
+    margin: 14px 0 10px;
 
     font-weight: 800;
 }
 
-.hero-content h1 span {
-    color: #9cf0c5;
+.tg-hero h1 span {
+    color: #9bf0c2;
 }
 
-.hero-content p {
+.tg-hero p {
     margin: 0;
 
-    font-size: 17px;
+    color: rgba(255,255,255,.85);
 
-    line-height: 1.6;
-
-    color: rgba(255,255,255,0.86);
+    font-size: 15px;
 }
 
 
-/* =====================================================
-   CATEGORY SECTION
-===================================================== */
+/* =========================================================
+   CATEGORY NAVIGATION
+========================================================= */
 
-.category-section {
-    padding: 35px 0;
+.tg-category-section {
+    padding: 25px 0 10px;
 }
 
-.section-heading {
-    margin-bottom: 24px;
+.tg-section-title {
+    margin-bottom: 14px;
 }
 
-.section-label {
-    color: var(--green);
-
-    font-size: 12px;
+.tg-section-title small {
+    color: var(--tg-green);
 
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
+
+    font-size: 11px;
 
     text-transform: uppercase;
 }
 
-.section-heading h2 {
-    margin: 7px 0;
+.tg-section-title h2 {
+    margin: 5px 0 0;
 
-    font-size: 30px;
+    font-size: 25px;
 
-    color: var(--text);
-}
-
-.section-heading p {
-    color: var(--muted);
-
-    margin: 0;
+    color: var(--tg-text);
 }
 
 
-.category-grid {
-    display: grid;
+/*
+   Compact category navigation
+*/
 
-    grid-template-columns:
-        repeat(3, 1fr);
+.tg-category-nav {
+    display: flex;
 
-    gap: 18px;
+    gap: 12px;
+
+    overflow-x: auto;
+
+    padding: 4px 2px 10px;
+
+    scrollbar-width: none;
 }
 
-.category-card {
-    height: 180px;
+.tg-category-nav::-webkit-scrollbar {
+    display: none;
+}
 
-    border-radius: 22px;
+
+.tg-category {
+    flex: 0 0 auto;
+
+    min-width: 145px;
+
+    height: 75px;
+
+    border-radius: 17px;
 
     overflow: hidden;
 
     position: relative;
 
-    display: block;
-
     text-decoration: none;
 
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.08);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.category-card:hover {
-    transform: translateY(-5px);
+    border: 1px solid rgba(255,255,255,.3);
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,0.14);
+        0 4px 15px rgba(0,0,0,.08);
 }
 
-.category-card img {
+
+.tg-category img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 
-    transition:
-        transform 0.5s ease;
+    display: block;
 }
 
-.category-card:hover img {
-    transform: scale(1.05);
-}
 
-.category-overlay {
+.tg-category-overlay {
     position: absolute;
 
     inset: 0;
 
-    padding: 25px;
-
     display: flex;
 
-    flex-direction: column;
+    align-items: center;
 
-    justify-content: flex-end;
+    gap: 8px;
+
+    padding: 13px;
 
     background:
         linear-gradient(
-            transparent 20%,
-            rgba(0,0,0,0.78)
+            90deg,
+            rgba(0,0,0,.72),
+            rgba(0,0,0,.15)
         );
 
     color: white;
 }
 
-.category-overlay .emoji {
-    font-size: 23px;
+
+.tg-category-icon {
+    font-size: 20px;
 }
 
-.category-overlay h3 {
-    margin: 5px 0 2px;
 
-    font-size: 24px;
+.tg-category-name {
+    font-size: 15px;
+
+    font-weight: 800;
 }
 
-.category-overlay p {
-    margin: 0;
+
+/* =========================================================
+   MENU HEADER
+========================================================= */
+
+.tg-menu {
+    padding: 25px 0 40px;
+}
+
+.tg-menu-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: end;
+
+    margin-bottom: 20px;
+}
+
+.tg-menu-label {
+    color: var(--tg-green);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.tg-menu-header h2 {
+    margin: 5px 0 0;
+
+    font-size: 30px;
+
+    color: var(--tg-text);
+}
+
+.tg-product-count {
+    color: var(--tg-muted);
 
     font-size: 13px;
-
-    color: rgba(255,255,255,0.8);
 }
 
 
-/* =====================================================
-   MENU
-===================================================== */
-
-.menu-section {
-    padding: 35px 0 110px;
-}
-
-
-/* =====================================================
+/* =========================================================
    PRODUCT GRID
-===================================================== */
+========================================================= */
 
-.product-grid {
+.tg-product-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-    gap: 22px;
+    gap: 20px;
 }
 
 
-/* =====================================================
+/* =========================================================
    PRODUCT CARD
-===================================================== */
+========================================================= */
 
-.product-card {
+.tg-product-card {
     background: white;
 
-    border: 1px solid var(--border);
+    border: 1px solid var(--tg-border);
 
-    border-radius: 22px;
+    border-radius: 20px;
 
     overflow: hidden;
 
     box-shadow:
-        0 5px 20px rgba(0,0,0,0.04);
+        0 5px 18px rgba(0,0,0,.04);
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+        transform .2s ease,
+        box-shadow .2s ease;
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
+.tg-product-card:hover {
+    transform: translateY(-4px);
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,0.10);
+        0 12px 30px rgba(0,0,0,.09);
 }
 
 
-/* =====================================================
+/* =========================================================
    PRODUCT IMAGE
-===================================================== */
+========================================================= */
 
-.product-image {
+.tg-product-image {
     width: 100%;
 
-    height: 250px;
+    height: 235px;
 
     overflow: hidden;
 
     background: #edf4ef;
 }
 
-.product-image img {
+.tg-product-image img {
     width: 100%;
     height: 100%;
 
@@ -416,82 +423,227 @@ body {
 
     display: block;
 
-    transition:
-        transform 0.5s ease;
+    transition: transform .4s ease;
 }
 
-.product-card:hover .product-image img {
+.tg-product-card:hover
+.tg-product-image img {
     transform: scale(1.04);
 }
 
-.no-image {
-    width: 100%;
+
+.tg-no-image {
     height: 100%;
 
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
-    font-size: 50px;
+    font-size: 45px;
 }
 
 
-/* =====================================================
+/* =========================================================
    PRODUCT BODY
-===================================================== */
+========================================================= */
 
-.product-body {
-    padding: 20px;
+.tg-product-body {
+    padding: 16px;
 }
 
-.product-category {
+
+.tg-product-category {
     display: inline-flex;
 
-    align-items: center;
+    padding: 5px 9px;
 
-    padding: 7px 11px;
+    background: var(--tg-green-light);
 
-    background: var(--green-light);
+    color: var(--tg-green);
 
-    color: var(--green);
+    border-radius: 20px;
 
-    border-radius: 30px;
-
-    font-size: 11px;
+    font-size: 9px;
 
     font-weight: 800;
 
     letter-spacing: 1px;
 }
 
-.product-body h3 {
-    margin: 13px 0 7px;
 
-    font-size: 21px;
+.tg-product-name {
+    margin: 10px 0 5px;
 
-    color: var(--text);
+    font-size: 19px;
+
+    line-height: 1.2;
+
+    color: var(--tg-text);
 }
 
-.product-description {
-    min-height: 42px;
 
+.tg-product-description {
     margin: 0;
 
-    color: var(--muted);
+    color: var(--tg-muted);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    min-height: 36px;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PRODUCT FOOTER
+========================================================= */
+
+.tg-product-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 15px;
+
+    gap: 8px;
+}
+
+
+.tg-price {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    color: var(--tg-text);
+}
+
+
+/* =========================================================
+   ADD BUTTON
+========================================================= */
+
+.tg-add-button {
+    border: none;
+
+    background: var(--tg-green);
+
+    color: white;
+
+    min-width: 88px;
+
+    height: 40px;
+
+    border-radius: 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    font-weight: 800;
 
     font-size: 13px;
 
-    line-height: 1.5;
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.tg-add-button:hover {
+    background: var(--tg-green-dark);
+}
+
+.tg-add-button:active {
+    transform: scale(.95);
 }
 
 
-/* =====================================================
-   PRODUCT FOOTER
-===================================================== */
+.tg-add-button.added {
+    background: #059669;
+}
 
-.product-footer {
-    margin-top: 20px;
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.tg-empty {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 60px 20px;
+
+    border: 1px solid var(--tg-border);
+}
+
+.tg-empty-icon {
+    font-size: 40px;
+}
+
+.tg-empty h3 {
+    margin: 10px 0 5px;
+}
+
+.tg-empty p {
+    color: var(--tg-muted);
+}
+
+
+/* =========================================================
+   FIXED CART BAR
+========================================================= */
+
+/*
+   IMPORTANT:
+   Hidden initially.
+   Appears only after customer adds a product.
+*/
+
+.tg-cart-bar {
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 16px;
+
+    transform:
+        translate(-50%, 120px);
+
+    width: min(
+        760px,
+        calc(100% - 24px)
+    );
+
+    min-height: 66px;
+
+    z-index: 99999;
+
+    background: #08ad70;
+
+    border-radius: 17px;
+
+    padding: 8px 9px 8px 15px;
 
     display: flex;
 
@@ -500,138 +652,9 @@ body {
     justify-content: space-between;
 
     gap: 10px;
-}
-
-.product-price {
-    font-size: 22px;
-
-    font-weight: 800;
-
-    color: var(--text);
-}
-
-
-/* =====================================================
-   ADD BUTTON
-===================================================== */
-
-.add-button {
-    border: none;
-
-    min-width: 105px;
-
-    height: 45px;
-
-    padding: 0 18px;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 7px;
-
-    border-radius: 13px;
-
-    background: var(--green);
-
-    color: white;
-
-    font-size: 14px;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.add-button:hover {
-    background: var(--green-dark);
-
-    transform: translateY(-2px);
-}
-
-.add-button:active {
-    transform: scale(0.95);
-}
-
-.add-icon {
-    font-size: 20px;
-}
-
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.empty-menu {
-    grid-column: 1 / -1;
-
-    text-align: center;
-
-    padding: 70px 20px;
-
-    background: white;
-
-    border-radius: 22px;
-
-    border: 1px solid var(--border);
-}
-
-.empty-menu-icon {
-    font-size: 45px;
-}
-
-.empty-menu h3 {
-    margin: 12px 0 5px;
-}
-
-.empty-menu p {
-    color: var(--muted);
-}
-
-
-/* =====================================================
-   STICKY CART BAR
-===================================================== */
-
-.cart-success-bar {
-    position: fixed;
-
-    z-index: 99999;
-
-    left: 50%;
-
-    bottom: 18px;
-
-    width: min(
-        calc(100% - 30px),
-        760px
-    );
-
-    min-height: 68px;
-
-    padding: 9px 10px 9px 15px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 12px;
-
-    background: #08ad70;
-
-    border-radius: 18px;
 
     box-shadow:
-        0 12px 40px rgba(0,0,0,0.25);
-
-    transform:
-        translate(-50%, 120px);
+        0 12px 35px rgba(0,0,0,.25);
 
     opacity: 0;
 
@@ -639,11 +662,12 @@ body {
 
     transition:
         transform .35s ease,
-        opacity .3s ease,
-        visibility .3s ease;
+        opacity .25s ease;
 }
 
-.cart-success-bar.show {
+
+.tg-cart-bar.show {
+
     transform:
         translate(-50%, 0);
 
@@ -652,7 +676,8 @@ body {
     visibility: visible;
 }
 
-.cart-success-left {
+
+.tg-cart-info {
     display: flex;
 
     align-items: center;
@@ -662,12 +687,16 @@ body {
     color: white;
 }
 
-.cart-check-icon {
+
+.tg-cart-icon {
     width: 40px;
 
     height: 40px;
 
     border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.18);
 
     display: flex;
 
@@ -675,78 +704,82 @@ body {
 
     justify-content: center;
 
-    background: rgba(255,255,255,0.18);
-
-    font-size: 20px;
-
-    font-weight: 900;
+    font-size: 18px;
 }
 
-.cart-success-left strong {
+
+.tg-cart-text strong {
     display: block;
 
-    font-size: 16px;
+    font-size: 15px;
 }
 
-.cart-success-left span {
-    display: block;
 
-    margin-top: 2px;
+.tg-cart-text span {
+    display: block;
 
     font-size: 11px;
 
-    color: rgba(255,255,255,0.85);
+    margin-top: 2px;
+
+    opacity: .85;
 }
 
-.view-cart-button {
-    flex-shrink: 0;
 
-    padding: 12px 16px;
+.tg-view-cart {
+    height: 47px;
 
-    border-radius: 12px;
+    padding: 0 17px;
 
     background: white;
 
-    color: var(--green);
-
-    text-decoration: none;
-
-    font-size: 14px;
-
-    font-weight: 800;
+    border-radius: 12px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 5px;
+    gap: 6px;
+
+    text-decoration: none;
+
+    color: var(--tg-green);
+
+    font-weight: 800;
+
+    font-size: 13px;
+
+    white-space: nowrap;
 }
 
-.view-cart-button:hover {
-    color: var(--green-dark);
+
+.tg-view-cart:hover {
+    color: var(--tg-green-dark);
 }
 
 
-/* =====================================================
+/* =========================================================
    SPINNER
-===================================================== */
+========================================================= */
 
-.add-spinner {
+.tg-spinner {
     width: 15px;
 
     height: 15px;
 
-    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+
+    border:
+        2px solid rgba(255,255,255,.35);
 
     border-top-color: white;
 
-    border-radius: 50%;
-
     animation:
-        spin .7s linear infinite;
+        tgSpin .7s linear infinite;
 }
 
-@keyframes spin {
+
+@keyframes tgSpin {
 
     to {
         transform: rotate(360deg);
@@ -755,146 +788,193 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media (max-width: 768px) {
 
-    .tgarden-container {
-        width: calc(100% - 24px);
-    }
-
-    .hero-section {
-        padding-top: 18px;
-    }
-
-    .hero-card {
-        min-height: 260px;
-
-        border-radius: 20px;
-    }
-
-    .hero-content {
-        padding: 25px;
-    }
-
-    .hero-content h1 {
-        font-size: 34px;
+    .tg-container {
+        width: calc(100% - 20px);
     }
 
 
-    /* Categories */
+    /* Search */
 
-    .category-grid {
-        grid-template-columns: 1fr;
+    .tg-search-section {
+        padding-top: 12px;
     }
 
-    .category-card {
-        height: 150px;
+    .tg-search-box {
+        height: 50px;
+    }
+
+    .tg-search-box button {
+        height: 40px;
+
+        padding: 0 14px;
     }
 
 
-    /* =================================================
-       TWO PRODUCTS PER ROW
-    ================================================= */
+    /* Hero */
 
-    .product-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .tg-hero {
+        height: 190px;
 
-        gap: 12px;
+        border-radius: 19px;
     }
 
-    .product-image {
-        height: 170px;
+    .tg-hero-content {
+        left: 22px;
+
+        right: 20px;
     }
 
-    .product-body {
-        padding: 13px;
+    .tg-hero h1 {
+        font-size: 28px;
+
+        margin: 10px 0 7px;
     }
 
-    .product-category {
-        padding: 5px 8px;
-
-        font-size: 9px;
-    }
-
-    .product-body h3 {
-        font-size: 16px;
-
-        margin: 9px 0 5px;
-
-        line-height: 1.2;
-    }
-
-    .product-description {
-        font-size: 11px;
-
-        min-height: 34px;
-
-        display: -webkit-box;
-
-        -webkit-line-clamp: 2;
-
-        -webkit-box-orient: vertical;
-
-        overflow: hidden;
-    }
-
-    .product-footer {
-        margin-top: 13px;
-
-        align-items: center;
-    }
-
-    .product-price {
-        font-size: 17px;
-    }
-
-    .add-button {
-        min-width: 65px;
-
-        height: 38px;
-
-        padding: 0 11px;
-
-        border-radius: 11px;
-
+    .tg-hero p {
         font-size: 12px;
     }
 
-    .add-icon {
-        font-size: 17px;
+
+    /* Category */
+
+    .tg-category-section {
+        padding-top: 20px;
+    }
+
+    .tg-section-title h2 {
+        font-size: 22px;
+    }
+
+    .tg-category {
+        min-width: 130px;
+
+        height: 64px;
+
+        border-radius: 15px;
+    }
+
+    .tg-category-overlay {
+        padding: 10px;
+    }
+
+    .tg-category-name {
+        font-size: 13px;
     }
 
 
-    /* Sticky bar */
+    /* Menu */
 
-    .cart-success-bar {
+    .tg-menu {
+        padding-top: 20px;
+    }
+
+    .tg-menu-header {
+        align-items: center;
+    }
+
+    .tg-menu-header h2 {
+        font-size: 23px;
+    }
+
+
+    /* 2 products per row */
+
+    .tg-product-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+
+    .tg-product-image {
+        height: 165px;
+    }
+
+
+    .tg-product-body {
+        padding: 11px;
+    }
+
+
+    .tg-product-category {
+        font-size: 8px;
+
+        padding: 5px 7px;
+    }
+
+
+    .tg-product-name {
+        font-size: 15px;
+
+        margin: 8px 0 4px;
+    }
+
+
+    .tg-product-description {
+        font-size: 10px;
+
+        min-height: 30px;
+    }
+
+
+    .tg-product-footer {
+        margin-top: 12px;
+    }
+
+
+    .tg-price {
+        font-size: 16px;
+    }
+
+
+    .tg-add-button {
+        min-width: 60px;
+
+        height: 36px;
+
+        padding: 0 9px;
+
+        font-size: 11px;
+    }
+
+
+    /* Fixed cart */
+
+    .tg-cart-bar {
+        bottom: 9px;
+
         width: calc(100% - 18px);
 
-        bottom: 10px;
+        min-height: 62px;
 
-        min-height: 64px;
-
-        border-radius: 17px;
+        border-radius: 16px;
     }
 
-    .cart-success-left strong {
-        font-size: 14px;
-    }
-
-    .cart-success-left span {
-        font-size: 10px;
-    }
-
-    .cart-check-icon {
+    .tg-cart-icon {
         width: 36px;
+
         height: 36px;
     }
 
-    .view-cart-button {
-        padding: 11px 13px;
+    .tg-cart-text strong {
+        font-size: 13px;
+    }
+
+    .tg-cart-text span {
+        font-size: 9px;
+    }
+
+    .tg-view-cart {
+        height: 44px;
+
+        padding: 0 13px;
 
         font-size: 12px;
     }
@@ -902,41 +982,31 @@ body {
 }
 
 
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
 
-@media (max-width: 390px) {
+@media (max-width: 380px) {
 
-    .product-grid {
-        gap: 9px;
-    }
-
-    .product-image {
+    .tg-product-image {
         height: 145px;
     }
 
-    .product-body {
-        padding: 11px;
+    .tg-product-name {
+        font-size: 14px;
     }
 
-    .product-body h3 {
+    .tg-price {
         font-size: 15px;
     }
 
-    .product-price {
-        font-size: 15px;
+    .tg-add-button {
+        min-width: 55px;
+
+        padding: 0 7px;
     }
 
-    .add-button {
-        min-width: 58px;
-
-        padding: 0 8px;
-
-        font-size: 11px;
-    }
-
-    .cart-success-left span {
+    .tg-cart-text span {
         display: none;
     }
 
@@ -945,59 +1015,24 @@ body {
 </style>
 
 
-<div class="tgarden-page">
+<div class="tg-page">
 
 
-    <!-- =================================================
-         HERO
-    ================================================= -->
-
-    <section class="hero-section">
-
-        <div class="tgarden-container">
-
-            <div class="hero-card">
-
-                <div class="hero-content">
-
-                    <span class="hero-badge">
-                        🌿 Welcome to Tgarden
-                    </span>
-
-                    <h1>
-                        Freshly made,
-                        <span>happily served.</span>
-                    </h1>
-
-                    <p>
-                        Delicious food, refreshing drinks and
-                        good vibes — all in one place.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
+    <!-- =====================================================
          SEARCH
-    ================================================= -->
+    ===================================================== -->
 
-    <section class="menu-search-section">
+    <section class="tg-search-section">
 
-        <div class="tgarden-container">
+        <div class="tg-container">
 
             <form
                 method="GET"
                 action="{% url 'home' %}"
-                class="menu-search"
+                class="tg-search-box"
             >
 
-                <div class="menu-search-icon">
+                <div class="tg-search-icon">
                     🔍
                 </div>
 
@@ -1005,7 +1040,7 @@ body {
                     type="text"
                     name="q"
                     value="{{ search_query }}"
-                    placeholder="Search coffee, tea, juice..."
+                    placeholder="Search for coffee, tea, juice..."
                     autocomplete="off"
                 >
 
@@ -1030,57 +1065,84 @@ body {
     </section>
 
 
-    <!-- =================================================
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section>
+
+        <div class="tg-container">
+
+            <div class="tg-hero">
+
+                <div class="tg-hero-content">
+
+                    <span class="tg-hero-badge">
+                        🌿 Welcome to Tgarden
+                    </span>
+
+                    <h1>
+                        Freshly made,
+                        <span>happily served.</span>
+                    </h1>
+
+                    <p>
+                        Delicious food, refreshing drinks and
+                        good vibes — all in one place.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
          CATEGORIES
-    ================================================= -->
+    ===================================================== -->
 
-    <section class="category-section">
+    <section class="tg-category-section">
 
-        <div class="tgarden-container">
+        <div class="tg-container">
 
-            <div class="section-heading">
+            <div class="tg-section-title">
 
-                <span class="section-label">
-                    Explore
-                </span>
+                <small>
+                    EXPLORE
+                </small>
 
                 <h2>
                     What are you craving?
                 </h2>
 
-                <p>
-                    Browse our menu and find something you'll love.
-                </p>
-
             </div>
 
 
-            <div class="category-grid">
+            <div class="tg-category-nav">
 
 
                 <a
                     href="{% url 'home' %}?category=HOT#menu"
-                    class="category-card"
+                    class="tg-category"
                 >
 
                     <img
                         src="{% static 'cafe/images/hot.jpg' %}"
-                        alt="Hot drinks"
+                        alt="Hot"
                     >
 
-                    <div class="category-overlay">
+                    <div class="tg-category-overlay">
 
-                        <span class="emoji">
+                        <span class="tg-category-icon">
                             🔥
                         </span>
 
-                        <h3>
+                        <span class="tg-category-name">
                             Hot
-                        </h3>
-
-                        <p>
-                            Coffee, tea & more
-                        </p>
+                        </span>
 
                     </div>
 
@@ -1089,27 +1151,23 @@ body {
 
                 <a
                     href="{% url 'home' %}?category=COOL#menu"
-                    class="category-card"
+                    class="tg-category"
                 >
 
                     <img
                         src="{% static 'cafe/images/cool.jpg' %}"
-                        alt="Cool drinks"
+                        alt="Cool"
                     >
 
-                    <div class="category-overlay">
+                    <div class="tg-category-overlay">
 
-                        <span class="emoji">
+                        <span class="tg-category-icon">
                             🧊
                         </span>
 
-                        <h3>
+                        <span class="tg-category-name">
                             Cool
-                        </h3>
-
-                        <p>
-                            Juices, mojitos & shakes
-                        </p>
+                        </span>
 
                     </div>
 
@@ -1118,7 +1176,7 @@ body {
 
                 <a
                     href="{% url 'home' %}?category=SNACKS#menu"
-                    class="category-card"
+                    class="tg-category"
                 >
 
                     <img
@@ -1126,19 +1184,44 @@ body {
                         alt="Snacks"
                     >
 
-                    <div class="category-overlay">
+                    <div class="tg-category-overlay">
 
-                        <span class="emoji">
+                        <span class="tg-category-icon">
                             🍟
                         </span>
 
-                        <h3>
+                        <span class="tg-category-name">
                             Snacks
-                        </h3>
+                        </span>
 
-                        <p>
-                            Burgers, fries & bites
-                        </p>
+                    </div>
+
+                </a>
+
+
+                <!-- ALL -->
+
+                <a
+                    href="{% url 'home' %}#menu"
+                    class="tg-category"
+                >
+
+                    <div
+                        style="
+                            width:100%;
+                            height:100%;
+                            background:#087f4e;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            color:white;
+                            font-weight:800;
+                        "
+                    >
+
+                        🍽️
+                        &nbsp;
+                        All Menu
 
                     </div>
 
@@ -1152,71 +1235,85 @@ body {
     </section>
 
 
-    <!-- =================================================
+    <!-- =====================================================
          MENU
-    ================================================= -->
+    ===================================================== -->
 
     <section
-        class="menu-section"
+        class="tg-menu"
         id="menu"
     >
 
-        <div class="tgarden-container">
+        <div class="tg-container">
 
 
-            <div class="section-heading">
+            <div class="tg-menu-header">
 
-                <span class="section-label">
-                    Our Menu
+                <div>
+
+                    <span class="tg-menu-label">
+                        OUR MENU
+                    </span>
+
+
+                    {% if search_query %}
+
+                        <h2>
+                            Results for "{{ search_query }}"
+                        </h2>
+
+                    {% elif selected_category == "HOT" %}
+
+                        <h2>
+                            🔥 Hot Menu
+                        </h2>
+
+                    {% elif selected_category == "COOL" %}
+
+                        <h2>
+                            🧊 Cool Menu
+                        </h2>
+
+                    {% elif selected_category == "SNACKS" %}
+
+                        <h2>
+                            🍟 Snacks Menu
+                        </h2>
+
+                    {% else %}
+
+                        <h2>
+                            All favourites
+                        </h2>
+
+                    {% endif %}
+
+                </div>
+
+
+                <span class="tg-product-count">
+
+                    {{ products|length }} items
+
                 </span>
-
-
-                {% if search_query %}
-
-                    <h2>
-                        Results for "{{ search_query }}"
-                    </h2>
-
-                {% elif selected_category == "HOT" %}
-
-                    <h2>
-                        🔥 Hot Menu
-                    </h2>
-
-                {% elif selected_category == "COOL" %}
-
-                    <h2>
-                        🧊 Cool Menu
-                    </h2>
-
-                {% elif selected_category == "SNACKS" %}
-
-                    <h2>
-                        🍟 Snacks Menu
-                    </h2>
-
-                {% else %}
-
-                    <h2>
-                        All our favourites
-                    </h2>
-
-                {% endif %}
 
             </div>
 
 
-            <div class="product-grid">
+            <!-- PRODUCT GRID -->
+
+            <div class="tg-product-grid">
 
 
                 {% for product in products %}
 
-                <div class="product-card">
+
+                <article class="tg-product-card">
 
 
                     <!-- IMAGE -->
 
-                    <div class="product-image">
+                    <div class="tg-product-image">
 
                         {% if product.image %}
 
@@ -1228,7 +1325,7 @@ body {
 
                         {% else %}
 
-                            <div class="no-image">
+                            <div class="tg-no-image">
                                 🌿
                             </div>
 
@@ -1239,10 +1336,10 @@ body {
 
                     <!-- BODY -->
 
-                    <div class="product-body">
+                    <div class="tg-product-body">
 
 
-                        <div class="product-category">
+                        <span class="tg-product-category">
 
                             {% if product.category == "HOT" %}
 
@@ -1258,15 +1355,17 @@ body {
 
                             {% endif %}
 
-                        </div>
+                        </span>
 
 
-                        <h3>
+                        <h3 class="tg-product-name">
+
                             {{ product.name }}
+
                         </h3>
 
 
-                        <p class="product-description">
+                        <p class="tg-product-description">
 
                             {% if product.description %}
 
@@ -1281,31 +1380,30 @@ body {
                         </p>
 
 
-                        <div class="product-footer">
+                        <div class="tg-product-footer">
 
 
-                            <div class="product-price">
+                            <strong class="tg-price">
 
                                 ₹{{ product.price }}
 
-                            </div>
+                            </strong>
 
 
                             <button
                                 type="button"
-                                class="add-button"
+                                class="tg-add-button"
                                 data-product-id="{{ product.id }}"
                                 data-product-name="{{ product.name }}"
-                                onclick="addToCart(this)"
+                                data-url="{% url 'add_to_cart' product.id %}"
+                                onclick="tgAddToCart(this)"
                             >
 
-                                <span class="add-icon">
+                                <span>
                                     +
                                 </span>
 
-                                <span>
-                                    Add
-                                </span>
+                                Add
 
                             </button>
 
@@ -1315,15 +1413,16 @@ body {
 
                     </div>
 
-                </div>
+
+                </article>
 
 
                 {% empty %}
 
 
-                <div class="empty-menu">
+                <div class="tg-empty">
 
-                    <div class="empty-menu-icon">
+                    <div class="tg-empty-icon">
                         🔍
                     </div>
 
@@ -1332,7 +1431,7 @@ body {
                     </h3>
 
                     <p>
-                        Try searching for something else.
+                        Try searching with another product name.
                     </p>
 
                 </div>
@@ -1347,31 +1446,35 @@ body {
 
     </section>
 
+
 </div>
 
 
-<!-- =====================================================
-     CART SUCCESS BAR
-===================================================== -->
+<!-- =========================================================
+     FIXED CART BAR
+     
+     Hidden when page loads.
+     Appears after Add button is clicked.
+========================================================= -->
 
 <div
-    id="cartSuccessBar"
-    class="cart-success-bar"
+    id="tgCartBar"
+    class="tg-cart-bar"
 >
 
-    <div class="cart-success-left">
+    <div class="tg-cart-info">
 
-        <div class="cart-check-icon">
-            ✓
+        <div class="tg-cart-icon">
+            🛍️
         </div>
 
-        <div>
+        <div class="tg-cart-text">
 
-            <strong id="addedItemText">
+            <strong id="tgCartCount">
                 1 Item added
             </strong>
 
-            <span id="addedProductText">
+            <span id="tgCartProduct">
                 Added to your cart
             </span>
 
@@ -1382,13 +1485,13 @@ body {
 
     <a
         href="{% url 'cart' %}"
-        class="view-cart-button"
+        class="tg-view-cart"
     >
 
         View Cart
 
         <span>
-            ›
+            →
         </span>
 
     </a>
@@ -1398,20 +1501,22 @@ body {
 
 <script>
 
-/* =====================================================
+/* =========================================================
    CSRF
-===================================================== */
+========================================================= */
 
-function getCookie(name) {
+function tgGetCookie(name) {
 
-    let cookieValue = null;
+    let value = null;
 
     if (document.cookie) {
 
         const cookies =
             document.cookie.split(";");
 
-        for (let cookie of cookies) {
+        for (
+            let cookie of cookies
+        ) {
 
             cookie = cookie.trim();
 
@@ -1421,7 +1526,7 @@ function getCookie(name) {
                 )
             ) {
 
-                cookieValue =
+                value =
                     decodeURIComponent(
                         cookie.substring(
                             name.length + 1
@@ -1430,86 +1535,78 @@ function getCookie(name) {
 
                 break;
             }
+
         }
+
     }
 
-    return cookieValue;
+    return value;
 }
 
 
-/* =====================================================
+/* =========================================================
    ADD TO CART
-===================================================== */
+========================================================= */
 
-let cartTimer = null;
+let tgCartTimer = null;
 
 
-function addToCart(button) {
+function tgAddToCart(button) {
 
-    const productId =
-        button.dataset.productId;
+    const url =
+        button.dataset.url;
 
     const productName =
         button.dataset.productName;
 
 
-    if (!productId) {
+    if (!url) {
 
         console.error(
-            "Product ID is missing"
+            "Add to cart URL missing"
         );
 
         return;
     }
 
 
+    /* Prevent double clicking */
+
     if (
-        button.classList.contains(
-            "adding"
-        )
+        button.dataset.loading === "true"
     ) {
 
         return;
     }
 
 
-    button.classList.add(
-        "adding"
-    );
+    button.dataset.loading =
+        "true";
 
 
-    const oldHTML =
+    const oldContent =
         button.innerHTML;
 
 
     button.innerHTML = `
-        <span class="add-spinner"></span>
-        Adding
+        <span class="tg-spinner"></span>
     `;
 
 
     fetch(
-        `/add-to-cart/${productId}/`,
+        url,
         {
-
             method: "POST",
 
             headers: {
 
                 "X-CSRFToken":
-                    getCookie("csrftoken"),
+                    tgGetCookie("csrftoken"),
 
                 "X-Requested-With":
-                    "XMLHttpRequest",
+                    "XMLHttpRequest"
 
-                "Content-Type":
-                    "application/json"
-
-            },
-
-            body: JSON.stringify({
-                product_id: productId
-            })
+            }
 
         }
     )
@@ -1519,9 +1616,10 @@ function addToCart(button) {
         if (!response.ok) {
 
             throw new Error(
-                "Server returned " +
+                "HTTP " +
                 response.status
             );
+
         }
 
         return response.json();
@@ -1530,76 +1628,95 @@ function addToCart(button) {
 
     .then(data => {
 
+
         console.log(
-            "Added:",
+            "Cart response:",
             data
         );
 
 
-        const count =
-            data.cart_count;
+        /*
+         * Server should return:
+         *
+         * {
+         *    "success": true,
+         *    "cart_count": 2
+         * }
+         */
+
+        const cartCount =
+            data.cart_count || 1;
 
 
-        /* Header count */
+        /* Update header cart count */
 
-        updateCartCount(
-            count
+        tgUpdateHeaderCart(
+            cartCount
         );
 
 
-        /* Bottom bar */
+        /* Show fixed cart */
 
-        showCartBar(
-            count,
+        tgShowCartBar(
+            cartCount,
             productName
         );
 
 
-        /* Button */
+        /* Button state */
 
-        button.innerHTML = `
-            <span>✓</span>
-            Added
-        `;
-
-        button.style.background =
-            "#059669";
-
-
-        setTimeout(() => {
-
-            button.innerHTML =
-                oldHTML;
-
-            button.classList.remove(
-                "adding"
-            );
-
-            button.style.background =
-                "";
-
-        }, 1200);
-
-    })
-
-    .catch(error => {
-
-        console.error(
-            "Add to cart failed:",
-            error
+        button.classList.add(
+            "added"
         );
 
 
         button.innerHTML =
-            oldHTML;
+            "✓ Added";
 
-        button.classList.remove(
-            "adding"
+
+        setTimeout(
+            function () {
+
+                button.innerHTML =
+                    oldContent;
+
+                button.classList.remove(
+                    "added"
+                );
+
+                button.dataset.loading =
+                    "false";
+
+            },
+            1000
+        );
+
+    })
+
+
+    .catch(error => {
+
+        console.error(
+            "Cart error:",
+            error
         );
 
 
+        /*
+         * If your old add_to_cart view
+         * redirects instead of returning
+         * JSON, this message helps identify it.
+         */
+
+        button.innerHTML =
+            oldContent;
+
+        button.dataset.loading =
+            "false";
+
+
         alert(
-            "Unable to add this product. Please try again."
+            "Unable to add item to cart. Please try again."
         );
 
     });
@@ -1607,28 +1724,30 @@ function addToCart(button) {
 }
 
 
-/* =====================================================
-   CART BAR
-===================================================== */
+/* =========================================================
+   SHOW FIXED CART BAR
+========================================================= */
 
-function showCartBar(
+function tgShowCartBar(
     count,
     productName
 ) {
 
     const bar =
         document.getElementById(
-            "cartSuccessBar"
+            "tgCartBar"
         );
 
-    const countText =
+
+    const countElement =
         document.getElementById(
-            "addedItemText"
+            "tgCartCount"
         );
 
-    const productText =
+
+    const productElement =
         document.getElementById(
-            "addedProductText"
+            "tgCartProduct"
         );
 
 
@@ -1637,64 +1756,76 @@ function showCartBar(
     }
 
 
-    countText.textContent =
-        count === 1
-            ? "1 Item added"
-            : `${count} Items added`;
+    if (count === 1) {
+
+        countElement.textContent =
+            "1 Item added";
+
+    } else {
+
+        countElement.textContent =
+            count + " Items added";
+
+    }
 
 
-    productText.textContent =
-        `${productName} added to your cart`;
+    productElement.textContent =
+        productName +
+        " added to your cart";
 
+
+    /*
+     * SHOW
+     */
 
     bar.classList.add(
         "show"
     );
 
 
-    if (cartTimer) {
-
-        clearTimeout(
-            cartTimer
-        );
-    }
-
-
-    cartTimer =
-        setTimeout(() => {
-
-            bar.classList.remove(
-                "show"
-            );
-
-        }, 5000);
+    /*
+     * Keep visible.
+     *
+     * We intentionally do NOT
+     * automatically hide it.
+     *
+     * Customer can scroll while
+     * the cart bar stays fixed.
+     */
 
 }
 
 
-/* =====================================================
-   UPDATE HEADER CART COUNT
-===================================================== */
+/* =========================================================
+   HEADER CART COUNT
+========================================================= */
 
-function updateCartCount(
+function tgUpdateHeaderCart(
     count
 ) {
+
+    /*
+     * Supports your existing
+     * .cart-count element.
+     */
 
     document
         .querySelectorAll(
             ".cart-count"
         )
-        .forEach(element => {
+        .forEach(
+            function (element) {
 
-            element.textContent =
-                count;
+                element.textContent =
+                    count;
 
-            element.style.display =
-                count > 0
-                    ? "inline-flex"
-                    : "none";
+                element.style.display =
+                    count > 0
+                        ? "inline-flex"
+                        : "none";
 
-        });
+            }
+        );
 
 }
 
