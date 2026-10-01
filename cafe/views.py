@@ -16,21 +16,51 @@ from .forms import CheckoutForm
 
 def home(request):
 
-    # Get all available products
+    search_query = request.GET.get(
+        "q",
+        ""
+    ).strip()
+
+    category = request.GET.get(
+        "category",
+        ""
+    ).upper()
+
+
     products = Product.objects.filter(
         is_available=True
-    ).order_by("name")
+    )
 
-    # Get cart from session
+
+    if search_query:
+
+        products = products.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
+
+
+    if category in [
+        "HOT",
+        "COOL",
+        "SNACKS"
+    ]:
+
+        products = products.filter(
+            category=category
+        )
+
+
     cart = request.session.get(
         "cart",
         {}
     )
 
-    # Calculate total items in cart
+
     cart_count = sum(
         cart.values()
     )
+
 
     return render(
         request,
@@ -38,8 +68,11 @@ def home(request):
         {
             "products": products,
             "cart_count": cart_count,
+            "search_query": search_query,
+            "selected_category": category,
         }
     )
+
 def add_to_cart(request, product_id):
 
     product = get_object_or_404(
@@ -48,36 +81,62 @@ def add_to_cart(request, product_id):
         is_available=True
     )
 
-    cart = request.session.get("cart", {})
-
-    product_id_str = str(product.id)
-
-    # Add/increase quantity
-    cart[product_id_str] = cart.get(product_id_str, 0) + 1
-
-    request.session["cart"] = cart
-    request.session.modified = True
-
-    # Calculate total cart quantity
-    cart_count = sum(cart.values())
-
-    # AJAX request
-    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-
-        return JsonResponse({
-            "success": True,
-            "message": f"{product.name} added to cart",
-            "product_name": product.name,
-            "cart_count": cart_count,
-        })
-
-    # Normal request fallback
-    messages.success(
-        request,
-        f"{product.name} added to cart."
+    cart = request.session.get(
+        "cart",
+        {}
     )
 
-    return redirect("home")
+
+    product_id_str = str(
+        product_id
+    )
+
+
+    # Add / increase quantity
+    cart[product_id_str] = (
+        cart.get(
+            product_id_str,
+            0
+        ) + 1
+    )
+
+
+    request.session["cart"] = cart
+
+    request.session.modified = True
+
+
+    # Calculate total quantity
+    cart_count = sum(
+        cart.values()
+    )
+
+
+    # AJAX request
+    if (
+        request.headers.get(
+            "X-Requested-With"
+        ) == "XMLHttpRequest"
+    ):
+
+        return JsonResponse({
+
+            "success": True,
+
+            "cart_count":
+                cart_count,
+
+            "product_name":
+                product.name,
+
+            "message":
+                f"{product.name} added to cart"
+
+        })
+
+
+    # Normal request fallback
+    return redirect("cart")
 
 def cart(request):
 
