@@ -1,0 +1,380 @@
+{% extends "cafe/base.html" %}
+
+{% block title %}
+Track Order | Tgarden
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* ================================
+   TRACK ORDER PAGE
+================================ */
+
+.track-page {
+    min-height: calc(100vh - 150px);
+    padding: 70px 20px 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(22, 163, 74, 0.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(34, 197, 94, 0.10),
+            transparent 35%
+        ),
+        #f7faf7;
+}
+
+
+/* ================================
+   CARD
+================================ */
+
+.track-card {
+    width: 100%;
+    max-width: 520px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    padding: 50px 40px;
+
+    border-radius: 28px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.10);
+
+    border: 1px solid rgba(22, 163, 74, 0.10);
+
+    animation: cardAppear 0.7s ease;
+}
+
+
+@keyframes cardAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ================================
+   ICON
+================================ */
+
+.track-icon {
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ecfdf3;
+
+    border-radius: 50%;
+
+    font-size: 42px;
+
+    animation: floatIcon 2.5s ease-in-out infinite;
+}
+
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+}
+
+
+/* ================================
+   TITLE
+================================ */
+
+.track-card h1 {
+    margin-bottom: 12px;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    color: #14532d;
+}
+
+
+.track-card p {
+    margin-bottom: 32px;
+
+    color: #64748b;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+/* ================================
+   FORM
+================================ */
+
+.track-form {
+    width: 100%;
+}
+
+
+.track-input {
+    width: 100%;
+
+    padding: 16px 18px;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    outline: none;
+
+    font-size: 16px;
+
+    text-align: center;
+
+    transition: all 0.25s ease;
+
+    box-sizing: border-box;
+
+    margin-bottom: 16px;
+}
+
+
+.track-input:focus {
+    border-color: #16a34a;
+
+    box-shadow:
+        0 0 0 4px rgba(22, 163, 74, 0.10);
+}
+
+
+.track-input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* ================================
+   BUTTON
+================================ */
+
+.track-button {
+    width: 100%;
+
+    border: none;
+
+    padding: 16px 20px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #16a34a,
+        #15803d
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 10px 25px rgba(22, 163, 74, 0.25);
+}
+
+
+.track-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(22, 163, 74, 0.32);
+}
+
+
+.track-button:active {
+    transform: translateY(0);
+}
+
+
+/* ================================
+   ERROR
+================================ */
+
+.error-message {
+
+    margin-top: 20px;
+
+    padding: 14px 16px;
+
+    border-radius: 12px;
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+    border: 1px solid #fecaca;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+/* ================================
+   INFO
+================================ */
+
+.track-info {
+
+    margin-top: 30px;
+
+    padding: 18px;
+
+    background: #f0fdf4;
+
+    border-radius: 14px;
+
+    color: #166534;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    .track-page {
+        padding: 40px 15px 70px;
+    }
+
+    .track-card {
+        padding: 40px 25px;
+        border-radius: 22px;
+    }
+
+    .track-card h1 {
+        font-size: 28px;
+    }
+
+    .track-icon {
+        width: 75px;
+        height: 75px;
+        font-size: 34px;
+    }
+
+}
+
+</style>
+
+
+<section class="track-page">
+
+    <div class="track-card">
+
+        <!-- ICON -->
+        <div class="track-icon">
+            📦
+        </div>
+
+
+        <!-- TITLE -->
+        <h1>
+            Track Your Order
+        </h1>
+
+
+        <p>
+            Enter your order number below to see
+            the latest status of your Tgarden order.
+        </p>
+
+
+        <!-- FORM -->
+        <form method="POST" class="track-form">
+
+            {% csrf_token %}
+
+            <input
+                type="number"
+                name="order_id"
+                class="track-input"
+                placeholder="Enter Order Number"
+                min="1"
+                required
+            >
+
+            <button
+                type="submit"
+                class="track-button"
+            >
+                Track My Order →
+            </button>
+
+        </form>
+
+
+        <!-- ERROR -->
+        {% if error %}
+
+            <div class="error-message">
+                ⚠️ {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- INFO -->
+        <div class="track-info">
+
+            💡 Your order number can be found on
+            the order confirmation page.
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

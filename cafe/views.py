@@ -5,6 +5,7 @@ from django.shortcuts import (
     redirect,
     get_object_or_404
 )
+from django.shortcuts import render, get_object_or_404, redirect
 
 from django.contrib import messages
 
@@ -322,5 +323,61 @@ def checkout(request):
             "cart_items": cart_items,
             "total": total,
             "cart_count": sum(cart_data.values()),
+        }
+    )
+def track_order(request):
+
+    if request.method == "POST":
+
+        order_id = request.POST.get("order_id", "").strip()
+
+        if not order_id:
+            return render(
+                request,
+                "cafe/track_order.html",
+                {
+                    "error": "Please enter your order number."
+                }
+            )
+
+        try:
+
+            order = Order.objects.get(
+                id=int(order_id)
+            )
+
+            return redirect(
+                "order_status",
+                order_id=order.id
+            )
+
+        except (Order.DoesNotExist, ValueError):
+
+            return render(
+                request,
+                "cafe/track_order.html",
+                {
+                    "error": "Order not found. Please check your order number."
+                }
+            )
+
+    # Required for GET /track-order/
+    return render(
+        request,
+        "cafe/track_order.html"
+    )
+
+def order_status(request, order_id):
+
+    order = get_object_or_404(
+        Order.objects.prefetch_related("items"),
+        id=order_id
+    )
+
+    return render(
+        request,
+        "cafe/order_status.html",
+        {
+            "order": order
         }
     )

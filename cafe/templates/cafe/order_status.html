@@ -1,0 +1,609 @@
+{% extends "cafe/base.html" %}
+
+{% block title %}
+Order Status | Tgarden
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.order-status-page {
+    min-height: calc(100vh - 150px);
+    padding: 50px 20px 90px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(22, 163, 74, 0.12),
+            transparent 35%
+        ),
+        #f7faf7;
+}
+
+
+/* MAIN CARD */
+
+.status-card {
+    max-width: 650px;
+    margin: 0 auto;
+
+    background: white;
+
+    border-radius: 28px;
+
+    padding: 40px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.10);
+
+    animation: appear 0.6s ease;
+}
+
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* HEADER */
+
+.status-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.status-icon {
+    width: 80px;
+    height: 80px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background: #ecfdf3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 38px;
+}
+
+.status-header h1 {
+    color: #14532d;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.status-header p {
+    color: #64748b;
+}
+
+
+/* ORDER INFO */
+
+.order-info {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    margin-bottom: 35px;
+}
+
+.info-box {
+    padding: 18px;
+
+    background: #f8fafc;
+
+    border-radius: 14px;
+}
+
+.info-box span {
+    display: block;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.info-box strong {
+    color: #14532d;
+
+    font-size: 18px;
+}
+
+
+/* STATUS */
+
+.current-status {
+    text-align: center;
+
+    padding: 20px;
+
+    background: #ecfdf3;
+
+    border-radius: 16px;
+
+    margin-bottom: 35px;
+}
+
+.current-status span {
+    display: block;
+
+    font-size: 12px;
+
+    color: #64748b;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.status-badge {
+    display: inline-block;
+
+    padding: 9px 20px;
+
+    border-radius: 30px;
+
+    background: #16a34a;
+
+    color: white;
+
+    font-weight: 700;
+
+    text-transform: capitalize;
+}
+
+
+/* PROGRESS */
+
+.progress-title {
+    color: #14532d;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    margin-bottom: 25px;
+}
+
+.progress-container {
+    position: relative;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+}
+
+.progress-container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 18px;
+    left: 8%;
+    right: 8%;
+
+    height: 4px;
+
+    background: #dcfce7;
+
+    z-index: 0;
+}
+
+.progress-step {
+    position: relative;
+
+    z-index: 1;
+
+    text-align: center;
+
+    width: 25%;
+}
+
+.step-circle {
+    width: 36px;
+    height: 36px;
+
+    margin: 0 auto 10px;
+
+    border-radius: 50%;
+
+    background: #e2e8f0;
+
+    color: #64748b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.progress-step.active .step-circle {
+    background: #16a34a;
+
+    color: white;
+
+    box-shadow:
+        0 0 0 5px rgba(22,163,74,0.12);
+}
+
+.progress-step span {
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+.progress-step.active span {
+    color: #14532d;
+
+    font-weight: 700;
+}
+
+
+/* ITEMS */
+
+.items-title {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    color: #14532d;
+
+    margin-bottom: 15px;
+}
+
+.order-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.item-name {
+    color: #334155;
+
+    font-weight: 600;
+}
+
+.item-quantity {
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.item-price {
+    color: #14532d;
+
+    font-weight: 700;
+}
+
+
+/* TOTAL */
+
+.order-total {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 20px;
+
+    padding-top: 20px;
+
+    border-top: 2px solid #e2e8f0;
+}
+
+.order-total span {
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+.order-total strong {
+    font-size: 22px;
+
+    color: #16a34a;
+}
+
+
+/* BUTTON */
+
+.back-button {
+    display: block;
+
+    text-align: center;
+
+    margin-top: 30px;
+
+    padding: 15px;
+
+    border-radius: 14px;
+
+    background: #14532d;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition: 0.25s;
+}
+
+.back-button:hover {
+    background: #166534;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    .status-card {
+        padding: 25px 20px;
+    }
+
+    .status-header h1 {
+        font-size: 27px;
+    }
+
+    .order-info {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-step span {
+        font-size: 10px;
+    }
+
+}
+
+</style>
+
+
+<div class="order-status-page">
+
+    <div class="status-card">
+
+
+        <!-- HEADER -->
+
+        <div class="status-header">
+
+            <div class="status-icon">
+                📦
+            </div>
+
+            <h1>
+                Order #{{ order.id }}
+            </h1>
+
+            <p>
+                Here is the latest status of your order.
+            </p>
+
+        </div>
+
+
+        <!-- ORDER INFO -->
+
+        <div class="order-info">
+
+            <div class="info-box">
+
+                <span>
+                    TABLE
+                </span>
+
+                <strong>
+                    {{ order.table_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    ORDER DATE
+                </span>
+
+                <strong>
+                    {{ order.created_at|date:"d M Y, h:i A" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- CURRENT STATUS -->
+
+        <div class="current-status">
+
+            <span>
+                CURRENT STATUS
+            </span>
+
+            <div class="status-badge">
+                {{ order.get_status_display }}
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-title">
+            Order Progress
+        </div>
+
+
+        <div class="progress-container">
+
+            <div class="progress-step
+                {% if order.status == 'pending' or order.status == 'preparing' or order.status == 'ready' or order.status == 'completed' %}
+                    active
+                {% endif %}
+            ">
+
+                <div class="step-circle">
+                    ✓
+                </div>
+
+                <span>
+                    Received
+                </span>
+
+            </div>
+
+
+            <div class="progress-step
+                {% if order.status == 'preparing' or order.status == 'ready' or order.status == 'completed' %}
+                    active
+                {% endif %}
+            ">
+
+                <div class="step-circle">
+                    ✓
+                </div>
+
+                <span>
+                    Preparing
+                </span>
+
+            </div>
+
+
+            <div class="progress-step
+                {% if order.status == 'ready' or order.status == 'completed' %}
+                    active
+                {% endif %}
+            ">
+
+                <div class="step-circle">
+                    ✓
+                </div>
+
+                <span>
+                    Ready
+                </span>
+
+            </div>
+
+
+            <div class="progress-step
+                {% if order.status == 'completed' %}
+                    active
+                {% endif %}
+            ">
+
+                <div class="step-circle">
+                    ✓
+                </div>
+
+                <span>
+                    Completed
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER ITEMS -->
+
+        <div class="items-title">
+            Your Order
+        </div>
+
+
+        {% for item in order.items.all %}
+
+        <div class="order-item">
+
+            <div>
+
+                <div class="item-name">
+                    {{ item.product.name }}
+                </div>
+
+                <div class="item-quantity">
+                    Quantity: {{ item.quantity }}
+                </div>
+
+            </div>
+
+
+            <div class="item-price">
+                ₹{{ item.price }}
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+        <!-- TOTAL -->
+
+        <div class="order-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong>
+                ₹{{ order.total_amount }}
+            </strong>
+
+        </div>
+
+
+        <!-- BACK BUTTON -->
+
+        <a
+            href="{% url 'home' %}"
+            class="back-button"
+        >
+            ← Back to Menu
+        </a>
+
+
+    </div>
+
+</div>
+
+{% endblock %}
