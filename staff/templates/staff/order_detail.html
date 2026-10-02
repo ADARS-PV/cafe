@@ -1,19 +1,29 @@
 {% extends "staff/base.html" %}
 
+{% block title %}
+Order #{{ order.id }} | Tgarden
+{% endblock %}
+
+{% block page_title %}
+Order Details
+{% endblock %}
+
 {% block content %}
 
 <style>
+
 /* =========================================================
-   TGARDEN — ORDER DETAIL
-   Professional Café Management UI
+   TGARDEN ORDER DETAIL
+   Professional Café / POS Management UI
 ========================================================= */
 
 .order-detail-page {
     max-width: 1450px;
     margin: 0 auto;
-    padding: 30px 34px 55px;
+    padding: 25px 30px 60px;
     color: #173b2b;
 }
+
 
 /* =========================================================
    TOP BAR
@@ -23,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
 }
 
 .back-link {
@@ -31,60 +41,132 @@
     align-items: center;
     gap: 7px;
 
+    padding: 9px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe8e3;
+
+    border-radius: 9px;
+
     color: #087443;
+
     text-decoration: none;
 
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
 
-    transition: .2s ease;
+    transition: all .2s ease;
 }
 
 .back-link:hover {
-    color: #064f2e;
+    background: #087443;
+    color: #ffffff;
+
     transform: translateX(-2px);
 }
 
+
 /* =========================================================
-   ORDER HEADER
+   ORDER HERO
 ========================================================= */
 
-.order-header-card {
+.order-hero {
+    position: relative;
+
+    overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 25px 28px;
+    padding: 28px 30px;
 
-    background: #ffffff;
+    margin-bottom: 18px;
 
-    border: 1px solid #e4ebe7;
-    border-radius: 16px;
+    border-radius: 20px;
 
-    box-shadow: 0 5px 22px rgba(20, 60, 42, .05);
+    background:
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(255,255,255,.14),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #075c35,
+            #087443 60%,
+            #0b8f50
+        );
 
-    margin-bottom: 20px;
+    color: white;
+
+    box-shadow:
+        0 12px 35px rgba(8,116,67,.16);
 }
 
-.order-header-left {
+.order-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    right: -70px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.07);
+}
+
+.order-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 110px;
+    height: 110px;
+
+    right: 130px;
+    bottom: -75px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.05);
+}
+
+.order-hero-left {
+    position: relative;
+    z-index: 2;
+
     display: flex;
     align-items: center;
-    gap: 17px;
+
+    gap: 16px;
 }
 
 .order-icon {
-    width: 58px;
-    height: 58px;
+    width: 62px;
+    height: 62px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: #eaf7ef;
+    border-radius: 16px;
 
-    border-radius: 14px;
+    background: rgba(255,255,255,.13);
 
-    font-size: 25px;
+    border: 1px solid rgba(255,255,255,.15);
+
+    font-size: 27px;
+}
+
+.order-heading {
+    position: relative;
+    z-index: 2;
 }
 
 .order-heading small {
@@ -92,47 +174,78 @@
 
     margin-bottom: 5px;
 
-    color: #8a9790;
+    color: rgba(255,255,255,.68);
 
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
 
+    letter-spacing: 1.2px;
+
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .order-heading h1 {
     margin: 0;
 
-    color: #173b2b;
-
     font-size: 28px;
     font-weight: 800;
+
+    letter-spacing: -.5px;
 }
 
 .order-heading p {
     margin: 6px 0 0;
 
-    color: #89958f;
+    color: rgba(255,255,255,.76);
 
-    font-size: 12px;
+    font-size: 11px;
 }
 
+
 /* =========================================================
-   STATUS
+   HERO STATUS
 ========================================================= */
+
+.hero-status {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 6px;
+}
+
+.hero-status-label {
+    color: rgba(255,255,255,.65);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: .8px;
+
+    text-transform: uppercase;
+}
 
 .order-status {
     display: inline-flex;
+
     align-items: center;
     gap: 7px;
 
-    padding: 8px 14px;
+    padding: 9px 16px;
 
     border-radius: 30px;
 
+    background: #ffffff;
+
     font-size: 11px;
     font-weight: 800;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.08);
 }
 
 .order-status::before {
@@ -148,28 +261,24 @@
 
 .status-pending {
     color: #bd4a39;
-    background: #fff0ed;
 }
 
 .status-preparing {
     color: #a06b00;
-    background: #fff7df;
 }
 
 .status-ready {
     color: #087443;
-    background: #e8f7ef;
 }
 
 .status-completed {
     color: #087443;
-    background: #dff4e6;
 }
 
 .status-cancelled {
-    color: #777;
-    background: #eeeeee;
+    color: #777777;
 }
+
 
 /* =========================================================
    SUMMARY CARDS
@@ -178,28 +287,77 @@
 .order-summary-grid {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
-    gap: 15px;
+    gap: 14px;
 
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 }
 
 .summary-card {
-    padding: 18px 19px;
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 18px;
 
     background: #ffffff;
 
     border: 1px solid #e4ebe7;
-    border-radius: 14px;
 
-    box-shadow: 0 4px 16px rgba(20, 60, 42, .04);
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(20,60,42,.045);
+
+    transition: all .2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(20,60,42,.08);
+}
+
+.summary-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 65px;
+    height: 65px;
+
+    right: -25px;
+    bottom: -30px;
+
+    border-radius: 50%;
+
+    background: rgba(8,116,67,.035);
+}
+
+.summary-icon {
+    float: right;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eef7f1;
+
+    font-size: 15px;
 }
 
 .summary-label {
     display: block;
 
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 
     color: #89958f;
 
@@ -220,14 +378,17 @@
 
 .summary-value.green {
     color: #087443;
+
+    font-size: 20px;
 }
 
 .summary-value small {
     color: #89958f;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
 }
+
 
 /* =========================================================
    MAIN GRID
@@ -238,34 +399,39 @@
 
     grid-template-columns:
         minmax(0, 1fr)
-        300px;
+        340px;
 
-    gap: 20px;
+    gap: 18px;
 
     align-items: start;
 }
 
+
 /* =========================================================
-   CARD
+   LEFT DETAIL CARD
 ========================================================= */
 
 .detail-card {
     background: #ffffff;
 
     border: 1px solid #e4ebe7;
-    border-radius: 16px;
 
-    box-shadow: 0 5px 22px rgba(20, 60, 42, .045);
+    border-radius: 17px;
+
+    box-shadow:
+        0 5px 22px rgba(20,60,42,.045);
 
     overflow: hidden;
 }
 
 .detail-card-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 21px 24px;
+    padding: 20px 22px;
 
     border-bottom: 1px solid #edf1ef;
 }
@@ -275,17 +441,31 @@
 
     color: #173b2b;
 
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 800;
 }
 
 .detail-card-header p {
     margin: 5px 0 0;
 
-    color: #8b9690;
+    color: #89958f;
 
-    font-size: 11px;
+    font-size: 10px;
 }
+
+.items-count {
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #eef7f1;
+
+    color: #087443;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
 
 /* =========================================================
    ITEMS TABLE
@@ -300,7 +480,7 @@
 
     border-collapse: collapse;
 
-    min-width: 600px;
+    min-width: 620px;
 }
 
 .items-table thead {
@@ -312,10 +492,12 @@
 
     color: #7e8b84;
 
-    font-size: 9px;
+    border-bottom: 1px solid #e5ebe8;
+
+    font-size: 8px;
     font-weight: 800;
 
-    letter-spacing: .7px;
+    letter-spacing: .8px;
 
     text-transform: uppercase;
 
@@ -323,48 +505,66 @@
 }
 
 .items-table td {
-    padding: 17px 20px;
+    padding: 16px 20px;
 
-    border-top: 1px solid #edf1ef;
+    border-bottom: 1px solid #edf1ef;
 
     color: #536159;
 
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .items-table tbody tr {
-    transition: .15s ease;
+    transition: background .15s ease;
 }
 
 .items-table tbody tr:hover {
     background: #fbfdfc;
 }
 
-/* PRODUCT */
-
-.product-name {
-    color: #173b2b;
-
-    font-size: 13px;
-    font-weight: 750;
+.items-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .product-number {
     width: 30px;
 
-    color: #9aa59f;
+    color: #a2ada7;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
-/* QUANTITY */
+.product-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #173b2b;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.product-dot {
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #16a34a;
+}
 
 .quantity-badge {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
-    min-width: 32px;
+    min-width: 35px;
 
     padding: 5px 9px;
 
@@ -374,26 +574,24 @@
 
     border-radius: 7px;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
 }
-
-/* PRICE */
 
 .price {
     color: #526158;
 
-    font-size: 12px;
+    font-size: 11px;
 }
-
-/* SUBTOTAL */
 
 .subtotal {
     color: #087443 !important;
 
-    font-size: 13px !important;
+    font-size: 12px !important;
+
     font-weight: 800 !important;
 }
+
 
 /* =========================================================
    TOTAL
@@ -401,260 +599,724 @@
 
 .items-total {
     display: flex;
+
     align-items: center;
-    justify-content: flex-end;
-    gap: 35px;
 
-    padding: 19px 24px;
+    justify-content: space-between;
 
-    background: #fafcfb;
+    padding: 20px 23px;
 
-    border-top: 1px solid #e5ebe8;
+    background:
+        linear-gradient(
+            135deg,
+            #f5faf7,
+            #eef8f2
+        );
+
+    border-top: 1px solid #dfece4;
 }
 
-.items-total span {
-    color: #7e8b84;
+.total-label {
+    color: #6f7d75;
 
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    text-transform: uppercase;
 }
 
-.items-total strong {
+.total-amount {
     color: #087443;
 
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 800;
 }
 
+
 /* =========================================================
-   SIDE PANEL
+   RIGHT SIDE CONTROL CARD
 ========================================================= */
 
 .side-card {
-    padding: 22px;
-
     background: #ffffff;
 
     border: 1px solid #e4ebe7;
-    border-radius: 16px;
 
-    box-shadow: 0 5px 22px rgba(20, 60, 42, .045);
+    border-radius: 17px;
+
+    box-shadow:
+        0 5px 22px rgba(20,60,42,.045);
+
+    overflow: hidden;
 }
 
-.side-card h3 {
-    margin: 0 0 5px;
+
+/* =========================================================
+   STATUS CONTROL HEADER
+========================================================= */
+
+.status-control-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f4faf6,
+            #ffffff
+        );
+
+    border-bottom: 1px solid #e5eee8;
+}
+
+.status-control-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #087443;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.status-control-header h3 {
+    margin: 0;
 
     color: #173b2b;
 
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 800;
 }
 
-.side-card-description {
-    margin: 0 0 18px;
+.status-control-header p {
+    margin: 5px 0 0;
 
-    color: #8b9690;
+    color: #89958f;
 
-    font-size: 11px;
+    font-size: 10px;
+
+    line-height: 1.5;
 }
 
+.status-control-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #e4f5eb;
+
+    font-size: 17px;
+}
+
+
 /* =========================================================
-   INFO LIST
+   CURRENT STATUS
 ========================================================= */
 
-.info-list {
+.current-status-card {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 16px 20px;
+
+    padding: 13px 15px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e5ece8;
+
+    border-radius: 11px;
+}
+
+.current-status-left span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #89958f;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: .8px;
+}
+
+.current-status-left strong {
+    color: #173b2b;
+
+    font-size: 13px;
+}
+
+.current-status-dot {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 5px rgba(22,163,74,.08);
+}
+
+.status-dot-pending {
+    background: #e05b45;
+}
+
+.status-dot-preparing {
+    background: #d79a20;
+}
+
+.status-dot-ready {
+    background: #16a34a;
+}
+
+.status-dot-completed {
+    background: #087443;
+}
+
+.status-dot-cancelled {
+    background: #777777;
+}
+
+
+/* =========================================================
+   ORDER PROGRESS
+========================================================= */
+
+.progress-section {
+    padding: 0 20px 18px;
+}
+
+.progress-title {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.progress-title span {
+    color: #173b2b;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.progress-title small {
+    color: #a0aaa5;
+
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.status-progress {
+    position: relative;
+
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.status-progress::before {
+    content: "";
+
+    position: absolute;
+
+    top: 10px;
+
+    left: 11px;
+    right: 11px;
+
+    height: 3px;
+
+    background: #e2ebe6;
+
+    z-index: 0;
+}
+
+.progress-step {
+    position: relative;
+
+    z-index: 1;
+
     display: flex;
 
     flex-direction: column;
 
-    gap: 14px;
-
-    margin-bottom: 22px;
-}
-
-.info-row {
-    display: flex;
-
-    justify-content: space-between;
     align-items: center;
 
-    padding-bottom: 13px;
+    width: 25%;
+}
+
+.progress-circle {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e1e9e5;
+
+    border: 3px solid #ffffff;
+
+    color: #89958f;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 0 1px #e1e9e5;
+}
+
+.progress-step.active .progress-circle {
+    background: #16a34a;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 0 0 1px #16a34a,
+        0 0 0 4px rgba(22,163,74,.08);
+}
+
+.progress-step span {
+    margin-top: 8px;
+
+    color: #89958f;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+.progress-step.active span {
+    color: #087443;
+}
+
+
+/* =========================================================
+   NEXT ACTION
+========================================================= */
+
+.next-action-section {
+    padding: 18px 20px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #edf1ef;
 
     border-bottom: 1px solid #edf1ef;
 }
 
-.info-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
+.next-action-label {
+    margin-bottom: 9px;
 
-.info-row span {
-    color: #8b9690;
+    color: #89958f;
 
-    font-size: 10px;
-}
-
-.info-row strong {
-    color: #31463a;
-
-    font-size: 11px;
-}
-
-/* =========================================================
-   ACTIONS
-========================================================= */
-
-.action-title {
-    margin: 23px 0 12px;
-
-    color: #173b2b;
-
-    font-size: 13px;
+    font-size: 8px;
     font-weight: 800;
+
+    letter-spacing: .8px;
 }
 
-.action-buttons {
+.primary-status-action {
+    width: 100%;
+
     display: flex;
 
-    flex-direction: column;
+    align-items: center;
 
-    gap: 8px;
-}
+    gap: 11px;
 
-/*
-   IMPORTANT:
-   These are now FORMS instead of links.
-   This allows Django to receive POST requests.
-*/
+    padding: 12px;
 
-.action-buttons form {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    border: none;
 
-.action-button {
-    width: 100%;
+    border-radius: 11px;
 
-    display: block;
+    color: #ffffff;
 
-    padding: 11px 13px;
-
-    border: 1px solid transparent;
-
-    border-radius: 8px;
-
-    text-align: center;
-
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 800;
+    text-align: left;
 
     cursor: pointer;
 
     transition: all .2s ease;
 }
 
-.action-button:hover {
-    transform: translateY(-1px);
+.primary-status-action:hover {
+    transform: translateY(-2px);
 
-    filter: brightness(.96);
-
-    box-shadow: 0 4px 10px rgba(20, 60, 42, .08);
+    box-shadow:
+        0 8px 20px rgba(8,116,67,.18);
 }
 
-.action-button:active {
-    transform: translateY(0);
+.preparing-action {
+    background:
+        linear-gradient(
+            135deg,
+            #b7790a,
+            #d49a24
+        );
 }
 
-/* STATUS BUTTONS */
-
-.action-pending {
-    background: #fff0ed;
-    color: #bd4a39;
+.ready-action {
+    background:
+        linear-gradient(
+            135deg,
+            #087443,
+            #159653
+        );
 }
 
-.action-preparing {
-    background: #fff7df;
-    color: #9a6800;
+.completed-action {
+    background:
+        linear-gradient(
+            135deg,
+            #075c35,
+            #087443
+        );
 }
 
-.action-ready {
-    background: #e8f7ef;
-    color: #087443;
+.action-main-icon {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.15);
+
+    font-size: 16px;
 }
 
-.action-completed {
-    background: #dff4e6;
-    color: #087443;
+.action-main-text {
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
 }
 
-.action-cancelled {
-    background: #f0f0f0;
-    color: #666;
+.action-main-text strong {
+    font-size: 11px;
+    font-weight: 800;
 }
 
-/* CURRENT STATUS */
+.action-main-text small {
+    margin-top: 3px;
 
-.current-status-box {
-    margin-top: 18px;
+    color: rgba(255,255,255,.72);
+
+    font-size: 8px;
+}
+
+.action-arrow {
+    font-size: 18px;
+
+    opacity: .75;
+}
+
+
+/* =========================================================
+   COMPLETED MESSAGE
+========================================================= */
+
+.completed-message {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
     padding: 12px;
+
+    background: #eaf8ef;
+
+    border: 1px solid #d5eddd;
+
+    border-radius: 11px;
+}
+
+.completed-icon {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #16a34a;
+
+    color: #ffffff;
+
+    font-weight: 800;
+}
+
+.completed-message strong {
+    display: block;
+
+    color: #087443;
+
+    font-size: 11px;
+}
+
+.completed-message small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #6e8276;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   OTHER ACTIONS
+========================================================= */
+
+.other-actions {
+    padding: 17px 20px;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+.other-actions-title {
+    margin-bottom: 9px;
+
+    color: #173b2b;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.action-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 7px;
+}
+
+.action-grid form {
+    margin: 0;
+}
+
+.secondary-action {
+    width: 100%;
+
+    padding: 9px 7px;
+
+    border-radius: 8px;
+
+    border: 1px solid #e2e9e5;
 
     background: #f8faf9;
 
-    border: 1px solid #edf1ef;
+    color: #52645a;
 
-    border-radius: 10px;
+    font-family: inherit;
 
-    text-align: center;
-}
-
-.current-status-box span {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: #8b9690;
-
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 800;
 
-    text-transform: uppercase;
-    letter-spacing: .6px;
+    cursor: pointer;
+
+    transition: .2s ease;
 }
 
+.secondary-action:hover {
+    transform: translateY(-1px);
+
+    background: #ffffff;
+}
+
+.pending-action:hover {
+    color: #bd4a39;
+
+    border-color: #f1d0c9;
+
+    background: #fff5f2;
+}
+
+.preparing-secondary:hover {
+    color: #9a6800;
+
+    border-color: #eedcae;
+
+    background: #fffaf0;
+}
+
+.ready-secondary:hover {
+    color: #087443;
+
+    border-color: #cfe8d8;
+
+    background: #f1fbf4;
+}
+
+.cancel-action:hover {
+    color: #bd4a39;
+
+    border-color: #f1d0c9;
+
+    background: #fff4f1;
+}
+
+
 /* =========================================================
-   ORDER FOOTER
+   ORDER INFORMATION
+========================================================= */
+
+.order-information {
+    padding: 18px 20px 20px;
+}
+
+.information-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+    color: #173b2b;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.information-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eef7f1;
+
+    font-size: 13px;
+}
+
+.info-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.info-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 9px 0;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row span {
+    color: #89958f;
+
+    font-size: 9px;
+}
+
+.info-row strong {
+    color: #31463a;
+
+    font-size: 10px;
+}
+
+.info-row.total-row strong {
+    color: #087443;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   FOOTER
 ========================================================= */
 
 .order-footer {
-    margin-top: 20px;
+    display: flex;
 
-    padding: 17px 22px;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 18px;
+
+    padding: 14px 18px;
 
     background: #f4faf6;
 
     border: 1px solid #dceee3;
 
-    border-radius: 13px;
+    border-radius: 12px;
 
-    color: #63736a;
+    color: #68766e;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .order-footer strong {
     color: #087443;
 }
 
+
 /* =========================================================
    RESPONSIVE
 ========================================================= */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
 
     .order-summary-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
     .order-main-grid {
@@ -663,45 +1325,91 @@
 
 }
 
-@media (max-width: 650px) {
+
+@media (max-width: 700px) {
 
     .order-detail-page {
-        padding: 20px 14px 40px;
+        padding: 18px 13px 40px;
     }
 
-    .order-header-card {
+    .order-hero {
         align-items: flex-start;
 
         flex-direction: column;
 
         gap: 18px;
+
+        padding: 23px;
+    }
+
+    .hero-status {
+        width: 100%;
+
+        align-items: flex-start;
+    }
+
+    .order-status {
+        width: 100%;
+
+        justify-content: center;
+
+        box-sizing: border-box;
+    }
+
+    .order-heading h1 {
+        font-size: 23px;
     }
 
     .order-summary-grid {
         grid-template-columns: 1fr;
     }
 
+}
+
+
+@media (max-width: 500px) {
+
+    .order-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 22px;
+    }
+
     .order-heading h1 {
-        font-size: 24px;
+        font-size: 20px;
     }
 
-    .order-header-card > div:last-child {
-        width: 100%;
+    .order-heading p {
+        font-size: 10px;
     }
 
-    .order-status {
-        width: 100%;
-        justify-content: center;
+    .detail-card-header {
+        padding: 17px;
+    }
+
+    .items-total {
+        padding: 17px;
+    }
+
+    .total-amount {
+        font-size: 21px;
+    }
+
+    .action-grid {
+        grid-template-columns: 1fr;
     }
 
 }
+
 </style>
 
 
 <div class="order-detail-page">
 
+
     <!-- =====================================================
-         BACK
+         BACK TO ORDERS
     ====================================================== -->
 
     <div class="order-topbar">
@@ -717,12 +1425,12 @@
 
 
     <!-- =====================================================
-         ORDER HEADER
+         ORDER HERO
     ====================================================== -->
 
-    <div class="order-header-card">
+    <div class="order-hero">
 
-        <div class="order-header-left">
+        <div class="order-hero-left">
 
             <div class="order-icon">
                 🧾
@@ -748,7 +1456,13 @@
         </div>
 
 
-        <div>
+        <!-- CURRENT STATUS -->
+
+        <div class="hero-status">
+
+            <span class="hero-status-label">
+                Current Status
+            </span>
 
             <span
                 class="
@@ -765,29 +1479,38 @@
 
 
     <!-- =====================================================
-         SUMMARY
+         SUMMARY CARDS
     ====================================================== -->
 
     <div class="order-summary-grid">
 
+
         <!-- TABLE -->
 
         <div class="summary-card">
+
+            <div class="summary-icon">
+                🪑
+            </div>
 
             <span class="summary-label">
                 Table
             </span>
 
             <div class="summary-value">
-                🪑 {{ order.table_name }}
+                {{ order.table_name }}
             </div>
 
         </div>
 
 
-        <!-- TIME -->
+        <!-- ORDER TIME -->
 
         <div class="summary-card">
+
+            <div class="summary-icon">
+                🕐
+            </div>
 
             <span class="summary-label">
                 Order Time
@@ -803,6 +1526,10 @@
         <!-- ITEMS -->
 
         <div class="summary-card">
+
+            <div class="summary-icon">
+                🍽️
+            </div>
 
             <span class="summary-label">
                 Items
@@ -825,14 +1552,16 @@
 
         <div class="summary-card">
 
+            <div class="summary-icon">
+                ₹
+            </div>
+
             <span class="summary-label">
                 Order Total
             </span>
 
             <div class="summary-value green">
-
                 ₹{{ order.total_amount|floatformat:2 }}
-
             </div>
 
         </div>
@@ -841,17 +1570,20 @@
 
 
     <!-- =====================================================
-         MAIN
+         MAIN CONTENT
     ====================================================== -->
 
     <div class="order-main-grid">
 
 
         <!-- =================================================
-             ORDER ITEMS
+             LEFT — ORDER ITEMS
         ================================================== -->
 
         <div class="detail-card">
+
+
+            <!-- HEADER -->
 
             <div class="detail-card-header">
 
@@ -868,13 +1600,18 @@
 
                 </div>
 
-                <strong>
+
+                <span class="items-count">
+
                     {{ order.items.all|length }}
                     item{{ order.items.all|length|pluralize }}
-                </strong>
+
+                </span>
 
             </div>
 
+
+            <!-- ITEMS TABLE -->
 
             <div class="items-table-wrapper">
 
@@ -884,15 +1621,25 @@
 
                         <tr>
 
-                            <th>#</th>
+                            <th>
+                                #
+                            </th>
 
-                            <th>Product</th>
+                            <th>
+                                Product
+                            </th>
 
-                            <th>Quantity</th>
+                            <th>
+                                Quantity
+                            </th>
 
-                            <th>Unit Price</th>
+                            <th>
+                                Unit Price
+                            </th>
 
-                            <th>Subtotal</th>
+                            <th>
+                                Subtotal
+                            </th>
 
                         </tr>
 
@@ -901,7 +1648,7 @@
 
                     <tbody>
 
-                        {% for item in order.items.all %}
+                    {% for item in order.items.all %}
 
                         <tr>
 
@@ -913,7 +1660,11 @@
                             <td>
 
                                 <span class="product-name">
+
+                                    <span class="product-dot"></span>
+
                                     {{ item.product.name }}
+
                                 </span>
 
                             </td>
@@ -922,7 +1673,7 @@
                             <td>
 
                                 <span class="quantity-badge">
-                                    {{ item.quantity }}
+                                    × {{ item.quantity }}
                                 </span>
 
                             </td>
@@ -943,7 +1694,8 @@
 
                         </tr>
 
-                        {% empty %}
+
+                    {% empty %}
 
                         <tr>
 
@@ -951,18 +1703,22 @@
                                 colspan="5"
                                 style="
                                     text-align:center;
-                                    padding:40px;
+                                    padding:45px 20px;
                                     color:#89958f;
                                 "
                             >
 
-                                No items found.
+                                🍽️
+
+                                <br><br>
+
+                                No items found for this order.
 
                             </td>
 
                         </tr>
 
-                        {% endfor %}
+                    {% endfor %}
 
                     </tbody>
 
@@ -975,11 +1731,11 @@
 
             <div class="items-total">
 
-                <span>
-                    ORDER TOTAL
+                <span class="total-label">
+                    Order Total
                 </span>
 
-                <strong>
+                <strong class="total-amount">
                     ₹{{ order.total_amount|floatformat:2 }}
                 </strong>
 
@@ -989,83 +1745,223 @@
 
 
         <!-- =================================================
-             SIDE PANEL
+             RIGHT — STATUS CONTROL
         ================================================== -->
 
         <div class="side-card">
 
-            <h3>
-                Order Information
-            </h3>
 
-            <p class="side-card-description">
-                Quick information about this order.
-            </p>
+            <!-- STATUS HEADER -->
+
+            <div class="status-control-header">
+
+                <div>
+
+                    <span class="status-control-label">
+                        ORDER CONTROL
+                    </span>
+
+                    <h3>
+                        Update Order Status
+                    </h3>
+
+                    <p>
+                        Move this order through the
+                        preparation process.
+                    </p>
+
+                </div>
 
 
-            <div class="info-list">
+                <div class="status-control-icon">
+                    ⚡
+                </div>
 
-                <div class="info-row">
+            </div>
+
+
+            <!-- CURRENT STATUS -->
+
+            <div class="current-status-card">
+
+                <div class="current-status-left">
 
                     <span>
-                        Order ID
+                        CURRENT STATUS
                     </span>
 
                     <strong>
-                        #{{ order.id }}
+                        {{ order.get_status_display }}
                     </strong>
 
                 </div>
 
 
-                <div class="info-row">
+                <div
+                    class="
+                        current-status-dot
+                        status-dot-{{ order.status|lower }}
+                    "
+                ></div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROGRESS
+            ================================================== -->
+
+            <div class="progress-section">
+
+                <div class="progress-title">
 
                     <span>
-                        Table
+                        Order Progress
                     </span>
 
-                    <strong>
-                        {{ order.table_name }}
-                    </strong>
+                    <small>
+
+                        {% if order.status == "pending" %}
+                            Step 1 of 4
+
+                        {% elif order.status == "preparing" %}
+                            Step 2 of 4
+
+                        {% elif order.status == "ready" %}
+                            Step 3 of 4
+
+                        {% elif order.status == "completed" %}
+                            Step 4 of 4
+
+                        {% elif order.status == "cancelled" %}
+                            Cancelled
+
+                        {% else %}
+                            Order Status
+                        {% endif %}
+
+                    </small>
 
                 </div>
 
 
-                <div class="info-row">
-
-                    <span>
-                        Date
-                    </span>
-
-                    <strong>
-                        {{ order.created_at|date:"d M Y" }}
-                    </strong>
-
-                </div>
+                <div class="status-progress">
 
 
-                <div class="info-row">
+                    <!-- RECEIVED -->
 
-                    <span>
-                        Time
-                    </span>
+                    <div
+                        class="
+                            progress-step
 
-                    <strong>
-                        {{ order.created_at|date:"h:i A" }}
-                    </strong>
+                            {% if order.status == 'pending' or order.status == 'preparing' or order.status == 'ready' or order.status == 'completed' %}
+                                active
+                            {% endif %}
+                        "
+                    >
 
-                </div>
+                        <div class="progress-circle">
+
+                            {% if order.status == 'pending' or order.status == 'preparing' or order.status == 'ready' or order.status == 'completed' %}
+                                ✓
+                            {% else %}
+                                1
+                            {% endif %}
+
+                        </div>
+
+                        <span>
+                            Received
+                        </span>
+
+                    </div>
 
 
-                <div class="info-row">
+                    <!-- PREPARING -->
 
-                    <span>
-                        Total
-                    </span>
+                    <div
+                        class="
+                            progress-step
 
-                    <strong style="color:#087443;">
-                        ₹{{ order.total_amount|floatformat:2 }}
-                    </strong>
+                            {% if order.status == 'preparing' or order.status == 'ready' or order.status == 'completed' %}
+                                active
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="progress-circle">
+
+                            {% if order.status == 'preparing' or order.status == 'ready' or order.status == 'completed' %}
+                                ✓
+                            {% else %}
+                                2
+                            {% endif %}
+
+                        </div>
+
+                        <span>
+                            Preparing
+                        </span>
+
+                    </div>
+
+
+                    <!-- READY -->
+
+                    <div
+                        class="
+                            progress-step
+
+                            {% if order.status == 'ready' or order.status == 'completed' %}
+                                active
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="progress-circle">
+
+                            {% if order.status == 'ready' or order.status == 'completed' %}
+                                ✓
+                            {% else %}
+                                3
+                            {% endif %}
+
+                        </div>
+
+                        <span>
+                            Ready
+                        </span>
+
+                    </div>
+
+
+                    <!-- COMPLETED -->
+
+                    <div
+                        class="
+                            progress-step
+
+                            {% if order.status == 'completed' %}
+                                active
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="progress-circle">
+
+                            {% if order.status == 'completed' %}
+                                ✓
+                            {% else %}
+                                4
+                            {% endif %}
+
+                        </div>
+
+                        <span>
+                            Completed
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -1073,142 +1969,400 @@
 
 
             <!-- =================================================
-                 STATUS ACTIONS
+                 NEXT ACTION
             ================================================== -->
 
-            <div class="action-title">
-                Update Order Status
-            </div>
+            <div class="next-action-section">
 
-
-            <div class="action-buttons">
+                <div class="next-action-label">
+                    NEXT ACTION
+                </div>
 
 
                 <!-- PENDING -->
 
-                <form method="post">
+                {% if order.status == "pending" %}
 
-                    {% csrf_token %}
+                    <form method="post">
 
-                    <input
-                        type="hidden"
-                        name="status"
-                        value="pending"
-                    >
+                        {% csrf_token %}
 
-                    <button
-                        type="submit"
-                        class="action-button action-pending"
-                    >
-                        Mark as Pending
-                    </button>
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="preparing"
+                        >
 
-                </form>
+                        <button
+                            type="submit"
+                            class="primary-status-action preparing-action"
+                        >
+
+                            <span class="action-main-icon">
+                                🍳
+                            </span>
+
+                            <span class="action-main-text">
+
+                                <strong>
+                                    Start Preparing
+                                </strong>
+
+                                <small>
+                                    Kitchen has started preparing
+                                    this order
+                                </small>
+
+                            </span>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </form>
 
 
                 <!-- PREPARING -->
 
-                <form method="post">
+                {% elif order.status == "preparing" %}
 
-                    {% csrf_token %}
+                    <form method="post">
 
-                    <input
-                        type="hidden"
-                        name="status"
-                        value="preparing"
-                    >
+                        {% csrf_token %}
 
-                    <button
-                        type="submit"
-                        class="action-button action-preparing"
-                    >
-                        Start Preparing
-                    </button>
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="ready"
+                        >
 
-                </form>
+                        <button
+                            type="submit"
+                            class="primary-status-action ready-action"
+                        >
+
+                            <span class="action-main-icon">
+                                🔔
+                            </span>
+
+                            <span class="action-main-text">
+
+                                <strong>
+                                    Mark as Ready
+                                </strong>
+
+                                <small>
+                                    Notify that the order is ready
+                                </small>
+
+                            </span>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </form>
 
 
                 <!-- READY -->
 
-                <form method="post">
+                {% elif order.status == "ready" %}
 
-                    {% csrf_token %}
+                    <form method="post">
 
-                    <input
-                        type="hidden"
-                        name="status"
-                        value="ready"
-                    >
+                        {% csrf_token %}
 
-                    <button
-                        type="submit"
-                        class="action-button action-ready"
-                    >
-                        Mark as Ready
-                    </button>
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="completed"
+                        >
 
-                </form>
+                        <button
+                            type="submit"
+                            class="primary-status-action completed-action"
+                        >
+
+                            <span class="action-main-icon">
+                                ✓
+                            </span>
+
+                            <span class="action-main-text">
+
+                                <strong>
+                                    Complete Order
+                                </strong>
+
+                                <small>
+                                    Customer has received the order
+                                </small>
+
+                            </span>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </form>
 
 
                 <!-- COMPLETED -->
 
-                <form method="post">
+                {% elif order.status == "completed" %}
 
-                    {% csrf_token %}
+                    <div class="completed-message">
 
-                    <input
-                        type="hidden"
-                        name="status"
-                        value="completed"
-                    >
+                        <div class="completed-icon">
+                            ✓
+                        </div>
 
-                    <button
-                        type="submit"
-                        class="action-button action-completed"
-                    >
-                        ✓ Complete Order
-                    </button>
+                        <div>
 
-                </form>
+                            <strong>
+                                Order Completed
+                            </strong>
 
+                            <small>
+                                This order has been successfully
+                                completed.
+                            </small>
 
-                <!-- CANCELLED -->
+                        </div>
 
-                <form method="post">
+                    </div>
 
-                    {% csrf_token %}
-
-                    <input
-                        type="hidden"
-                        name="status"
-                        value="cancelled"
-                    >
-
-                    <button
-                        type="submit"
-                        class="action-button action-cancelled"
-                    >
-                        Cancel Order
-                    </button>
-
-                </form>
+                {% endif %}
 
             </div>
 
 
-            <!-- CURRENT STATUS -->
+            <!-- =================================================
+                 OTHER ACTIONS
+            ================================================== -->
 
-            <div class="current-status-box">
+            {% if order.status != "completed" and order.status != "cancelled" %}
 
-                <span>
-                    Current Status
-                </span>
+                <div class="other-actions">
 
-                <strong>
-                    {{ order.get_status_display }}
-                </strong>
+                    <div class="other-actions-title">
+                        Other Actions
+                    </div>
+
+
+                    <div class="action-grid">
+
+
+                        <!-- PENDING -->
+
+                        {% if order.status != "pending" %}
+
+                            <form method="post">
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="status"
+                                    value="pending"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="secondary-action pending-action"
+                                >
+                                    ⏳ Pending
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+
+                        <!-- PREPARING -->
+
+                        {% if order.status != "preparing" %}
+
+                            <form method="post">
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="status"
+                                    value="preparing"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="secondary-action preparing-secondary"
+                                >
+                                    🍳 Preparing
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+
+                        <!-- READY -->
+
+                        {% if order.status != "ready" %}
+
+                            <form method="post">
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="status"
+                                    value="ready"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="secondary-action ready-secondary"
+                                >
+                                    🔔 Ready
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+
+                        <!-- CANCEL -->
+
+                        <form
+                            method="post"
+                            onsubmit="
+                                return confirm(
+                                    'Are you sure you want to cancel this order?'
+                                );
+                            "
+                        >
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="status"
+                                value="cancelled"
+                            >
+
+                            <button
+                                type="submit"
+                                class="secondary-action cancel-action"
+                            >
+                                ✕ Cancel Order
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 ORDER INFORMATION
+            ================================================== -->
+
+            <div class="order-information">
+
+                <div class="information-title">
+
+                    <span class="information-icon">
+                        📋
+                    </span>
+
+                    <span>
+                        Order Information
+                    </span>
+
+                </div>
+
+
+                <div class="info-list">
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Order ID
+                        </span>
+
+                        <strong>
+                            #{{ order.id }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Table
+                        </span>
+
+                        <strong>
+                            {{ order.table_name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Date
+                        </span>
+
+                        <strong>
+                            {{ order.created_at|date:"d M Y" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>
+                            Time
+                        </span>
+
+                        <strong>
+                            {{ order.created_at|date:"h:i A" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row total-row">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            ₹{{ order.total_amount|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
 
             </div>
+
 
         </div>
 
@@ -1223,30 +2377,32 @@
 
         🌿
 
-        Order
+        <span>
 
-        <strong>
-            #{{ order.id }}
-        </strong>
+            Order
 
-        from table
+            <strong>
+                #{{ order.id }}
+            </strong>
 
-        <strong>
-            {{ order.table_name }}
-        </strong>
+            from table
 
-        ·
+            <strong>
+                {{ order.table_name }}
+            </strong>
 
-        {{ order.items.all|length }}
-        item{{ order.items.all|length|pluralize }}
+            ·
 
-        ·
+            {{ order.items.all|length }}
+            item{{ order.items.all|length|pluralize }}
 
-        Total
+            · Total
 
-        <strong>
-            ₹{{ order.total_amount|floatformat:2 }}
-        </strong>
+            <strong>
+                ₹{{ order.total_amount|floatformat:2 }}
+            </strong>
+
+        </span>
 
     </div>
 

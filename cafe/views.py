@@ -6,6 +6,8 @@ from django.shortcuts import (
     get_object_or_404
 )
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 
 from django.contrib import messages
 
@@ -15,6 +17,7 @@ from .models import Product, Order, OrderItem
 from .forms import CheckoutForm
 
 
+@ensure_csrf_cookie
 def home(request):
 
     search_query = request.GET.get(
@@ -59,7 +62,8 @@ def home(request):
 
 
     cart_count = sum(
-        cart.values()
+        int(quantity)
+        for quantity in cart.values()
     )
 
 
@@ -77,10 +81,6 @@ def home(request):
 
 def add_to_cart(request, product_id):
 
-    print("\n==============================")
-    print("ADD TO CART DEBUG")
-    print("==============================")
-
     if request.method != "POST":
         return JsonResponse(
             {
@@ -95,16 +95,7 @@ def add_to_cart(request, product_id):
         id=product_id
     )
 
-    print("Request method:", request.method)
-    print("Product ID:", product_id)
-    print("Product:", product.name)
-    print("Is available:", product.is_available)
-    print("Database stock:", product.stock)
-
-    # Only check whether the product is available
     if not product.is_available:
-        print("❌ PRODUCT NOT AVAILABLE")
-
         return JsonResponse(
             {
                 "success": False,
@@ -113,38 +104,34 @@ def add_to_cart(request, product_id):
             status=400
         )
 
-    # Get cart
-    cart = request.session.get("cart", {})
+    # IMPORTANT:
+    # There is NO stock check here.
+    # Stock is only the inventory/display value.
+    # Customer can add the same product
+    # multiple times to the cart.
 
-    print("Current cart:", cart)
+    cart = request.session.get("cart", {})
 
     product_id_str = str(product_id)
 
-    # Current quantity
     current_quantity = int(
-        cart.get(product_id_str, 0)
+        cart.get(
+            product_id_str,
+            0
+        )
     )
 
-    print("Current quantity in cart:", current_quantity)
+    cart[product_id_str] = (
+        current_quantity + 1
+    )
 
-    # ADD WITHOUT ANY LIMIT
-    new_quantity = current_quantity + 1
-
-    cart[product_id_str] = new_quantity
-
-    # Save session
     request.session["cart"] = cart
     request.session.modified = True
 
-    # Total items in cart
     cart_count = sum(
         int(quantity)
         for quantity in cart.values()
     )
-
-    print("✅ ADDED TO CART")
-    print("New quantity:", new_quantity)
-    print("Cart count:", cart_count)
 
     return JsonResponse(
         {
@@ -153,7 +140,7 @@ def add_to_cart(request, product_id):
             "cart_count": cart_count,
             "product_name": product.name,
             "stock": product.stock,
-            "cart_quantity": new_quantity
+            "cart_quantity": cart[product_id_str],
         }
     )
 
