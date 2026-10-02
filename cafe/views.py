@@ -73,49 +73,88 @@ def home(request):
         }
     )
 
+
 def add_to_cart(request, product_id):
+
+    print("\n==============================")
+    print("ADD TO CART DEBUG")
+    print("==============================")
+
+    if request.method != "POST":
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Invalid request method."
+            },
+            status=400
+        )
 
     product = get_object_or_404(
         Product,
-        id=product_id,
-        is_available=True
+        id=product_id
     )
 
-    cart = request.session.get(
-        "cart",
-        {}
+    print("Request method:", request.method)
+    print("Product ID:", product_id)
+    print("Product:", product.name)
+    print("Is available:", product.is_available)
+    print("Database stock:", product.stock)
+
+    # Only check whether the product is available
+    if not product.is_available:
+        print("❌ PRODUCT NOT AVAILABLE")
+
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "This product is currently unavailable."
+            },
+            status=400
+        )
+
+    # Get cart
+    cart = request.session.get("cart", {})
+
+    print("Current cart:", cart)
+
+    product_id_str = str(product_id)
+
+    # Current quantity
+    current_quantity = int(
+        cart.get(product_id_str, 0)
     )
 
-    product_id = str(product_id)
+    print("Current quantity in cart:", current_quantity)
 
-    cart[product_id] = (
-        cart.get(product_id, 0) + 1
-    )
+    # ADD WITHOUT ANY LIMIT
+    new_quantity = current_quantity + 1
 
+    cart[product_id_str] = new_quantity
+
+    # Save session
     request.session["cart"] = cart
-
     request.session.modified = True
 
-
+    # Total items in cart
     cart_count = sum(
-        cart.values()
+        int(quantity)
+        for quantity in cart.values()
     )
 
+    print("✅ ADDED TO CART")
+    print("New quantity:", new_quantity)
+    print("Cart count:", cart_count)
 
-    # AJAX request
-    if request.headers.get(
-        "X-Requested-With"
-    ) == "XMLHttpRequest":
-
-        return JsonResponse({
+    return JsonResponse(
+        {
             "success": True,
+            "message": f"{product.name} added to cart.",
             "cart_count": cart_count,
             "product_name": product.name,
-        })
-
-
-    # Normal browser request
-    return redirect("cart")
+            "stock": product.stock,
+            "cart_quantity": new_quantity
+        }
+    )
 
 def cart(request):
 

@@ -94,6 +94,10 @@ Tgarden Café | Menu
     background: transparent;
 }
 
+.tg-search-box input::placeholder {
+    color: #98a29d;
+}
+
 .tg-search-box button {
     height: 44px;
 
@@ -110,6 +114,12 @@ Tgarden Café | Menu
     font-weight: 700;
 
     cursor: pointer;
+
+    transition: .2s;
+}
+
+.tg-search-box button:hover {
+    background: var(--tg-green-dark);
 }
 
 
@@ -226,9 +236,7 @@ Tgarden Café | Menu
 }
 
 
-/*
-   Compact category navigation
-*/
+/* Compact category navigation */
 
 .tg-category-nav {
     display: flex;
@@ -413,6 +421,8 @@ Tgarden Café | Menu
     overflow: hidden;
 
     background: #edf4ef;
+
+    position: relative;
 }
 
 .tg-product-image img {
@@ -442,6 +452,48 @@ Tgarden Café | Menu
     align-items: center;
 
     font-size: 45px;
+}
+
+
+/* =========================================================
+   STOCK BADGE ON IMAGE
+========================================================= */
+
+.tg-stock-badge {
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.96);
+
+    color: var(--tg-green);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.15);
+
+    z-index: 5;
+}
+
+.tg-stock-badge.low {
+    color: #d97706;
+
+    background: #fffaf0;
+}
+
+.tg-stock-badge.sold {
+    color: #dc2626;
+
+    background: #fff1f1;
 }
 
 
@@ -532,6 +584,35 @@ Tgarden Café | Menu
 
 
 /* =========================================================
+   PRODUCT STOCK INFORMATION
+========================================================= */
+
+.tg-stock-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: var(--tg-green);
+}
+
+.tg-stock-info.low {
+    color: #d97706;
+}
+
+.tg-stock-info.sold {
+    color: #dc2626;
+}
+
+
+/* =========================================================
    ADD BUTTON
 ========================================================= */
 
@@ -573,9 +654,25 @@ Tgarden Café | Menu
     transform: scale(.95);
 }
 
-
 .tg-add-button.added {
     background: #059669;
+}
+
+
+/* SOLD OUT BUTTON */
+
+.tg-add-button.sold-out {
+    background: #d5dcd8;
+
+    color: #68736d;
+
+    cursor: not-allowed;
+
+    opacity: .9;
+}
+
+.tg-add-button.sold-out:hover {
+    background: #d5dcd8;
 }
 
 
@@ -613,12 +710,6 @@ Tgarden Café | Menu
 /* =========================================================
    FIXED CART BAR
 ========================================================= */
-
-/*
-   IMPORTANT:
-   Hidden initially.
-   Appears only after customer adds a product.
-*/
 
 .tg-cart-bar {
     position: fixed;
@@ -667,7 +758,6 @@ Tgarden Café | Menu
 
 
 .tg-cart-bar.show {
-
     transform:
         translate(-50%, 0);
 
@@ -882,6 +972,10 @@ Tgarden Café | Menu
         font-size: 23px;
     }
 
+    .tg-product-count {
+        font-size: 11px;
+    }
+
 
     /* 2 products per row */
 
@@ -931,6 +1025,24 @@ Tgarden Café | Menu
 
     .tg-price {
         font-size: 16px;
+    }
+
+
+    .tg-stock-info {
+        font-size: 9px;
+
+        margin-top: 4px;
+    }
+
+
+    .tg-stock-badge {
+        top: 7px;
+
+        right: 7px;
+
+        padding: 5px 8px;
+
+        font-size: 9px;
     }
 
 
@@ -1004,6 +1116,16 @@ Tgarden Café | Menu
         min-width: 55px;
 
         padding: 0 7px;
+    }
+
+    .tg-stock-info {
+        font-size: 8px;
+    }
+
+    .tg-stock-badge {
+        font-size: 8px;
+
+        padding: 4px 6px;
     }
 
     .tg-cart-text span {
@@ -1124,6 +1246,8 @@ Tgarden Café | Menu
             <div class="tg-category-nav">
 
 
+                <!-- HOT -->
+
                 <a
                     href="{% url 'home' %}?category=HOT#menu"
                     class="tg-category"
@@ -1149,6 +1273,8 @@ Tgarden Café | Menu
                 </a>
 
 
+                <!-- COOL -->
+
                 <a
                     href="{% url 'home' %}?category=COOL#menu"
                     class="tg-category"
@@ -1173,6 +1299,8 @@ Tgarden Café | Menu
 
                 </a>
 
+
+                <!-- SNACKS -->
 
                 <a
                     href="{% url 'home' %}?category=SNACKS#menu"
@@ -1291,6 +1419,8 @@ Tgarden Café | Menu
                 </div>
 
 
+                <!-- TOTAL PRODUCTS -->
+
                 <span class="tg-product-count">
 
                     {{ products|length }} items
@@ -1300,7 +1430,9 @@ Tgarden Café | Menu
             </div>
 
 
-            <!-- PRODUCT GRID -->
+            <!-- =================================================
+                 PRODUCT GRID
+            ================================================= -->
 
             <div class="tg-product-grid">
 
@@ -1308,12 +1440,19 @@ Tgarden Café | Menu
                 {% for product in products %}
 
 
-                <article class="tg-product-card">
+                <article
+                    class="tg-product-card"
+                    data-product-id="{{ product.id }}"
+                    data-stock="{{ product.stock }}"
+                >
 
 
-                    <!-- IMAGE -->
+                    <!-- =================================================
+                         PRODUCT IMAGE
+                    ================================================= -->
 
                     <div class="tg-product-image">
+
 
                         {% if product.image %}
 
@@ -1331,13 +1470,47 @@ Tgarden Café | Menu
 
                         {% endif %}
 
+
+                        <!-- =================================================
+                             STOCK BADGE
+                        ================================================= -->
+
+                        {% if product.stock > 0 %}
+
+                            {% if product.stock <= 3 %}
+
+                                <span class="tg-stock-badge low">
+                                    🔥 {{ product.stock }} left
+                                </span>
+
+                            {% else %}
+
+                                <span class="tg-stock-badge">
+                                    ✓ {{ product.stock }} left
+                                </span>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <span class="tg-stock-badge sold">
+                                Sold Out
+                            </span>
+
+                        {% endif %}
+
+
                     </div>
 
 
-                    <!-- BODY -->
+                    <!-- =================================================
+                         PRODUCT BODY
+                    ================================================= -->
 
                     <div class="tg-product-body">
 
+
+                        <!-- CATEGORY -->
 
                         <span class="tg-product-category">
 
@@ -1358,12 +1531,16 @@ Tgarden Café | Menu
                         </span>
 
 
+                        <!-- NAME -->
+
                         <h3 class="tg-product-name">
 
                             {{ product.name }}
 
                         </h3>
 
+
+                        <!-- DESCRIPTION -->
 
                         <p class="tg-product-description">
 
@@ -1380,32 +1557,97 @@ Tgarden Café | Menu
                         </p>
 
 
+                        <!-- =================================================
+                             PRICE / STOCK / BUTTON
+                        ================================================= -->
+
                         <div class="tg-product-footer">
 
 
-                            <strong class="tg-price">
+                            <div>
 
-                                ₹{{ product.price }}
+                                <!-- PRICE -->
 
-                            </strong>
+                                <strong class="tg-price">
+
+                                    ₹{{ product.price }}
+
+                                </strong>
 
 
-                            <button
-                                type="button"
-                                class="tg-add-button"
-                                data-product-id="{{ product.id }}"
-                                data-product-name="{{ product.name }}"
-                                data-url="{% url 'add_to_cart' product.id %}"
-                                onclick="tgAddToCart(this)"
-                            >
+                                <!-- STOCK DETAILS -->
 
-                                <span>
-                                    +
-                                </span>
+                                {% if product.stock > 0 %}
 
-                                Add
+                                    {% if product.stock <= 3 %}
 
-                            </button>
+                                        <div
+                                            class="tg-stock-info low"
+                                        >
+                                            🔥 Only
+                                            {{ product.stock }}
+                                            left
+                                        </div>
+
+                                    {% else %}
+
+                                        <div
+                                            class="tg-stock-info"
+                                        >
+                                            ✓
+                                            {{ product.stock }}
+                                            available
+                                        </div>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <div
+                                        class="tg-stock-info sold"
+                                    >
+                                        ✕ Sold Out
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 ADD BUTTON
+                            ================================================= -->
+
+                            {% if product.stock > 0 and product.is_available %}
+
+                                <button
+                                    type="button"
+                                    class="tg-add-button"
+                                    data-product-id="{{ product.id }}"
+                                    data-product-name="{{ product.name }}"
+                                    data-url="{% url 'add_to_cart' product.id %}"
+                                    onclick="tgAddToCart(this)"
+                                >
+
+                                    <span>
+                                        +
+                                    </span>
+
+                                    Add
+
+                                </button>
+
+                            {% else %}
+
+                                <button
+                                    type="button"
+                                    class="tg-add-button sold-out"
+                                    disabled
+                                >
+                                    Sold Out
+                                </button>
+
+                            {% endif %}
 
 
                         </div>
@@ -1419,6 +1661,8 @@ Tgarden Café | Menu
 
                 {% empty %}
 
+
+                <!-- EMPTY -->
 
                 <div class="tg-empty">
 
@@ -1452,9 +1696,6 @@ Tgarden Café | Menu
 
 <!-- =========================================================
      FIXED CART BAR
-     
-     Hidden when page loads.
-     Appears after Add button is clicked.
 ========================================================= -->
 
 <div
@@ -1514,9 +1755,7 @@ function tgGetCookie(name) {
         const cookies =
             document.cookie.split(";");
 
-        for (
-            let cookie of cookies
-        ) {
+        for (let cookie of cookies) {
 
             cookie = cookie.trim();
 
@@ -1558,6 +1797,9 @@ function tgAddToCart(button) {
 
     const productName =
         button.dataset.productName;
+
+    const productId =
+        button.dataset.productId;
 
 
     if (!url) {
@@ -1636,13 +1878,24 @@ function tgAddToCart(button) {
 
 
         /*
-         * Server should return:
+         * Expected response:
          *
          * {
-         *    "success": true,
-         *    "cart_count": 2
+         *     "success": true,
+         *     "cart_count": 2
          * }
          */
+
+
+        if (data.success === false) {
+
+            throw new Error(
+                data.message ||
+                "Unable to add product"
+            );
+
+        }
+
 
         const cartCount =
             data.cart_count || 1;
@@ -1663,6 +1916,67 @@ function tgAddToCart(button) {
         );
 
 
+        /*
+         * UPDATE STOCK
+         *
+         * The server can optionally return:
+         *
+         * remaining_stock
+         *
+         * If it doesn't, we decrease the
+         * current visible stock by 1.
+         */
+
+        const card =
+            button.closest(
+                ".tg-product-card"
+            );
+
+
+        if (card) {
+
+            let currentStock =
+                parseInt(
+                    card.dataset.stock || "0"
+                );
+
+
+            if (
+                typeof data.remaining_stock !==
+                "undefined"
+            ) {
+
+                currentStock =
+                    parseInt(
+                        data.remaining_stock
+                    );
+
+            } else {
+
+                currentStock =
+                    currentStock - 1;
+
+            }
+
+
+            if (currentStock < 0) {
+                currentStock = 0;
+            }
+
+
+            card.dataset.stock =
+                currentStock;
+
+
+            tgUpdateProductStock(
+                card,
+                currentStock,
+                button
+            );
+
+        }
+
+
         /* Button state */
 
         button.classList.add(
@@ -1677,15 +1991,50 @@ function tgAddToCart(button) {
         setTimeout(
             function () {
 
-                button.innerHTML =
-                    oldContent;
+                /*
+                 * Only restore Add button
+                 * if product is still available.
+                 */
 
-                button.classList.remove(
-                    "added"
-                );
+                const latestStock =
+                    parseInt(
+                        card?.dataset.stock || "0"
+                    );
 
-                button.dataset.loading =
-                    "false";
+
+                if (
+                    latestStock > 0
+                ) {
+
+                    button.innerHTML =
+                        oldContent;
+
+                    button.classList.remove(
+                        "added"
+                    );
+
+                    button.dataset.loading =
+                        "false";
+
+                } else {
+
+                    button.innerHTML =
+                        "Sold Out";
+
+                    button.classList.remove(
+                        "added"
+                    );
+
+                    button.classList.add(
+                        "sold-out"
+                    );
+
+                    button.disabled =
+                        true;
+
+                    button.dataset.loading =
+                        "false";
+                }
 
             },
             1000
@@ -1702,12 +2051,6 @@ function tgAddToCart(button) {
         );
 
 
-        /*
-         * If your old add_to_cart view
-         * redirects instead of returning
-         * JSON, this message helps identify it.
-         */
-
         button.innerHTML =
             oldContent;
 
@@ -1716,10 +2059,186 @@ function tgAddToCart(button) {
 
 
         alert(
+            error.message ||
             "Unable to add item to cart. Please try again."
         );
 
     });
+
+}
+
+
+/* =========================================================
+   UPDATE PRODUCT STOCK
+========================================================= */
+
+function tgUpdateProductStock(
+    card,
+    stock,
+    button
+) {
+
+    const badge =
+        card.querySelector(
+            ".tg-stock-badge"
+        );
+
+
+    const stockInfo =
+        card.querySelector(
+            ".tg-stock-info"
+        );
+
+
+    /*
+     * SOLD OUT
+     */
+
+    if (stock <= 0) {
+
+        if (badge) {
+
+            badge.textContent =
+                "Sold Out";
+
+            badge.classList.remove(
+                "low"
+            );
+
+            badge.classList.add(
+                "sold"
+            );
+
+        }
+
+
+        if (stockInfo) {
+
+            stockInfo.textContent =
+                "✕ Sold Out";
+
+            stockInfo.classList.remove(
+                "low"
+            );
+
+            stockInfo.classList.add(
+                "sold"
+            );
+
+        }
+
+
+        if (button) {
+
+            button.textContent =
+                "Sold Out";
+
+            button.disabled =
+                true;
+
+            button.classList.add(
+                "sold-out"
+            );
+
+        }
+
+
+        return;
+    }
+
+
+    /*
+     * LOW STOCK
+     */
+
+    if (stock <= 3) {
+
+        if (badge) {
+
+            badge.textContent =
+                "🔥 " +
+                stock +
+                " left";
+
+            badge.classList.remove(
+                "sold"
+            );
+
+            badge.classList.add(
+                "low"
+            );
+
+        }
+
+
+        if (stockInfo) {
+
+            stockInfo.textContent =
+                "🔥 Only " +
+                stock +
+                " left";
+
+            stockInfo.classList.remove(
+                "sold"
+            );
+
+            stockInfo.classList.add(
+                "low"
+            );
+
+        }
+
+    }
+
+
+    /*
+     * NORMAL STOCK
+     */
+
+    else {
+
+        if (badge) {
+
+            badge.textContent =
+                "✓ " +
+                stock +
+                " left";
+
+            badge.classList.remove(
+                "low",
+                "sold"
+            );
+
+        }
+
+
+        if (stockInfo) {
+
+            stockInfo.textContent =
+                "✓ " +
+                stock +
+                " available";
+
+            stockInfo.classList.remove(
+                "low",
+                "sold"
+            );
+
+        }
+
+    }
+
+
+    if (button) {
+
+        button.disabled =
+            false;
+
+        button.classList.remove(
+            "sold-out"
+        );
+
+    }
 
 }
 
@@ -1764,7 +2283,8 @@ function tgShowCartBar(
     } else {
 
         countElement.textContent =
-            count + " Items added";
+            count +
+            " Items added";
 
     }
 
@@ -1781,17 +2301,6 @@ function tgShowCartBar(
     bar.classList.add(
         "show"
     );
-
-
-    /*
-     * Keep visible.
-     *
-     * We intentionally do NOT
-     * automatically hide it.
-     *
-     * Customer can scroll while
-     * the cart bar stays fixed.
-     */
 
 }
 

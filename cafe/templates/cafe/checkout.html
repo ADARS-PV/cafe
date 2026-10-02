@@ -9,398 +9,708 @@ Checkout | Tgarden
 
 <style>
 
-/* =====================================================
-   CHECKOUT PAGE
-===================================================== */
+    /* =========================================================
+       TGARDEN CHECKOUT PAGE
+       ========================================================= */
 
-.checkout-page {
-    min-height: calc(100vh - 80px);
-    padding: 70px 20px 100px;
-    background:
-        radial-gradient(
-            circle at top left,
-            rgba(22, 163, 74, 0.08),
-            transparent 35%
-        ),
-        #f7faf8;
-}
+    :root {
+        --tg-green: #087f4e;
+        --tg-green-dark: #05663e;
+        --tg-green-light: #eaf7f0;
+        --tg-green-soft: #f4faf7;
 
+        --tg-bg: #f7faf8;
+        --tg-white: #ffffff;
 
-/* =====================================================
-   MAIN CONTAINER
-===================================================== */
+        --tg-text: #17231e;
+        --tg-muted: #75827c;
 
-.checkout-page .container {
-    max-width: 900px;
-    margin: 0 auto;
-}
+        --tg-border: #e2ebe6;
 
+        --tg-red: #c62828;
+        --tg-red-light: #fff2f2;
+    }
 
-/* =====================================================
-   HEADER
-===================================================== */
 
-.checkout-header {
-    text-align: center;
-    margin-bottom: 45px;
-}
-
-.checkout-label {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 15px;
-    border-radius: 50px;
-
-    background: #e8f7ee;
-    color: #087443;
-
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-
-    margin-bottom: 18px;
-}
-
-.checkout-header h1 {
-    margin: 0;
-
-    color: #123c2a;
-
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 800;
-
-    letter-spacing: -1.5px;
-}
-
-.checkout-header p {
-    margin: 14px 0 0;
-
-    color: #708077;
-
-    font-size: 16px;
-}
-
-
-/* =====================================================
-   CHECKOUT CARD
-===================================================== */
-
-.checkout-layout {
-    display: flex;
-    justify-content: center;
-}
-
-.checkout-card {
-    width: 100%;
-    max-width: 700px;
-
-    background: #ffffff;
-
-    border: 1px solid #e4ece7;
-
-    border-radius: 24px;
-
-    padding: 42px;
-
-    box-shadow:
-        0 20px 50px rgba(16, 62, 42, 0.08);
-}
-
-
-/* =====================================================
-   TABLE ICON
-===================================================== */
-
-.table-icon {
-    width: 68px;
-    height: 68px;
-
-    margin: 0 auto 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 20px;
-
-    background: #eaf8ef;
-
-    font-size: 32px;
-
-    box-shadow:
-        inset 0 0 0 1px rgba(21, 128, 61, 0.08);
-}
-
-
-/* =====================================================
-   CARD HEADING
-===================================================== */
-
-.table-card {
-    text-align: center;
-}
-
-.table-card h2 {
-    margin: 0;
-
-    color: #123c2a;
-
-    font-size: 28px;
-    font-weight: 800;
-}
-
-.table-card > p {
-    max-width: 500px;
-
-    margin: 12px auto 30px;
-
-    color: #718078;
-
-    font-size: 15px;
-    line-height: 1.7;
-}
-
-
-/* =====================================================
-   FORM
-===================================================== */
-
-.table-card form {
-    text-align: left;
-}
-
-.table-card label {
-    display: block;
-
-    margin-bottom: 12px;
-
-    color: #183d2d;
-
-    font-size: 14px;
-    font-weight: 700;
-}
-
-
-/* =====================================================
-   TABLE SELECT
-===================================================== */
-
-.table-card select,
-.table-card input {
-    width: 100%;
-
-    height: 56px;
-
-    padding: 0 18px;
-
-    border: 1px solid #dce7e0;
-
-    border-radius: 14px;
-
-    background: #fbfdfc;
-
-    color: #183d2d;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    outline: none;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-.table-card select:hover,
-.table-card input:hover {
-    border-color: #9ac9ad;
-}
-
-.table-card select:focus,
-.table-card input:focus {
-    border-color: #159447;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 0 0 4px rgba(21, 148, 71, 0.10);
-}
-
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-.form-error {
-    margin-top: 10px;
-
-    padding: 11px 14px;
-
-    border-radius: 10px;
-
-    background: #fff0f0;
-
-    color: #c62828;
-
-    font-size: 13px;
-}
-
-
-/* =====================================================
-   PLACE ORDER BUTTON
-===================================================== */
-
-.place-order-button {
-    width: 100%;
-
-    height: 58px;
-
-    margin-top: 25px;
-
-    border: none;
-
-    border-radius: 14px;
-
-    background: linear-gradient(
-        135deg,
-        #087443,
-        #159447
-    );
-
-    color: #ffffff;
-
-    font-size: 16px;
-    font-weight: 800;
-
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    box-shadow:
-        0 10px 24px rgba(8, 116, 67, 0.20);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        filter .2s ease;
-}
-
-.place-order-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 14px 30px rgba(8, 116, 67, 0.28);
-
-    filter: brightness(1.04);
-}
-
-.place-order-button:active {
-    transform: translateY(0);
-}
-
-
-/* =====================================================
-   BACK TO CART
-===================================================== */
-
-.back-cart {
-    display: block;
-
-    width: fit-content;
-
-    margin: 22px auto 0;
-
-    color: #087443;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    text-decoration: none;
-
-    transition: color .2s ease;
-}
-
-.back-cart:hover {
-    color: #054e2d;
-
-    text-decoration: underline;
-}
-
-
-/* =====================================================
-   TABLE INFORMATION
-===================================================== */
-
-.table-hint {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    margin-top: 20px;
-    padding: 14px 16px;
-
-    border-radius: 12px;
-
-    background: #f3f8f5;
-
-    color: #66776e;
-
-    font-size: 13px;
-
-    text-align: left;
-}
-
-.table-hint span {
-    font-size: 18px;
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 600px) {
+    /* =========================================================
+       PAGE
+       ========================================================= */
 
     .checkout-page {
-        padding: 45px 16px 70px;
+        min-height: calc(100vh - 80px);
+
+        padding: 38px 15px 65px;
+
+        background:
+            radial-gradient(
+                circle at 10% 0%,
+                rgba(8, 127, 78, 0.08),
+                transparent 32%
+            ),
+            radial-gradient(
+                circle at 90% 20%,
+                rgba(8, 127, 78, 0.05),
+                transparent 28%
+            ),
+            var(--tg-bg);
     }
+
+
+    .checkout-container {
+        max-width: 760px;
+
+        margin: 0 auto;
+    }
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
 
     .checkout-header {
-        margin-bottom: 30px;
+        text-align: center;
+
+        margin-bottom: 28px;
     }
+
+
+    .checkout-label {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        padding: 7px 13px;
+
+        margin-bottom: 12px;
+
+        border-radius: 30px;
+
+        background: var(--tg-green-light);
+
+        color: var(--tg-green);
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        letter-spacing: 1.5px;
+
+        text-transform: uppercase;
+    }
+
 
     .checkout-header h1 {
-        font-size: 32px;
+        margin: 0;
+
+        color: var(--tg-text);
+
+        font-size: clamp(27px, 5vw, 38px);
+
+        line-height: 1.15;
+
+        font-weight: 850;
+
+        letter-spacing: -0.8px;
     }
+
+
+    .checkout-header p {
+        max-width: 500px;
+
+        margin: 8px auto 0;
+
+        color: var(--tg-muted);
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       CHECKOUT CARD
+       ========================================================= */
 
     .checkout-card {
-        padding: 28px 20px;
+        width: 100%;
+
+        background: var(--tg-white);
+
+        border: 1px solid var(--tg-border);
 
         border-radius: 20px;
+
+        padding: 28px;
+
+        box-shadow:
+            0 12px 40px rgba(16, 62, 42, 0.07);
     }
+
+
+    /* =========================================================
+       ICON
+       ========================================================= */
+
+    .table-icon {
+        width: 55px;
+        height: 55px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        margin: 0 auto 15px;
+
+        border-radius: 16px;
+
+        background: var(--tg-green-light);
+
+        font-size: 27px;
+
+        box-shadow:
+            inset 0 0 0 1px rgba(8, 127, 78, 0.07);
+    }
+
+
+    /* =========================================================
+       CARD TITLE
+       ========================================================= */
+
+    .table-card {
+        text-align: center;
+    }
+
 
     .table-card h2 {
-        font-size: 24px;
+        margin: 0;
+
+        color: var(--tg-text);
+
+        font-size: 22px;
+
+        font-weight: 800;
     }
 
-    .place-order-button {
-        height: 55px;
+
+    .table-description {
+        max-width: 520px;
+
+        margin: 8px auto 22px;
+
+        color: var(--tg-muted);
+
+        font-size: 12px;
+
+        line-height: 1.65;
     }
-}
+
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+
+    .table-form {
+        text-align: left;
+
+        max-width: 500px;
+
+        margin: 0 auto;
+    }
+
+
+    .table-label {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-bottom: 7px;
+
+        color: var(--tg-text);
+
+        font-size: 12px;
+
+        font-weight: 800;
+    }
+
+
+    .required-label {
+        color: var(--tg-red);
+
+        font-size: 10px;
+
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       TABLE SELECT
+       ========================================================= */
+
+    .table-select-wrapper {
+        position: relative;
+    }
+
+
+    .table-select-wrapper::after {
+        content: "⌄";
+
+        position: absolute;
+
+        right: 15px;
+
+        top: 50%;
+
+        transform: translateY(-55%);
+
+        pointer-events: none;
+
+        color: var(--tg-green);
+
+        font-size: 18px;
+
+        font-weight: 700;
+    }
+
+
+    .table-select {
+        width: 100%;
+
+        height: 48px;
+
+        padding: 0 42px 0 14px;
+
+        border: 1px solid #d9e5df;
+
+        border-radius: 11px;
+
+        background: #fbfdfc;
+
+        color: var(--tg-text);
+
+        font-size: 13px;
+
+        font-weight: 650;
+
+        outline: none;
+
+        appearance: none;
+
+        cursor: pointer;
+
+        transition:
+            border-color .2s ease,
+            box-shadow .2s ease,
+            background .2s ease;
+    }
+
+
+    .table-select:hover {
+        border-color: #a9ccb8;
+    }
+
+
+    .table-select:focus {
+        border-color: var(--tg-green);
+
+        background: white;
+
+        box-shadow:
+            0 0 0 3px rgba(8, 127, 78, 0.10);
+    }
+
+
+    .table-select:invalid {
+        color: #89958f;
+    }
+
+
+    .table-select option {
+        color: var(--tg-text);
+
+        font-size: 13px;
+    }
+
+
+    .table-select option[value=""] {
+        color: #89958f;
+    }
+
+
+    /* =========================================================
+       REQUIRED MESSAGE
+       ========================================================= */
+
+    .select-warning {
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        margin-top: 8px;
+
+        padding: 9px 11px;
+
+        border-radius: 8px;
+
+        background: #fff8e8;
+
+        color: #8a6817;
+
+        font-size: 10px;
+
+        line-height: 1.4;
+    }
+
+
+    .select-warning i {
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+       DJANGO FORM ERROR
+       ========================================================= */
+
+    .form-error {
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        margin-top: 8px;
+
+        padding: 9px 11px;
+
+        border-radius: 8px;
+
+        background: var(--tg-red-light);
+
+        color: var(--tg-red);
+
+        font-size: 11px;
+
+        font-weight: 600;
+    }
+
+
+    /* =========================================================
+       TABLE GUIDE
+       ========================================================= */
+
+    .table-guide {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-top: 16px;
+
+        padding: 11px 13px;
+
+        border-radius: 10px;
+
+        background: var(--tg-green-soft);
+
+        border: 1px solid #e0eee6;
+
+        color: var(--tg-muted);
+
+        font-size: 10px;
+
+        line-height: 1.5;
+    }
+
+
+    .table-guide-icon {
+        width: 29px;
+        height: 29px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 8px;
+
+        background: var(--tg-green-light);
+
+        color: var(--tg-green);
+
+        font-size: 13px;
+    }
+
+
+    .table-guide strong {
+        color: var(--tg-text);
+    }
+
+
+    /* =========================================================
+       PLACE ORDER BUTTON
+       ========================================================= */
+
+    .place-order-button {
+        width: 100%;
+
+        height: 49px;
+
+        margin-top: 17px;
+
+        border: none;
+
+        border-radius: 11px;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--tg-green),
+                #119653
+            );
+
+        color: white;
+
+        font-size: 13px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 8px;
+
+        box-shadow:
+            0 7px 18px rgba(8, 127, 78, 0.18);
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            filter .2s ease;
+    }
+
+
+    .place-order-button:hover {
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 10px 23px rgba(8, 127, 78, 0.24);
+
+        filter: brightness(1.03);
+    }
+
+
+    .place-order-button:active {
+        transform: translateY(0);
+    }
+
+
+    /* =========================================================
+       BACK TO CART
+       ========================================================= */
+
+    .back-cart {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        width: fit-content;
+
+        margin: 14px auto 0;
+
+        padding: 6px 10px;
+
+        color: var(--tg-green);
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        text-decoration: none;
+
+        border-radius: 7px;
+
+        transition:
+            background .2s ease,
+            color .2s ease;
+    }
+
+
+    .back-cart:hover {
+        background: var(--tg-green-soft);
+
+        color: var(--tg-green-dark);
+    }
+
+
+    /* =========================================================
+       SECURITY / INFO
+       ========================================================= */
+
+    .checkout-info {
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 15px;
+
+        margin-top: 17px;
+
+        padding-top: 15px;
+
+        border-top: 1px solid var(--tg-border);
+
+        color: #89958f;
+
+        font-size: 9px;
+    }
+
+
+    .checkout-info span {
+        display: flex;
+
+        align-items: center;
+
+        gap: 4px;
+    }
+
+
+    .checkout-info i {
+        color: var(--tg-green);
+
+        font-size: 11px;
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 600px) {
+
+        .checkout-page {
+            padding: 27px 12px 45px;
+        }
+
+
+        .checkout-header {
+            margin-bottom: 20px;
+        }
+
+
+        .checkout-label {
+            font-size: 9px;
+
+            padding: 6px 11px;
+        }
+
+
+        .checkout-header h1 {
+            font-size: 27px;
+        }
+
+
+        .checkout-header p {
+            font-size: 11px;
+
+            padding: 0 12px;
+        }
+
+
+        .checkout-card {
+            padding: 22px 16px;
+
+            border-radius: 16px;
+        }
+
+
+        .table-icon {
+            width: 50px;
+            height: 50px;
+
+            margin-bottom: 12px;
+
+            border-radius: 14px;
+
+            font-size: 24px;
+        }
+
+
+        .table-card h2 {
+            font-size: 20px;
+        }
+
+
+        .table-description {
+            font-size: 11px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .table-label {
+            font-size: 11px;
+        }
+
+
+        .table-select {
+            height: 46px;
+
+            font-size: 12px;
+        }
+
+
+        .table-guide {
+            font-size: 9px;
+
+            padding: 9px 10px;
+        }
+
+
+        .place-order-button {
+            height: 47px;
+
+            font-size: 12px;
+        }
+
+
+        .checkout-info {
+            gap: 9px;
+
+            font-size: 8px;
+        }
+
+    }
+
 
 </style>
 
 
 <section class="checkout-page">
 
-    <div class="container">
+    <div class="checkout-container">
 
-        <!-- HEADER -->
+
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
 
         <div class="checkout-header">
 
@@ -413,97 +723,259 @@ Checkout | Tgarden
             </h1>
 
             <p>
-                Select your table and we'll bring your order to you.
+                Select your table number and we'll bring your order
+                directly to you.
             </p>
 
         </div>
 
 
-        <!-- TABLE SELECTION -->
+        <!-- =====================================================
+             CHECKOUT CARD
+             ===================================================== -->
 
-        <div class="checkout-layout">
+        <div class="checkout-card table-card">
 
-            <div class="checkout-card table-card">
 
-                <div class="table-icon">
-                    🪑
+            <!-- ICON -->
+
+            <div class="table-icon">
+                🪑
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h2>
+                Select Your Table
+            </h2>
+
+
+            <p class="table-description">
+                Please choose the table where you are currently sitting.
+                This helps our team deliver your order correctly.
+            </p>
+
+
+            <!-- =================================================
+                 FORM
+                 ================================================= -->
+
+            <form
+                method="POST"
+                action="{% url 'checkout' %}"
+                class="table-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- LABEL -->
+
+                <label
+                    for="{{ form.table_name.id_for_label }}"
+                    class="table-label"
+                >
+
+                    <span>
+                        Table Number
+                    </span>
+
+                    <span class="required-label">
+                        * Required
+                    </span>
+
+                </label>
+
+
+                <!-- =================================================
+                     TABLE SELECT
+                     ================================================= -->
+
+                <div class="table-select-wrapper">
+
+                    <select
+                        name="{{ form.table_name.html_name }}"
+                        id="{{ form.table_name.id_for_label }}"
+                        class="table-select"
+                        required
+                    >
+
+                        <!-- IMPORTANT:
+                             No A1 default selection -->
+
+                        <option
+                            value=""
+                            selected
+                            disabled
+                        >
+                            Please select your table
+                        </option>
+
+
+                        <option value="A1">
+                            Table A1
+                        </option>
+
+                        <option value="A2">
+                            Table A2
+                        </option>
+
+                        <option value="A3">
+                            Table A3
+                        </option>
+
+                        <option value="A4">
+                            Table A4
+                        </option>
+
+                        <option value="A5">
+                            Table A5
+                        </option>
+
+                        <option value="A6">
+                            Table A6
+                        </option>
+
+                        <option value="A7">
+                            Table A7
+                        </option>
+
+                        <option value="A8">
+                            Table A8
+                        </option>
+
+                        <option value="A9">
+                            Table A9
+                        </option>
+
+                        <option value="A10">
+                            Table A10
+                        </option>
+
+                    </select>
+
                 </div>
 
 
-                <h2>
-                    Select Your Table
-                </h2>
+                <!-- Browser guidance -->
+
+                <div class="select-warning">
+
+                    <i class="bi bi-exclamation-circle"></i>
+
+                    <span>
+                        Please select your table before placing the order.
+                    </span>
+
+                </div>
 
 
-                <p>
-                    Choose the table number where you're currently sitting.
-                    This helps our team deliver your order to the right place.
-                </p>
+                <!-- Django validation error -->
 
+                {% if form.table_name.errors %}
 
-                <form
-                    method="POST"
-                    action="{% url 'checkout' %}"
-                >
+                    <div class="form-error">
 
-                    {% csrf_token %}
+                        <i class="bi bi-exclamation-triangle-fill"></i>
 
-
-                    <label
-                        for="{{ form.table_name.id_for_label }}"
-                    >
-                        Table Number
-                    </label>
-
-
-                    {{ form.table_name }}
-
-
-                    {% if form.table_name.errors %}
-
-                        <div class="form-error">
-                            {{ form.table_name.errors }}
-                        </div>
-
-                    {% endif %}
-
-
-                    <div class="table-hint">
-
-                        <span>💡</span>
-
-                        <div>
-                            Please make sure you select the correct
-                            table before placing your order.
-                        </div>
+                        <span>
+                            {{ form.table_name.errors|striptags }}
+                        </span>
 
                     </div>
 
-
-                    <button
-                        type="submit"
-                        class="place-order-button"
-                    >
-
-                        <span>
-                            🍃
-                        </span>
-
-                        Confirm & Place Order
-
-                    </button>
-
-                </form>
+                {% endif %}
 
 
-                <a
-                    href="{% url 'cart' %}"
-                    class="back-cart"
+                <!-- TABLE GUIDE -->
+
+                <div class="table-guide">
+
+                    <div class="table-guide-icon">
+
+                        <i class="bi bi-info-circle"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Important:
+                        </strong>
+
+                        Make sure you select the table where you
+                        are currently sitting. Our staff will use
+                        this information to deliver your order.
+
+                    </div>
+
+                </div>
+
+
+                <!-- PLACE ORDER -->
+
+                <button
+                    type="submit"
+                    class="place-order-button"
                 >
-                    ← Back to Cart
-                </a>
+
+                    <span>
+                        🍃
+                    </span>
+
+                    Confirm & Place Order
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- BACK TO CART -->
+
+            <a
+                href="{% url 'cart' %}"
+                class="back-cart"
+            >
+
+                ← Back to Cart
+
+            </a>
+
+
+            <!-- INFO -->
+
+            <div class="checkout-info">
+
+                <span>
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Freshly prepared
+
+                </span>
+
+                <span>
+
+                    <i class="bi bi-shield-check"></i>
+
+                    Secure order
+
+                </span>
+
+                <span>
+
+                    <i class="bi bi-cup-hot-fill"></i>
+
+                    Tgarden Café
+
+                </span>
 
             </div>
+
 
         </div>
 

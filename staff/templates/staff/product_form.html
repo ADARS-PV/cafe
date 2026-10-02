@@ -1,19 +1,24 @@
 {% extends "staff/base.html" %}
 
 {% block title %}
+
 {% if product %}
-Edit Product | Tgarden
+    Edit Product | Tgarden
 {% else %}
-Add Product | Tgarden
+    Add Product | Tgarden
 {% endif %}
+
 {% endblock %}
 
+
 {% block page_title %}
+
 {% if product %}
-Edit Product
+    Edit Product
 {% else %}
-Add Product
+    Add Product
 {% endif %}
+
 {% endblock %}
 
 
@@ -27,7 +32,9 @@ Add Product
 
 .product-form-page {
     max-width: 1100px;
+
     margin: 0 auto;
+
     padding: 30px 35px 60px;
 }
 
@@ -38,8 +45,12 @@ Add Product
 
 .form-page-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
+    gap: 20px;
 
     margin-bottom: 25px;
 }
@@ -50,6 +61,7 @@ Add Product
     color: #173b2b;
 
     font-size: 30px;
+
     font-weight: 800;
 
     letter-spacing: -0.5px;
@@ -63,9 +75,16 @@ Add Product
     font-size: 13px;
 }
 
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
 .back-button {
     display: inline-flex;
+
     align-items: center;
+
     gap: 7px;
 
     height: 38px;
@@ -83,6 +102,7 @@ Add Product
     text-decoration: none;
 
     font-size: 11px;
+
     font-weight: 700;
 
     transition: .2s ease;
@@ -167,7 +187,8 @@ Add Product
 .form-grid {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 22px 25px;
 }
@@ -231,11 +252,13 @@ Add Product
     transition: .2s ease;
 }
 
+
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select {
     height: 44px;
 }
+
 
 .form-group textarea {
     min-height: 120px;
@@ -244,6 +267,7 @@ Add Product
 
     line-height: 1.5;
 }
+
 
 .form-group input:focus,
 .form-group select:focus,
@@ -255,6 +279,7 @@ Add Product
     box-shadow:
         0 0 0 3px rgba(8, 116, 67, .08);
 }
+
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
@@ -309,6 +334,88 @@ Add Product
 
 
 /* =========================================================
+   STOCK / AVAILABLE QUANTITY
+========================================================= */
+
+.stock-field {
+    position: relative;
+}
+
+
+.stock-input-wrapper {
+    position: relative;
+}
+
+
+.stock-input-wrapper::before {
+    content: "📦";
+
+    position: absolute;
+
+    left: 13px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 15px;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+.stock-input-wrapper input {
+    padding-left: 40px !important;
+}
+
+
+.stock-help {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 6px;
+
+    color: #99a49f;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+.stock-current {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    width: fit-content;
+
+    margin-top: 8px;
+
+    padding: 5px 10px;
+
+    background: #e8f7ef;
+
+    border: 1px solid #cce9d8;
+
+    border-radius: 20px;
+
+    color: #087443;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
    IMAGE UPLOAD
 ========================================================= */
 
@@ -334,13 +441,16 @@ Add Product
     border-color: #83b79d;
 }
 
+
 .image-icon {
     width: 48px;
+
     height: 48px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     margin: 0 auto 10px;
@@ -352,6 +462,7 @@ Add Product
     font-size: 21px;
 }
 
+
 .image-upload-box input[type="file"] {
     background: transparent;
 
@@ -361,6 +472,7 @@ Add Product
 
     font-size: 11px;
 }
+
 
 .current-image {
     margin-top: 12px;
@@ -374,8 +486,43 @@ Add Product
     font-size: 10px;
 }
 
+
 .current-image strong {
     color: #087443;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.image-preview-wrapper {
+    margin-top: 14px;
+
+    display: none;
+}
+
+.image-preview-wrapper.show {
+    display: block;
+}
+
+.image-preview {
+    width: 120px;
+
+    height: 90px;
+
+    margin: 0 auto;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #dce7e1;
+
+    box-shadow:
+        0 5px 15px rgba(20,60,42,.08);
 }
 
 
@@ -401,6 +548,7 @@ Add Product
     border-radius: 9px;
 }
 
+
 .availability-text strong {
     display: block;
 
@@ -411,6 +559,7 @@ Add Product
     font-size: 11px;
 }
 
+
 .availability-text span {
     color: #929d98;
 
@@ -419,22 +568,28 @@ Add Product
 
 
 /* =========================================================
-   CHECKBOX
+   CHECKBOX SWITCH
 ========================================================= */
 
 .checkbox-wrapper {
     position: relative;
 
     width: 44px;
+
     height: 24px;
+
+    flex-shrink: 0;
 }
+
 
 .checkbox-wrapper input {
     opacity: 0;
 
     width: 0;
+
     height: 0;
 }
+
 
 .checkbox-slider {
     position: absolute;
@@ -450,32 +605,41 @@ Add Product
     transition: .25s;
 }
 
+
 .checkbox-slider::before {
     content: "";
 
     position: absolute;
 
     width: 18px;
+
     height: 18px;
 
     left: 3px;
+
     top: 3px;
 
     background: #ffffff;
 
     border-radius: 50%;
 
-    box-shadow: 0 2px 5px rgba(0,0,0,.15);
+    box-shadow:
+        0 2px 5px rgba(0,0,0,.15);
 
     transition: .25s;
 }
 
-.checkbox-wrapper input:checked + .checkbox-slider {
+
+.checkbox-wrapper input:checked
++ .checkbox-slider {
     background: #087443;
 }
 
-.checkbox-wrapper input:checked + .checkbox-slider::before {
-    transform: translateX(20px);
+
+.checkbox-wrapper input:checked
++ .checkbox-slider::before {
+    transform:
+        translateX(20px);
 }
 
 
@@ -508,6 +672,7 @@ Add Product
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     height: 40px;
@@ -535,16 +700,19 @@ Add Product
     transition: .2s ease;
 }
 
+
 .cancel-button:hover {
     background: #f1f5f3;
 
     color: #31483d;
 }
 
+
 .save-button {
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     height: 40px;
@@ -573,6 +741,7 @@ Add Product
     transition: .2s ease;
 }
 
+
 .save-button:hover {
     background: #066238;
 
@@ -584,7 +753,7 @@ Add Product
 
 
 /* =========================================================
-   RESPONSIVE
+   MOBILE
 ========================================================= */
 
 @media (max-width: 800px) {
@@ -593,18 +762,89 @@ Add Product
         padding: 22px 16px 45px;
     }
 
+
     .form-page-header {
         align-items: flex-start;
 
         flex-direction: column;
     }
 
+
+    .back-button {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+
     .form-grid {
         grid-template-columns: 1fr;
     }
 
+
     .form-group.full-width {
         grid-column: auto;
+    }
+
+
+    .form-body {
+        padding: 20px;
+    }
+
+
+    .form-card-header {
+        padding: 20px;
+    }
+
+
+    .form-footer {
+        padding: 16px 20px;
+
+        flex-direction: column-reverse;
+    }
+
+
+    .cancel-button,
+    .save-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .product-form-page {
+        padding: 18px 10px 40px;
+    }
+
+
+    .form-page-header-left h1 {
+        font-size: 25px;
+    }
+
+
+    .form-page-header-left p {
+        font-size: 12px;
+    }
+
+
+    .form-card {
+        border-radius: 12px;
+    }
+
+
+    .form-body {
+        padding: 16px;
+    }
+
+
+    .form-card-header {
+        padding: 18px 16px;
     }
 
 }
@@ -633,12 +873,15 @@ Add Product
 
             </h1>
 
+
             <p>
+
                 {% if product %}
                     Update your Tgarden menu item.
                 {% else %}
                     Add a new item to your Tgarden café menu.
                 {% endif %}
+
             </p>
 
         </div>
@@ -648,10 +891,13 @@ Add Product
             href="{% url 'staff:products' %}"
             class="back-button"
         >
+
             ← Back to Products
+
         </a>
 
     </div>
+
 
 
     <!-- =====================================================
@@ -660,6 +906,8 @@ Add Product
 
     <div class="form-card">
 
+
+        <!-- FORM HEADER -->
 
         <div class="form-card-header">
 
@@ -674,7 +922,10 @@ Add Product
         </div>
 
 
-        <!-- IMPORTANT: enctype is required for image upload -->
+
+        <!-- IMPORTANT:
+             enctype is required for image upload
+        -->
 
         <form
             method="POST"
@@ -687,7 +938,9 @@ Add Product
             <div class="form-body">
 
 
-                <!-- FORM ERRORS -->
+                <!-- =================================================
+                     FORM ERRORS
+                ================================================== -->
 
                 {% if form.non_field_errors %}
 
@@ -700,26 +953,38 @@ Add Product
                 {% endif %}
 
 
+
                 <div class="form-grid">
 
 
-                    <!-- PRODUCT NAME -->
+                    <!-- =================================================
+                         PRODUCT NAME
+                    ================================================== -->
 
                     <div class="form-group">
 
-                        <label for="{{ form.name.id_for_label }}">
+                        <label
+                            for="{{ form.name.id_for_label }}"
+                        >
 
                             Product Name
-                            <span class="required">*</span>
+
+                            <span class="required">
+                                *
+                            </span>
 
                         </label>
 
+
                         {{ form.name }}
+
 
                         {% if form.name.errors %}
 
                             <div class="field-errors">
+
                                 {{ form.name.errors }}
+
                             </div>
 
                         {% endif %}
@@ -727,23 +992,35 @@ Add Product
                     </div>
 
 
-                    <!-- CATEGORY -->
+
+                    <!-- =================================================
+                         CATEGORY
+                    ================================================== -->
 
                     <div class="form-group">
 
-                        <label for="{{ form.category.id_for_label }}">
+                        <label
+                            for="{{ form.category.id_for_label }}"
+                        >
 
                             Category
-                            <span class="required">*</span>
+
+                            <span class="required">
+                                *
+                            </span>
 
                         </label>
 
+
                         {{ form.category }}
+
 
                         {% if form.category.errors %}
 
                             <div class="field-errors">
+
                                 {{ form.category.errors }}
+
                             </div>
 
                         {% endif %}
@@ -751,27 +1028,42 @@ Add Product
                     </div>
 
 
-                    <!-- PRICE -->
+
+                    <!-- =================================================
+                         PRICE
+                    ================================================== -->
 
                     <div class="form-group">
 
-                        <label for="{{ form.price.id_for_label }}">
+                        <label
+                            for="{{ form.price.id_for_label }}"
+                        >
 
                             Price
-                            <span class="required">*</span>
+
+                            <span class="required">
+                                *
+                            </span>
 
                         </label>
 
+
                         {{ form.price }}
 
+
                         <div class="help-text">
+
                             Enter the selling price in Indian Rupees.
+
                         </div>
+
 
                         {% if form.price.errors %}
 
                             <div class="field-errors">
+
                                 {{ form.price.errors }}
+
                             </div>
 
                         {% endif %}
@@ -779,11 +1071,79 @@ Add Product
                     </div>
 
 
-                    <!-- IMAGE -->
 
-                    <div class="form-group">
+                    <!-- =================================================
+                         AVAILABLE QUANTITY
+                    ================================================== -->
 
-                        <label for="{{ form.image.id_for_label }}">
+                    <div class="form-group stock-field">
+
+                        <label
+                            for="{{ form.stock.id_for_label }}"
+                        >
+
+                            Available Quantity
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="stock-input-wrapper">
+
+                            {{ form.stock }}
+
+                        </div>
+
+
+                        <div class="stock-help">
+
+                            📦
+
+                            Enter the number of items available
+                            for customers.
+
+                        </div>
+
+
+                        {% if product %}
+
+                            <div class="stock-current">
+
+                                ✓ Current Stock:
+
+                                {{ product.stock }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if form.stock.errors %}
+
+                            <div class="field-errors">
+
+                                {{ form.stock.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         IMAGE
+                    ================================================== -->
+
+                    <div class="form-group full-width">
+
+                        <label
+                            for="{{ form.image.id_for_label }}"
+                        >
 
                             Product Image
 
@@ -792,29 +1152,72 @@ Add Product
 
                         <div class="image-upload-box">
 
+
                             <div class="image-icon">
                                 🖼️
                             </div>
 
+
                             {{ form.image }}
 
+
                             <div class="help-text">
-                                JPG, JPEG, PNG or WEBP image recommended.
+
+                                JPG, JPEG, PNG or WEBP
+                                image recommended.
+
                             </div>
 
+
+
+                            <!-- CURRENT IMAGE -->
 
                             {% if product and product.image %}
 
                                 <div class="current-image">
 
                                     Current image:
+
                                     <strong>
+
                                         {{ product.image.name }}
+
                                     </strong>
 
                                 </div>
 
+
+                                <div
+                                    class="image-preview-wrapper show"
+                                >
+
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        class="image-preview"
+                                        alt="{{ product.name }}"
+                                    >
+
+                                </div>
+
                             {% endif %}
+
+
+                            <!-- NEW IMAGE PREVIEW -->
+
+                            <div
+                                id="newImagePreview"
+                                class="image-preview-wrapper"
+                            >
+
+                                <img
+                                    id="previewImage"
+                                    class="image-preview"
+                                    src=""
+                                    alt="Image preview"
+                                >
+
+                            </div>
+
 
                         </div>
 
@@ -822,7 +1225,9 @@ Add Product
                         {% if form.image.errors %}
 
                             <div class="field-errors">
+
                                 {{ form.image.errors }}
+
                             </div>
 
                         {% endif %}
@@ -830,27 +1235,38 @@ Add Product
                     </div>
 
 
-                    <!-- DESCRIPTION -->
+
+                    <!-- =================================================
+                         DESCRIPTION
+                    ================================================== -->
 
                     <div class="form-group full-width">
 
-                        <label for="{{ form.description.id_for_label }}">
+                        <label
+                            for="{{ form.description.id_for_label }}"
+                        >
 
                             Description
 
                         </label>
 
+
                         {{ form.description }}
 
+
                         <div class="help-text">
+
                             Add a short description of the product.
+
                         </div>
 
 
                         {% if form.description.errors %}
 
                             <div class="field-errors">
+
                                 {{ form.description.errors }}
+
                             </div>
 
                         {% endif %}
@@ -858,25 +1274,36 @@ Add Product
                     </div>
 
 
-                    <!-- AVAILABILITY -->
+
+                    <!-- =================================================
+                         AVAILABILITY
+                    ================================================== -->
 
                     <div class="form-group full-width">
 
                         <label>
+
                             Product Availability
+
                         </label>
 
 
                         <div class="availability-box">
 
+
                             <div class="availability-text">
 
                                 <strong>
+
                                     Available for customers
+
                                 </strong>
 
                                 <span>
-                                    Customers can order this product when enabled.
+
+                                    Customers can order this
+                                    product when enabled.
+
                                 </span>
 
                             </div>
@@ -890,13 +1317,16 @@ Add Product
 
                             </label>
 
+
                         </div>
 
 
                         {% if form.is_available.errors %}
 
                             <div class="field-errors">
+
                                 {{ form.is_available.errors }}
+
                             </div>
 
                         {% endif %}
@@ -910,17 +1340,21 @@ Add Product
             </div>
 
 
+
             <!-- =================================================
                  FORM FOOTER
             ================================================== -->
 
             <div class="form-footer">
 
+
                 <a
                     href="{% url 'staff:products' %}"
                     class="cancel-button"
                 >
+
                     Cancel
+
                 </a>
 
 
@@ -930,12 +1364,17 @@ Add Product
                 >
 
                     {% if product %}
+
                         ✓ Update Product
+
                     {% else %}
+
                         + Add Product
+
                     {% endif %}
 
                 </button>
+
 
             </div>
 
@@ -945,7 +1384,113 @@ Add Product
 
     </div>
 
-
 </div>
+
+
+
+<script>
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const imageInput =
+            document.getElementById(
+                "{{ form.image.id_for_label }}"
+            );
+
+        const previewWrapper =
+            document.getElementById(
+                "newImagePreview"
+            );
+
+        const previewImage =
+            document.getElementById(
+                "previewImage"
+            );
+
+
+        if (
+            imageInput &&
+            previewWrapper &&
+            previewImage
+        ) {
+
+            imageInput.addEventListener(
+                "change",
+                function () {
+
+                    const file =
+                        this.files &&
+                        this.files[0];
+
+
+                    if (!file) {
+
+                        previewWrapper.classList.remove(
+                            "show"
+                        );
+
+                        previewImage.src = "";
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * Only preview image files.
+                     */
+
+                    if (
+                        !file.type.startsWith(
+                            "image/"
+                        )
+                    ) {
+
+                        previewWrapper.classList.remove(
+                            "show"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload =
+                        function (event) {
+
+                            previewImage.src =
+                                event.target.result;
+
+                            previewWrapper.classList.add(
+                                "show"
+                            );
+
+                        };
+
+
+                    reader.readAsDataURL(
+                        file
+                    );
+
+                }
+            );
+
+        }
+
+    }
+);
+
+</script>
+
 
 {% endblock %}

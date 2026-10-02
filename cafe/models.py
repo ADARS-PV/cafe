@@ -42,11 +42,18 @@ class Product(models.Model):
         auto_now_add=True
     )
 
+    stock = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Available Quantity"
+    )
+
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ["-created_at"]
+
+    
 
 
 class Order(models.Model):

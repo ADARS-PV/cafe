@@ -37,6 +37,7 @@ class ProductForm(forms.ModelForm):
             "price",
             "image",
             "is_available",
+            "stock",
         ]
 
         widgets = {
@@ -59,6 +60,13 @@ class ProductForm(forms.ModelForm):
                 attrs={
                     "placeholder": "0.00",
                     "step": "0.01",
+                }
+            ),
+            "stock": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": "0",
+                    "placeholder": "Available quantity"
                 }
             ),
 

@@ -316,28 +316,27 @@ def add_product(request):
 
     if request.method == "POST":
 
-        form = ProductForm(
-            request.POST,
-            request.FILES
-        )
+        form = ProductForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+
+            product = form.save()
 
             return redirect("staff:products")
 
     else:
+
         form = ProductForm()
+
 
     return render(
         request,
         "staff/product_form.html",
         {
             "form": form,
-            "page_title": "Add Product",
+            "title": "Add Product",
         }
     )
-
 
 @login_required
 def edit_product(request, product_id):
@@ -356,6 +355,7 @@ def edit_product(request, product_id):
         )
 
         if form.is_valid():
+
             form.save()
 
             return redirect("staff:products")
@@ -366,13 +366,14 @@ def edit_product(request, product_id):
             instance=product
         )
 
+
     return render(
         request,
         "staff/product_form.html",
         {
             "form": form,
+            "title": "Edit Product",
             "product": product,
-            "page_title": "Edit Product",
         }
     )
 
